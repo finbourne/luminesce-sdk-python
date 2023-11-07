@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.source import Source
+from luminesce.models.source import Source
 
 # TODO update the JSON string below
 json = "{}"

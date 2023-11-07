@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 
 # TODO update the JSON string below
 json = "{}"

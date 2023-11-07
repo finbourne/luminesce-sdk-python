@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.options_xml import OptionsXml
+from luminesce.models.options_xml import OptionsXml
 
 # TODO update the JSON string below
 json = "{}"

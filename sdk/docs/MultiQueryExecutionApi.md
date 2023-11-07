@@ -1,4 +1,4 @@
-# finbourne_luminesce.MultiQueryExecutionApi
+# luminesce.MultiQueryExecutionApi
 
 All URIs are relative to *https://fbn-ci.lusid.com/honeycomb*
 
@@ -23,12 +23,12 @@ Cancel the query-set (if still running) / clear the data (if already returned) T
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -36,7 +36,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -66,7 +66,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.MultiQueryExecutionApi)
+    api_instance = api_client_factory.build(luminesce.MultiQueryExecutionApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
     try:
@@ -119,12 +119,12 @@ View progress information (up until this point) for the entire query-set The fol
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -132,7 +132,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -162,7 +162,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.MultiQueryExecutionApi)
+    api_instance = api_client_factory.build(luminesce.MultiQueryExecutionApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
     try:
@@ -215,13 +215,13 @@ StartQueries: Starts to Execute the LuminesceSql statements in the background.
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
-from finbourne_luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
+from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -229,7 +229,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -259,8 +259,8 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.MultiQueryExecutionApi)
-    type = finbourne_luminesce.MultiQueryDefinitionType() # MultiQueryDefinitionType | An enum value defining the set of statements being executed
+    api_instance = api_client_factory.build(luminesce.MultiQueryExecutionApi)
+    type = luminesce.MultiQueryDefinitionType() # MultiQueryDefinitionType | An enum value defining the set of statements being executed
     body = Apple # str | A \"search\" value (e.g. 'Apple' on an instrument search, a `Finbourne.Filtering` expression of Insights, etc.)  In the cases where \"Nothing\" is valid for a `Finbourne.Filtering` expression, pass `True`.
     as_at = '2013-10-20T19:20:30+01:00' # datetime | The AsAt time used by any bitemporal provider in the queries. (optional)
     effective_at = '2013-10-20T19:20:30+01:00' # datetime | The EffectiveAt time used by any bitemporal provider in the queries. (optional)

@@ -1,4 +1,4 @@
-# finbourne_luminesce.HistoricallyExecutedQueriesApi
+# luminesce.HistoricallyExecutedQueriesApi
 
 All URIs are relative to *https://fbn-ci.lusid.com/honeycomb*
 
@@ -25,12 +25,12 @@ Cancel the query (if still running) / clear the data (if already returned) The f
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -38,7 +38,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -68,7 +68,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.HistoricallyExecutedQueriesApi)
+    api_instance = api_client_factory.build(luminesce.HistoricallyExecutedQueriesApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
     try:
@@ -121,11 +121,11 @@ Fetch the histogram in Json format (if available, or if not simply being informe
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
+import luminesce
+from luminesce.rest import ApiException
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -133,7 +133,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -163,7 +163,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.HistoricallyExecutedQueriesApi)
+    api_instance = api_client_factory.build(luminesce.HistoricallyExecutedQueriesApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
     bucket_size = 'bucket_size_example' # str | Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated. (optional)
     filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
@@ -223,11 +223,11 @@ Fetch the data in Json format (if available, or if not simply being informed it 
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
+import luminesce
+from luminesce.rest import ApiException
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -235,7 +235,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -265,7 +265,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.HistoricallyExecutedQueriesApi)
+    api_instance = api_client_factory.build(luminesce.HistoricallyExecutedQueriesApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
     sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
     filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
@@ -333,12 +333,12 @@ GetHistory: Shows queries executed in a given historical time window (in Json fo
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_query_response import BackgroundQueryResponse
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_query_response import BackgroundQueryResponse
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -346,7 +346,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -376,7 +376,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.HistoricallyExecutedQueriesApi)
+    api_instance = api_client_factory.build(luminesce.HistoricallyExecutedQueriesApi)
     start_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to start the search from.  Will default to Now - 1 Day (optional)
     end_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to end the search at.  Defaults to now. (optional)
     free_text_search = 'free_text_search_example' # str | Some test that must be in at least one field returned. (optional)
@@ -435,12 +435,12 @@ View progress information (up until this point) of previously started History qu
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -448,7 +448,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -478,7 +478,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.HistoricallyExecutedQueriesApi)
+    api_instance = api_client_factory.build(luminesce.HistoricallyExecutedQueriesApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
     try:

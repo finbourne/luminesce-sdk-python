@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.aggregation import Aggregation
+from luminesce.models.aggregation import Aggregation
 
 # TODO update the JSON string below
 json = "{}"

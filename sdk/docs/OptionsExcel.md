@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.options_excel import OptionsExcel
+from luminesce.models.options_excel import OptionsExcel
 
 # TODO update the JSON string below
 json = "{}"

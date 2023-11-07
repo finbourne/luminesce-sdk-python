@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.column_info import ColumnInfo
+from luminesce.models.column_info import ColumnInfo
 
 # TODO update the JSON string below
 json = "{}"

@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.convert_to_view_data import ConvertToViewData
+from luminesce.models.convert_to_view_data import ConvertToViewData
 
 # TODO update the JSON string below
 json = "{}"

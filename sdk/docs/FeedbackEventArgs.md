@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.feedback_event_args import FeedbackEventArgs
+from luminesce.models.feedback_event_args import FeedbackEventArgs
 
 # TODO update the JSON string below
 json = "{}"

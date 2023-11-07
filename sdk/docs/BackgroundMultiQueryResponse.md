@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
+from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
 
 # TODO update the JSON string below
 json = "{}"

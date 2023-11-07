@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.view_parameter import ViewParameter
+from luminesce.models.view_parameter import ViewParameter
 
 # TODO update the JSON string below
 json = "{}"

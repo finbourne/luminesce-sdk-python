@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.link import Link
+from luminesce.models.link import Link
 
 # TODO update the JSON string below
 json = "{}"

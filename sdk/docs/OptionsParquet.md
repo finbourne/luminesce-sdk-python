@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.options_parquet import OptionsParquet
+from luminesce.models.options_parquet import OptionsParquet
 
 # TODO update the JSON string below
 json = "{}"

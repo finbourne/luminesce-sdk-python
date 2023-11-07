@@ -1,4 +1,4 @@
-# finbourne_luminesce.ApplicationMetadataApi
+# luminesce.ApplicationMetadataApi
 
 All URIs are relative to *https://fbn-ci.lusid.com/honeycomb*
 
@@ -21,12 +21,12 @@ GetServicesAsAccessControlledResources: Get resources available for access contr
 from __future__ import print_function
 import time
 import os
-import finbourne_luminesce
-from finbourne_luminesce.rest import ApiException
-from finbourne_luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
+import luminesce
+from luminesce.rest import ApiException
+from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
 from pprint import pprint
 
-from finbourne_luminesce import (
+from luminesce import (
 	  ApiClientFactory,
 	  ApplicationMetadataApi,
 	  EnvironmentVariablesConfigurationLoader,
@@ -34,7 +34,7 @@ from finbourne_luminesce import (
 	  ArgsConfigurationLoader
 )
 
-# Use the finbourne_luminesce ApiClientFactory to build Api instances with a configured api client
+# Use the luminesce ApiClientFactory to build Api instances with a configured api client
 # By default this will read config from environment variables
 # Then from a secrets.json file found in the current working directory
 api_client_factory = ApiClientFactory()
@@ -64,7 +64,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
 async with api_client_factory:
     # Create an instance of the API class
-    api_instance = api_client_factory.build(finbourne_luminesce.ApplicationMetadataApi)
+    api_instance = api_client_factory.build(luminesce.ApplicationMetadataApi)
 
     try:
         # GetServicesAsAccessControlledResources: Get resources available for access control

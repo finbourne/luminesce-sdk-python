@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.access_controlled_resource import AccessControlledResource
+from luminesce.models.access_controlled_resource import AccessControlledResource
 
 # TODO update the JSON string below
 json = "{}"

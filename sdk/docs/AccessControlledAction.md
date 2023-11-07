@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.access_controlled_action import AccessControlledAction
+from luminesce.models.access_controlled_action import AccessControlledAction
 
 # TODO update the JSON string below
 json = "{}"

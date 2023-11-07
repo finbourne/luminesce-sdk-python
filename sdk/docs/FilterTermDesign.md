@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.filter_term_design import FilterTermDesign
+from luminesce.models.filter_term_design import FilterTermDesign
 
 # TODO update the JSON string below
 json = "{}"

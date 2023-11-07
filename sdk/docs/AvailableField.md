@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.available_field import AvailableField
+from luminesce.models.available_field import AvailableField
 
 # TODO update the JSON string below
 json = "{}"

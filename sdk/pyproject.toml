@@ -1,16 +1,16 @@
 [tool.poetry]
-name = "finbourne-luminesce-sdk"
+name = "luminesce-sdk"
 version = "2.0.1"
 description = "FINBOURNE Luminesce Web API"
 authors = ["FINBOURNE Technology <info@finbourne.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/finbourne/luminesce-sdk-python"
-keywords = ["OpenAPI", "OpenAPI-Generator", "FINBOURNE Luminesce Web API", "finbourne-luminesce-sdk"]
+keywords = ["OpenAPI", "OpenAPI-Generator", "FINBOURNE Luminesce Web API", "luminesce-sdk"]
 packages = [
-    {include = "finbourne_luminesce"}
+    {include = "luminesce"}
 ]
-include = ["finbourne_luminesce/**/*"]
+include = ["luminesce/**/*"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

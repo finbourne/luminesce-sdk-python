@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.file_reader_builder_def import FileReaderBuilderDef
+from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 
 # TODO update the JSON string below
 json = "{}"

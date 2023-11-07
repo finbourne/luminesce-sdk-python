@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.options_sq_lite import OptionsSqLite
+from luminesce.models.options_sq_lite import OptionsSqLite
 
 # TODO update the JSON string below
 json = "{}"

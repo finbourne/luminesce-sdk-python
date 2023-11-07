@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.background_query_response import BackgroundQueryResponse
+from luminesce.models.background_query_response import BackgroundQueryResponse
 
 # TODO update the JSON string below
 json = "{}"

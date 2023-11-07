@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from finbourne_luminesce.models.options_csv import OptionsCsv
+from luminesce.models.options_csv import OptionsCsv
 
 # TODO update the JSON string below
 json = "{}"
