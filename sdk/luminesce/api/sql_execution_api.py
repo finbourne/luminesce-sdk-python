@@ -3118,28 +3118,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_file_read_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the file read design object from")], determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_file_read_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the file read design object from")], determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_file_read_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the file read design object from")], determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToFileReadDesign: Generates a SQL-file-read-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Design object from  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_sql_to_file_read_design(body, determine_available_sources, async_req=True)
+        >>> thread = api.put_sql_to_file_read_design(determine_available_sources, body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the file read design object from (required)
-        :type body: str
         :param determine_available_sources: Should the available sources be determined from `Sys.Registration`
         :type determine_available_sources: bool
+        :param body: SQL query to generate the file read design object from
+        :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -3157,23 +3157,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_sql_to_file_read_design_with_http_info(body, determine_available_sources, **kwargs)  # noqa: E501
+        return self.put_sql_to_file_read_design_with_http_info(determine_available_sources, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_sql_to_file_read_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the file read design object from")], determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_sql_to_file_read_design_with_http_info(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToFileReadDesign: Generates a SQL-file-read-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Design object from  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_sql_to_file_read_design_with_http_info(body, determine_available_sources, async_req=True)
+        >>> thread = api.put_sql_to_file_read_design_with_http_info(determine_available_sources, body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the file read design object from (required)
-        :type body: str
         :param determine_available_sources: Should the available sources be determined from `Sys.Registration`
         :type determine_available_sources: bool
+        :param body: SQL query to generate the file read design object from
+        :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -3202,8 +3202,8 @@ class SqlExecutionApi:
         _params = locals()
 
         _all_params = [
-            'body',
-            'determine_available_sources'
+            'determine_available_sources',
+            'body'
         ]
         _all_params.extend(
             [

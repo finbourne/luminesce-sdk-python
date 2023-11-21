@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **escape** | **str** | Character used to escape the &#39;Quote&#39; character when within a value | [optional] 
 **quote** | **str** | Character used around any field containing the &#39;delimiter&#39; or a line break. | [optional] 
 **values_to_make_null** | **str** | Regex of values to map to &#39;null&#39; in the returned data. | [optional] 
-**skip_pre_header** | **bool** | Number of rows to ignore before the header row | [optional] 
-**skip_post_header** | **bool** | Number of rows to ignore after the header row | [optional] 
+**skip_pre_header** | **int** | Number of rows to ignore before the header row | [optional] 
+**skip_post_header** | **int** | Number of rows to ignore after the header row | [optional] 
 **skip_invalid_rows** | **bool** | Skip invalid data rows (totally invalid ones),   This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows).  In either case a warning will show in the progress feedback. | [optional] 
 
 ## Example

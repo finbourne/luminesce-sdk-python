@@ -34,8 +34,8 @@ class OptionsCsv(BaseModel):
     escape: Optional[StrictStr] = Field(None, description="Character used to escape the 'Quote' character when within a value")
     quote: Optional[StrictStr] = Field(None, description="Character used around any field containing the 'delimiter' or a line break.")
     values_to_make_null: Optional[StrictStr] = Field(None, alias="valuesToMakeNull", description="Regex of values to map to 'null' in the returned data.")
-    skip_pre_header: Optional[StrictBool] = Field(None, alias="skipPreHeader", description="Number of rows to ignore before the header row")
-    skip_post_header: Optional[StrictBool] = Field(None, alias="skipPostHeader", description="Number of rows to ignore after the header row")
+    skip_pre_header: Optional[StrictInt] = Field(None, alias="skipPreHeader", description="Number of rows to ignore before the header row")
+    skip_post_header: Optional[StrictInt] = Field(None, alias="skipPostHeader", description="Number of rows to ignore after the header row")
     skip_invalid_rows: Optional[StrictBool] = Field(None, alias="skipInvalidRows", description="Skip invalid data rows (totally invalid ones),   This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows).  In either case a warning will show in the progress feedback.")
     __properties = ["columnNames", "columnNamesWanted", "columnTypes", "inferTypeRowCount", "noHeader", "delimiter", "escape", "quote", "valuesToMakeNull", "skipPreHeader", "skipPostHeader", "skipInvalidRows"]
 
