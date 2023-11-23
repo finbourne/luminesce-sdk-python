@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, conlist, constr
+from pydantic import BaseModel, Field, StrictStr, conlist, constr
 from luminesce.models.view_parameter import ViewParameter
 
 class ConvertToViewData(BaseModel):
@@ -31,7 +31,9 @@ class ConvertToViewData(BaseModel):
     description: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Description of view")
     documentation_link: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="documentationLink", description="Documentation link")
     view_parameters: Optional[conlist(ViewParameter)] = Field(None, alias="viewParameters", description="View parameters")
-    __properties = ["query", "name", "description", "documentationLink", "viewParameters"]
+    other_parameters: Optional[Dict[str, StrictStr]] = Field(None, alias="otherParameters", description="Other parameters not explicitly handled by the ConvertToView generation.  These will be populated by the \"From SQL\" and should simply be returned by  the web GUI should the user edit / update / regenerate")
+    starting_variable_name: Optional[StrictStr] = Field(None, alias="startingVariableName", description="Which variable the this start with, null if not started from a full Create View Sql Statement.")
+    __properties = ["query", "name", "description", "documentationLink", "viewParameters", "otherParameters", "startingVariableName"]
 
     class Config:
         """Pydantic configuration"""
@@ -79,6 +81,16 @@ class ConvertToViewData(BaseModel):
         if self.view_parameters is None and "view_parameters" in self.__fields_set__:
             _dict['viewParameters'] = None
 
+        # set to None if other_parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.other_parameters is None and "other_parameters" in self.__fields_set__:
+            _dict['otherParameters'] = None
+
+        # set to None if starting_variable_name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.starting_variable_name is None and "starting_variable_name" in self.__fields_set__:
+            _dict['startingVariableName'] = None
+
         return _dict
 
     @classmethod
@@ -95,6 +107,8 @@ class ConvertToViewData(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "documentation_link": obj.get("documentationLink"),
-            "view_parameters": [ViewParameter.from_dict(_item) for _item in obj.get("viewParameters")] if obj.get("viewParameters") is not None else None
+            "view_parameters": [ViewParameter.from_dict(_item) for _item in obj.get("viewParameters")] if obj.get("viewParameters") is not None else None,
+            "other_parameters": obj.get("otherParameters"),
+            "starting_variable_name": obj.get("startingVariableName")
         })
         return _obj
