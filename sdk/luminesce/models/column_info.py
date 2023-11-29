@@ -29,7 +29,8 @@ class ColumnInfo(BaseModel):
     select: Optional[StrictBool] = Field(None, description="Should the column be used/selected?")
     type: Optional[DataType] = None
     name: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="The name of the column")
-    __properties = ["select", "type", "name"]
+    x_path: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="xPath", description="Xpath for the column (only applicable to XML defined columns)")
+    __properties = ["select", "type", "name", "xPath"]
 
     class Config:
         """Pydantic configuration"""
@@ -60,6 +61,11 @@ class ColumnInfo(BaseModel):
         if self.name is None and "name" in self.__fields_set__:
             _dict['name'] = None
 
+        # set to None if x_path (nullable) is None
+        # and __fields_set__ contains the field
+        if self.x_path is None and "x_path" in self.__fields_set__:
+            _dict['xPath'] = None
+
         return _dict
 
     @classmethod
@@ -74,6 +80,7 @@ class ColumnInfo(BaseModel):
         _obj = ColumnInfo.parse_obj({
             "select": obj.get("select"),
             "type": obj.get("type"),
-            "name": obj.get("name")
+            "name": obj.get("name"),
+            "x_path": obj.get("xPath")
         })
         return _obj
