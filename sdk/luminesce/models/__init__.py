@@ -28,6 +28,10 @@ from luminesce.models.background_query_cancel_response import BackgroundQueryCan
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from luminesce.models.background_query_state import BackgroundQueryState
+from luminesce.models.certificate_action import CertificateAction
+from luminesce.models.certificate_state import CertificateState
+from luminesce.models.certificate_status import CertificateStatus
+from luminesce.models.certificate_type import CertificateType
 from luminesce.models.column import Column
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.condition_attributes import ConditionAttributes

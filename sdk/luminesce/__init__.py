@@ -20,6 +20,7 @@ from __future__ import absolute_import
 from luminesce.api.application_metadata_api import ApplicationMetadataApi
 from luminesce.api.current_table_field_catalog_api import CurrentTableFieldCatalogApi
 from luminesce.api.historically_executed_queries_api import HistoricallyExecutedQueriesApi
+from luminesce.api.luminesce_certificate_management_api import LuminesceCertificateManagementApi
 from luminesce.api.multi_query_execution_api import MultiQueryExecutionApi
 from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
 from luminesce.api.sql_execution_api import SqlExecutionApi
@@ -47,6 +48,10 @@ from luminesce.models.background_query_cancel_response import BackgroundQueryCan
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from luminesce.models.background_query_state import BackgroundQueryState
+from luminesce.models.certificate_action import CertificateAction
+from luminesce.models.certificate_state import CertificateState
+from luminesce.models.certificate_status import CertificateStatus
+from luminesce.models.certificate_type import CertificateType
 from luminesce.models.column import Column
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.condition_attributes import ConditionAttributes
