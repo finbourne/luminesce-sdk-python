@@ -28,7 +28,6 @@ from typing import List, Optional
 
 from luminesce.models.certificate_action import CertificateAction
 from luminesce.models.certificate_state import CertificateState
-from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 
 from luminesce.api_client import ApiClient
@@ -194,22 +193,22 @@ class LuminesceCertificateManagementApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, skip_systems : Annotated[Optional[CertificateStatus], Field(description="Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)")] = None, **kwargs) -> CertificateState:  # noqa: E501
+    async def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> CertificateState:  # noqa: E501
         ...
 
     @overload
-    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, skip_systems : Annotated[Optional[CertificateStatus], Field(description="Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)")] = None, async_req: Optional[bool]=True, **kwargs) -> CertificateState:  # noqa: E501
+    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=True, **kwargs) -> CertificateState:  # noqa: E501
         ...
 
     @validate_arguments
-    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, skip_systems : Annotated[Optional[CertificateStatus], Field(description="Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CertificateState, Awaitable[CertificateState]]:  # noqa: E501
+    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CertificateState, Awaitable[CertificateState]]:  # noqa: E501
         """[EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.manage_certificate(action, type, version, validity_start, validity_end, dry_run, skip_systems, async_req=True)
+        >>> thread = api.manage_certificate(action, type, version, validity_start, validity_end, dry_run, async_req=True)
         >>> result = thread.get()
 
         :param action: The Action to perform, e.g. Create / Renew / Revoke
@@ -224,8 +223,6 @@ class LuminesceCertificateManagementApi:
         :type validity_end: datetime
         :param dry_run: True will just validate the request, but perform no changes to any system
         :type dry_run: bool
-        :param skip_systems: Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)
-        :type skip_systems: CertificateStatus
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -243,17 +240,17 @@ class LuminesceCertificateManagementApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.manage_certificate_with_http_info(action, type, version, validity_start, validity_end, dry_run, skip_systems, **kwargs)  # noqa: E501
+        return self.manage_certificate_with_http_info(action, type, version, validity_start, validity_end, dry_run, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def manage_certificate_with_http_info(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, skip_systems : Annotated[Optional[CertificateStatus], Field(description="Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def manage_certificate_with_http_info(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """[EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.manage_certificate_with_http_info(action, type, version, validity_start, validity_end, dry_run, skip_systems, async_req=True)
+        >>> thread = api.manage_certificate_with_http_info(action, type, version, validity_start, validity_end, dry_run, async_req=True)
         >>> result = thread.get()
 
         :param action: The Action to perform, e.g. Create / Renew / Revoke
@@ -268,8 +265,6 @@ class LuminesceCertificateManagementApi:
         :type validity_end: datetime
         :param dry_run: True will just validate the request, but perform no changes to any system
         :type dry_run: bool
-        :param skip_systems: Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation)
-        :type skip_systems: CertificateStatus
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -303,8 +298,7 @@ class LuminesceCertificateManagementApi:
             'version',
             'validity_start',
             'validity_end',
-            'dry_run',
-            'skip_systems'
+            'dry_run'
         ]
         _all_params.extend(
             [
@@ -358,9 +352,6 @@ class LuminesceCertificateManagementApi:
 
         if _params.get('dry_run') is not None:  # noqa: E501
             _query_params.append(('dryRun', _params['dry_run']))
-
-        if _params.get('skip_systems') is not None:  # noqa: E501
-            _query_params.append(('skipSystems', _params['skip_systems'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

@@ -101,7 +101,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **manage_certificate**
-> CertificateState manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, skip_systems=skip_systems)
+> CertificateState manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
 
 [EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
 
@@ -118,7 +118,6 @@ import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.certificate_action import CertificateAction
 from luminesce.models.certificate_state import CertificateState
-from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 from pprint import pprint
 
@@ -167,11 +166,10 @@ async with api_client_factory:
     validity_start = '2013-10-20T19:20:30+01:00' # datetime | When should the cert first be valid (defaults to the current time in UTC) (optional)
     validity_end = '2013-10-20T19:20:30+01:00' # datetime | When should the cert no longer be valid (defaults to 13 months from now) (optional)
     dry_run = True # bool | True will just validate the request, but perform no changes to any system (optional) (default to True)
-    skip_systems = luminesce.CertificateStatus() # CertificateStatus | Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation) (optional)
 
     try:
         # [EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
-        api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, skip_systems=skip_systems)
+        api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
         print("The response of LuminesceCertificateManagementApi->manage_certificate:\n")
         pprint(api_response)
     except Exception as e:
@@ -189,7 +187,6 @@ Name | Type | Description  | Notes
  **validity_start** | **datetime**| When should the cert first be valid (defaults to the current time in UTC) | [optional] 
  **validity_end** | **datetime**| When should the cert no longer be valid (defaults to 13 months from now) | [optional] 
  **dry_run** | **bool**| True will just validate the request, but perform no changes to any system | [optional] [default to True]
- **skip_systems** | [**CertificateStatus**](.md)| Any systems that should be skipped  (if any are the certificate will not function, but can be useful for certain forms of validation) | [optional] 
 
 ### Return type
 
