@@ -29,6 +29,7 @@ from luminesce.models.background_query_progress_response import BackgroundQueryP
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.certificate_action import CertificateAction
+from luminesce.models.certificate_file_type import CertificateFileType
 from luminesce.models.certificate_state import CertificateState
 from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
