@@ -52,28 +52,30 @@ class CertificateManagementApi:
         self.api_client = api_client
 
     @overload
-    async def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.  # noqa: E501
 
          Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.download_certificate(type, file_type, async_req=True)
+        >>> thread = api.download_certificate(type, file_type, may_auto_create, async_req=True)
         >>> result = thread.get()
 
         :param type: User or Domain level cert (Domain level requires additional entitlements)
         :type type: CertificateType
         :param file_type: Should the public key or private key be downloaded? (both must be in place to run providers)
         :type file_type: CertificateFileType
+        :param may_auto_create: If no matching cert is available, should an attempt be made to Create/Renew it with default options?
+        :type may_auto_create: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -91,23 +93,25 @@ class CertificateManagementApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.download_certificate_with_http_info(type, file_type, **kwargs)  # noqa: E501
+        return self.download_certificate_with_http_info(type, file_type, may_auto_create, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def download_certificate_with_http_info(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def download_certificate_with_http_info(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.  # noqa: E501
 
          Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.download_certificate_with_http_info(type, file_type, async_req=True)
+        >>> thread = api.download_certificate_with_http_info(type, file_type, may_auto_create, async_req=True)
         >>> result = thread.get()
 
         :param type: User or Domain level cert (Domain level requires additional entitlements)
         :type type: CertificateType
         :param file_type: Should the public key or private key be downloaded? (both must be in place to run providers)
         :type file_type: CertificateFileType
+        :param may_auto_create: If no matching cert is available, should an attempt be made to Create/Renew it with default options?
+        :type may_auto_create: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -137,7 +141,8 @@ class CertificateManagementApi:
 
         _all_params = [
             'type',
-            'file_type'
+            'file_type',
+            'may_auto_create'
         ]
         _all_params.extend(
             [
@@ -173,6 +178,9 @@ class CertificateManagementApi:
 
         if _params.get('file_type') is not None:  # noqa: E501
             _query_params.append(('fileType', _params['file_type'].value))
+
+        if _params.get('may_auto_create') is not None:  # noqa: E501
+            _query_params.append(('mayAutoCreate', _params['may_auto_create']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
