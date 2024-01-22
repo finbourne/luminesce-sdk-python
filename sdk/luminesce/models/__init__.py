@@ -46,6 +46,7 @@ from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 from luminesce.models.filter_term_design import FilterTermDesign
 from luminesce.models.id_selector_definition import IdSelectorDefinition
 from luminesce.models.link import Link
+from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from luminesce.models.options_csv import OptionsCsv

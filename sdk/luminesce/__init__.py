@@ -18,6 +18,7 @@ from __future__ import absolute_import
 
 # import apis into sdk package
 from luminesce.api.application_metadata_api import ApplicationMetadataApi
+from luminesce.api.binary_downloading_api import BinaryDownloadingApi
 from luminesce.api.certificate_management_api import CertificateManagementApi
 from luminesce.api.current_table_field_catalog_api import CurrentTableFieldCatalogApi
 from luminesce.api.historically_executed_queries_api import HistoricallyExecutedQueriesApi
@@ -66,6 +67,7 @@ from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 from luminesce.models.filter_term_design import FilterTermDesign
 from luminesce.models.id_selector_definition import IdSelectorDefinition
 from luminesce.models.link import Link
+from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from luminesce.models.options_csv import OptionsCsv
