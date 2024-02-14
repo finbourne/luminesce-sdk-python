@@ -4,15 +4,15 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate&#39;s public or private key - if any.
-[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate&#39;s public or private key - if any
+[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
 [**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | [EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
 
 
 # **download_certificate**
 > bytearray download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
 
-[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.
+[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any
 
  Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized 
 
@@ -73,7 +73,7 @@ async with api_client_factory:
     may_auto_create = False # bool | If no matching cert is available, should an attempt be made to Create/Renew it with default options? (optional) (default to False)
 
     try:
-        # [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.
+        # [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any
         api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
         print("The response of CertificateManagementApi->download_certificate:\n")
         pprint(api_response)
@@ -114,7 +114,7 @@ Name | Type | Description  | Notes
 # **list_certificates**
 > List[CertificateState] list_certificates()
 
-[EXPERIMENTAL] ListCertificates: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+[EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
 
  Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized 
 
@@ -171,7 +171,7 @@ async with api_client_factory:
     api_instance = api_client_factory.build(luminesce.CertificateManagementApi)
 
     try:
-        # [EXPERIMENTAL] ListCertificates: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+        # [EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
         api_response = await api_instance.list_certificates()
         print("The response of CertificateManagementApi->list_certificates:\n")
         pprint(api_response)

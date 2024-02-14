@@ -8,5 +8,6 @@ from luminesce.api.current_table_field_catalog_api import CurrentTableFieldCatal
 from luminesce.api.historically_executed_queries_api import HistoricallyExecutedQueriesApi
 from luminesce.api.multi_query_execution_api import MultiQueryExecutionApi
 from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
+from luminesce.api.sql_design_api import SqlDesignApi
 from luminesce.api.sql_execution_api import SqlExecutionApi
 

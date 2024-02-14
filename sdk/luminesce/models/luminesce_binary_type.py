@@ -42,6 +42,7 @@ class LuminesceBinaryType(str, Enum):
     SQL_DB_PROVIDERS_SNOWFLAKE = 'SqlDb_Providers_Snowflake'
     SQL_DB_PROVIDERS_SQL_SERVER = 'SqlDb_Providers_SqlServer'
     SQL_DB_PROVIDERS_SYBASE_ASE = 'SqlDb_Providers_SybaseAse'
+    JDBC_DRIVER = 'Jdbc_Driver'
 
     @classmethod
     def from_json(cls, json_str: str) -> LuminesceBinaryType:

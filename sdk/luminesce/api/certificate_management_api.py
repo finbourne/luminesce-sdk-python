@@ -61,7 +61,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
-        """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.  # noqa: E501
+        """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any  # noqa: E501
 
          Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -97,7 +97,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def download_certificate_with_http_info(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any.  # noqa: E501
+        """[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any  # noqa: E501
 
          Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -228,7 +228,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def list_certificates(self, async_req: Optional[bool]=None, **kwargs) -> Union[List[CertificateState], Awaitable[List[CertificateState]]]:  # noqa: E501
-        """[EXPERIMENTAL] ListCertificates: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """[EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access  # noqa: E501
 
          Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -258,7 +258,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def list_certificates_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] ListCertificates: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """[EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access  # noqa: E501
 
          Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

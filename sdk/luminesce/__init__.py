@@ -24,6 +24,7 @@ from luminesce.api.current_table_field_catalog_api import CurrentTableFieldCatal
 from luminesce.api.historically_executed_queries_api import HistoricallyExecutedQueriesApi
 from luminesce.api.multi_query_execution_api import MultiQueryExecutionApi
 from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
+from luminesce.api.sql_design_api import SqlDesignApi
 from luminesce.api.sql_execution_api import SqlExecutionApi
 
 # import ApiClient
@@ -43,6 +44,7 @@ from luminesce.models.aggregate_function import AggregateFunction
 from luminesce.models.aggregation import Aggregation
 from luminesce.models.auto_detect_type import AutoDetectType
 from luminesce.models.available_field import AvailableField
+from luminesce.models.available_parameter import AvailableParameter
 from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
@@ -59,6 +61,7 @@ from luminesce.models.column_info import ColumnInfo
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.data_type import DataType
+from luminesce.models.expression_with_alias import ExpressionWithAlias
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.feedback_level import FeedbackLevel
 from luminesce.models.field_design import FieldDesign
@@ -69,6 +72,7 @@ from luminesce.models.id_selector_definition import IdSelectorDefinition
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_problem_details import LusidProblemDetails
+from luminesce.models.mappable_field import MappableField
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from luminesce.models.options_csv import OptionsCsv
 from luminesce.models.options_excel import OptionsExcel
@@ -84,6 +88,7 @@ from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
 from luminesce.models.task_status import TaskStatus
 from luminesce.models.view_parameter import ViewParameter
+from luminesce.models.writer_design import WriterDesign
 
 # import extensions into sdk package
 from luminesce.extensions import *
