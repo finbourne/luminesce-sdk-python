@@ -15,7 +15,7 @@ This is the Python SDK for [LUMINESCE by FINBOURNE](https://www.finbourne.com/lu
 The PyPi package for the LUMINESCE SDK can installed using the following:
 
 ```
-pip install luminesce-sdk finbourne-sdk-utilities
+pip install luminesce-sdk
 ```
 
 For more information on the LUMINESCE API, see [LUMINESCE API Documentation](https://www.lusid.com/honeycomb/swagger/index.html).
@@ -25,12 +25,12 @@ For more information on the LUMINESCE API, see [LUMINESCE API Documentation](htt
 
 ```python
 import luminesce
-from fbnsdkutilities import ApiClientFactory
+from luminesce import ApiClientFactory
 
-factory = ApiClientFactory(luminesce, api_secrets_filename='/path/to/secrets.json')
+factory = ApiClientFactory()
 sql_exec_api = factory.build(luminesce.api.SqlExecutionApi)
 
-sql_exec_api.put_by_query_csv("""
+await sql_exec_api.put_by_query_csv("""
     select * from lusid.portfolio limit 10
 """)
 ```
