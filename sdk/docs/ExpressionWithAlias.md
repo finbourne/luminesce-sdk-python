@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **expression** | **str** | Expression (column name, constant, complex expression, etc.) | 
 **alias** | **str** | Column Alias for the expression | [optional] 
+**flags** | [**MappingFlags**](MappingFlags.md) |  | [optional] 
 
 ## Example
 

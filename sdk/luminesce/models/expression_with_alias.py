@@ -20,6 +20,7 @@ import json
 
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr, constr
+from luminesce.models.mapping_flags import MappingFlags
 
 class ExpressionWithAlias(BaseModel):
     """
@@ -27,7 +28,8 @@ class ExpressionWithAlias(BaseModel):
     """
     expression: constr(strict=True, min_length=1) = Field(..., description="Expression (column name, constant, complex expression, etc.)")
     alias: Optional[StrictStr] = Field(None, description="Column Alias for the expression")
-    __properties = ["expression", "alias"]
+    flags: Optional[MappingFlags] = None
+    __properties = ["expression", "alias", "flags"]
 
     class Config:
         """Pydantic configuration"""
@@ -71,6 +73,7 @@ class ExpressionWithAlias(BaseModel):
 
         _obj = ExpressionWithAlias.parse_obj({
             "expression": obj.get("expression"),
-            "alias": obj.get("alias")
+            "alias": obj.get("alias"),
+            "flags": obj.get("flags")
         })
         return _obj

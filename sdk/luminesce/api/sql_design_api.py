@@ -1126,26 +1126,28 @@ class SqlDesignApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToWriterDesign: Generates a SQL-writer-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Writer Design object from  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_sql_to_writer_design(body, async_req=True)
+        >>> thread = api.put_sql_to_writer_design(body, merge_additional_mapping_fields, async_req=True)
         >>> result = thread.get()
 
         :param body: SQL query to generate the writer design object from (required)
         :type body: str
+        :param merge_additional_mapping_fields: Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)
+        :type merge_additional_mapping_fields: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -1163,21 +1165,23 @@ class SqlDesignApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_sql_to_writer_design_with_http_info(body, **kwargs)  # noqa: E501
+        return self.put_sql_to_writer_design_with_http_info(body, merge_additional_mapping_fields, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_sql_to_writer_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_sql_to_writer_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToWriterDesign: Generates a SQL-writer-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Writer Design object from  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_sql_to_writer_design_with_http_info(body, async_req=True)
+        >>> thread = api.put_sql_to_writer_design_with_http_info(body, merge_additional_mapping_fields, async_req=True)
         >>> result = thread.get()
 
         :param body: SQL query to generate the writer design object from (required)
         :type body: str
+        :param merge_additional_mapping_fields: Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)
+        :type merge_additional_mapping_fields: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1206,7 +1210,8 @@ class SqlDesignApi:
         _params = locals()
 
         _all_params = [
-            'body'
+            'body',
+            'merge_additional_mapping_fields'
         ]
         _all_params.extend(
             [
@@ -1237,6 +1242,9 @@ class SqlDesignApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('merge_additional_mapping_fields') is not None:  # noqa: E501
+            _query_params.append(('mergeAdditionalMappingFields', _params['merge_additional_mapping_fields']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         # process the form parameters

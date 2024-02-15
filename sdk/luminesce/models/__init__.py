@@ -51,6 +51,7 @@ from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.mappable_field import MappableField
+from luminesce.models.mapping_flags import MappingFlags
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from luminesce.models.options_csv import OptionsCsv
 from luminesce.models.options_excel import OptionsExcel
