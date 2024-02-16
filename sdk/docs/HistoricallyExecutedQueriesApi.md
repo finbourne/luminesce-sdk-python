@@ -320,7 +320,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_history**
-> BackgroundQueryResponse get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all)
+> BackgroundQueryResponse get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
 
 GetHistory: Shows queries executed in a given historical time window (in Json format).
 
@@ -381,10 +381,11 @@ async with api_client_factory:
     end_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to end the search at.  Defaults to now. (optional)
     free_text_search = 'free_text_search_example' # str | Some test that must be in at least one field returned. (optional)
     show_all = False # bool | For users with extra permissions, they may optionally see other users' queries. (optional) (default to False)
+    may_use_native_store = True # bool | Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? (optional) (default to True)
 
     try:
         # GetHistory: Shows queries executed in a given historical time window (in Json format).
-        api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all)
+        api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
         print("The response of HistoricallyExecutedQueriesApi->get_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -400,6 +401,7 @@ Name | Type | Description  | Notes
  **end_at** | **datetime**| Date time to end the search at.  Defaults to now. | [optional] 
  **free_text_search** | **str**| Some test that must be in at least one field returned. | [optional] 
  **show_all** | **bool**| For users with extra permissions, they may optionally see other users&#39; queries. | [optional] [default to False]
+ **may_use_native_store** | **bool**| Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? | [optional] [default to True]
 
 ### Return type
 

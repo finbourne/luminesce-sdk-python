@@ -583,22 +583,22 @@ class HistoricallyExecutedQueriesApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    async def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @overload
-    def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
+    def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
         """GetHistory: Shows queries executed in a given historical time window (in Json format).  # noqa: E501
 
          Starts to load the historical query logs for a certain time range, search criteria, etc.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_history(start_at, end_at, free_text_search, show_all, async_req=True)
+        >>> thread = api.get_history(start_at, end_at, free_text_search, show_all, may_use_native_store, async_req=True)
         >>> result = thread.get()
 
         :param start_at: Date time to start the search from.  Will default to Now - 1 Day
@@ -609,6 +609,8 @@ class HistoricallyExecutedQueriesApi:
         :type free_text_search: str
         :param show_all: For users with extra permissions, they may optionally see other users' queries.
         :type show_all: bool
+        :param may_use_native_store: Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?
+        :type may_use_native_store: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -626,17 +628,17 @@ class HistoricallyExecutedQueriesApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_history_with_http_info(start_at, end_at, free_text_search, show_all, **kwargs)  # noqa: E501
+        return self.get_history_with_http_info(start_at, end_at, free_text_search, show_all, may_use_native_store, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_history_with_http_info(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_history_with_http_info(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetHistory: Shows queries executed in a given historical time window (in Json format).  # noqa: E501
 
          Starts to load the historical query logs for a certain time range, search criteria, etc.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_history_with_http_info(start_at, end_at, free_text_search, show_all, async_req=True)
+        >>> thread = api.get_history_with_http_info(start_at, end_at, free_text_search, show_all, may_use_native_store, async_req=True)
         >>> result = thread.get()
 
         :param start_at: Date time to start the search from.  Will default to Now - 1 Day
@@ -647,6 +649,8 @@ class HistoricallyExecutedQueriesApi:
         :type free_text_search: str
         :param show_all: For users with extra permissions, they may optionally see other users' queries.
         :type show_all: bool
+        :param may_use_native_store: Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?
+        :type may_use_native_store: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -678,7 +682,8 @@ class HistoricallyExecutedQueriesApi:
             'start_at',
             'end_at',
             'free_text_search',
-            'show_all'
+            'show_all',
+            'may_use_native_store'
         ]
         _all_params.extend(
             [
@@ -726,6 +731,9 @@ class HistoricallyExecutedQueriesApi:
 
         if _params.get('show_all') is not None:  # noqa: E501
             _query_params.append(('showAll', _params['show_all']))
+
+        if _params.get('may_use_native_store') is not None:  # noqa: E501
+            _query_params.append(('mayUseNativeStore', _params['may_use_native_store']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
