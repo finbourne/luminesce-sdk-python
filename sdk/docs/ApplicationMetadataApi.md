@@ -20,18 +20,18 @@ GetServicesAsAccessControlledResources: Get resources available for access contr
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    ApplicationMetadataApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client

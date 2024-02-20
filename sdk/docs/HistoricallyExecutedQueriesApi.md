@@ -24,18 +24,18 @@ Cancel the query (if still running) / clear the data (if already returned) The f
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    HistoricallyExecutedQueriesApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -120,17 +120,17 @@ Fetch the histogram in Json format (if available, or if not simply being informe
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    HistoricallyExecutedQueriesApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -222,17 +222,17 @@ Fetch the data in Json format (if available, or if not simply being informed it 
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    HistoricallyExecutedQueriesApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -332,18 +332,18 @@ GetHistory: Shows queries executed in a given historical time window (in Json fo
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    HistoricallyExecutedQueriesApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -436,18 +436,18 @@ View progress information (up until this point) of previously started History qu
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    HistoricallyExecutedQueriesApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client

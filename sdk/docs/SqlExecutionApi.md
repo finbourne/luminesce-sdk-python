@@ -33,17 +33,17 @@ GetByQueryCsv: Executes Sql, returned in CSV format, where the sql is simply in 
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -139,17 +139,17 @@ GetByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be 
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -239,17 +239,17 @@ GetByQueryJson: Executes Sql, returned in JSON format, where the sql is simply i
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -341,17 +341,17 @@ GetByQueryParquet: Executes Sql, returned in Parquet (.parquet) format (as a fil
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -441,17 +441,17 @@ GetByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql i
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -543,17 +543,17 @@ GetByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a fil
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -643,17 +643,17 @@ GetByQueryXml: Executes Sql, returned in Xml format, where the sql is simply in 
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -745,17 +745,17 @@ PutByQueryCsv: Executes Sql, returned in CSV format, where the sql is the post-b
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -851,17 +851,17 @@ PutByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be 
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -951,17 +951,17 @@ PutByQueryJson: Executes Sql, returned in JSON format, where the sql is the post
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -1053,17 +1053,17 @@ PutByQueryParquet: Executes Sql, returned in Parquet format, where the sql is th
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -1153,17 +1153,17 @@ PutByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql i
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -1255,17 +1255,17 @@ PutByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a fil
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -1355,17 +1355,17 @@ PutByQueryXml: Executes Sql, returned in Xml format, where the sql is the post-b
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client

@@ -22,18 +22,18 @@ Cancel the query-set (if still running) / clear the data (if already returned) T
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    MultiQueryExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -118,18 +118,18 @@ View progress information (up until this point) for the entire query-set The fol
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    MultiQueryExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -214,19 +214,19 @@ StartQueries: Starts to Execute the LuminesceSql statements in the background.
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    MultiQueryExecutionApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client

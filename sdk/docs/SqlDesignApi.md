@@ -28,18 +28,18 @@ SQL Designer specification to generate SQL from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -127,18 +127,18 @@ SQL Designer specification to generate SQL from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.query_design import QueryDesign
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -224,17 +224,17 @@ PutQueryToFormat: Formats SQL into a more readable form, a.k.a. Pretty-Print the
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -346,17 +346,17 @@ SQL to attempt to create a Design object from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -449,17 +449,17 @@ SQL to attempt to create a Design object from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -558,17 +558,17 @@ SQL which creates a view into a structured ConvertToViewData object
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -661,17 +661,17 @@ SQL to attempt to create a Writer Design object from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -759,18 +759,18 @@ Converts a ConvertToView specification into SQL that creates a view
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
@@ -856,18 +856,18 @@ SQL Writer Design specification to generate Writer SQL from
 ```python
 from __future__ import print_function
 import time
-import os
 import luminesce
 from luminesce.rest import ApiException
 from luminesce.models.writer_design import WriterDesign
 from pprint import pprint
 
+import os
 from luminesce import (
-	  ApiClientFactory,
-	  ApplicationMetadataApi,
-	  EnvironmentVariablesConfigurationLoader,
-	  SecretsFileConfigurationLoader,
-	  ArgsConfigurationLoader
+    ApiClientFactory,
+    SqlDesignApi,
+    EnvironmentVariablesConfigurationLoader,
+    SecretsFileConfigurationLoader,
+    ArgsConfigurationLoader
 )
 
 # Use the luminesce ApiClientFactory to build Api instances with a configured api client
