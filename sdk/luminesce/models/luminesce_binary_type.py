@@ -42,6 +42,8 @@ class LuminesceBinaryType(str, Enum):
     SQL_DB_PROVIDERS_SNOWFLAKE = 'SqlDb_Providers_Snowflake'
     SQL_DB_PROVIDERS_SQL_SERVER = 'SqlDb_Providers_SqlServer'
     SQL_DB_PROVIDERS_SYBASE_ASE = 'SqlDb_Providers_SybaseAse'
+    SQL_DB_PROVIDERS_SQ_LITE = 'SqlDb_Providers_SqLite'
+    SQL_DB_PROVIDERS_DUCK_DB = 'SqlDb_Providers_DuckDb'
     JDBC_DRIVER = 'Jdbc_Driver'
 
     @classmethod
