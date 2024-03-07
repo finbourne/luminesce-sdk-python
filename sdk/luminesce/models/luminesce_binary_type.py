@@ -34,6 +34,7 @@ class LuminesceBinaryType(str, Enum):
     EMAIL_PROVIDERS = 'Email_Providers'
     PYTHON_PROVIDERS = 'Python_Providers'
     AWS_S3_PROVIDERS = 'AwsS3_Providers'
+    AZURE_PROVIDERS = 'Azure_Providers'
     SQL_DB_PROVIDERS_DB2_LINUX = 'SqlDb_Providers_Db2Linux'
     SQL_DB_PROVIDERS_MY_SQL = 'SqlDb_Providers_MySql'
     SQL_DB_PROVIDERS_ORACLE = 'SqlDb_Providers_Oracle'
