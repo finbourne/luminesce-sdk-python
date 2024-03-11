@@ -26,6 +26,9 @@ from typing import Optional
 
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
+from luminesce.models.file_reader_builder_response import FileReaderBuilderResponse
+from luminesce.models.intellisense_request import IntellisenseRequest
+from luminesce.models.intellisense_response import IntellisenseResponse
 from luminesce.models.query_design import QueryDesign
 from luminesce.models.writer_design import WriterDesign
 
@@ -50,15 +53,15 @@ class SqlDesignApi:
         self.api_client = api_client
 
     @overload
-    async def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
         ...
 
     @overload
-    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=True, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderResponse, Awaitable[FileReaderBuilderResponse]]:  # noqa: E501
         """[EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design  # noqa: E501
 
         SQL Designer specification to generate SQL from  # noqa: E501
@@ -81,7 +84,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: str
+        :rtype: FileReaderBuilderResponse
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -128,7 +131,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(FileReaderBuilderResponse, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -194,12 +197,170 @@ class SqlDesignApi:
         _auth_settings = ['oauth2']  # noqa: E501
 
         _response_types_map = {
-            '200': "str",
+            '200': "FileReaderBuilderResponse",
             '400': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
             '/api/Sql/fromfilereaddesign', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @overload
+    async def put_intellisense(self, intellisense_request : IntellisenseRequest, **kwargs) -> IntellisenseResponse:  # noqa: E501
+        ...
+
+    @overload
+    def put_intellisense(self, intellisense_request : IntellisenseRequest, async_req: Optional[bool]=True, **kwargs) -> IntellisenseResponse:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def put_intellisense(self, intellisense_request : IntellisenseRequest, async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
+        """[EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snipit (in need not yet be valid) and cursor location  # noqa: E501
+
+        SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_intellisense(intellisense_request, async_req=True)
+        >>> result = thread.get()
+
+        :param intellisense_request: (required)
+        :type intellisense_request: IntellisenseRequest
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: IntellisenseResponse
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the put_intellisense_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.put_intellisense_with_http_info(intellisense_request, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def put_intellisense_with_http_info(self, intellisense_request : IntellisenseRequest, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snipit (in need not yet be valid) and cursor location  # noqa: E501
+
+        SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_intellisense_with_http_info(intellisense_request, async_req=True)
+        >>> result = thread.get()
+
+        :param intellisense_request: (required)
+        :type intellisense_request: IntellisenseRequest
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(IntellisenseResponse, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'intellisense_request'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method put_intellisense" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['intellisense_request'] is not None:
+            _body_params = _params['intellisense_request']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json-patch+json', 'application/json', 'text/json', 'application/*+json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "IntellisenseResponse",
+            '400': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/Sql/intellisense', 'PUT',
             _path_params,
             _query_params,
             _header_params,
@@ -636,15 +797,15 @@ class SqlDesignApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, **kwargs) -> FileReaderBuilderDef:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> FileReaderBuilderDef:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderDef, Awaitable[FileReaderBuilderDef]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToFileReadDesign: Generates a SQL-file-read-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Design object from  # noqa: E501
@@ -667,7 +828,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: str
+        :rtype: FileReaderBuilderDef
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -714,7 +875,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(FileReaderBuilderDef, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -780,7 +941,7 @@ class SqlDesignApi:
         _auth_settings = ['oauth2']  # noqa: E501
 
         _response_types_map = {
-            '200': "str",
+            '200': "FileReaderBuilderDef",
             '400': "LusidProblemDetails",
         }
 
@@ -802,15 +963,15 @@ class SqlDesignApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, **kwargs) -> QueryDesign:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, async_req: Optional[bool]=True, **kwargs) -> QueryDesign:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[QueryDesign, Awaitable[QueryDesign]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToQueryDesign: Generates a SQL-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Design object from  # noqa: E501
@@ -833,7 +994,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: str
+        :rtype: QueryDesign
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -880,7 +1041,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(QueryDesign, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -946,7 +1107,7 @@ class SqlDesignApi:
         _auth_settings = ['oauth2']  # noqa: E501
 
         _response_types_map = {
-            '200': "str",
+            '200': "QueryDesign",
             '400': "LusidProblemDetails",
         }
 
@@ -968,15 +1129,15 @@ class SqlDesignApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], **kwargs) -> ConvertToViewData:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], async_req: Optional[bool]=True, **kwargs) -> ConvertToViewData:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], async_req: Optional[bool]=None, **kwargs) -> Union[ConvertToViewData, Awaitable[ConvertToViewData]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToViewDesign: Generates a structured view creation design from existing view creation SQL.  # noqa: E501
 
         SQL which creates a view into a structured ConvertToViewData object  # noqa: E501
@@ -997,7 +1158,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: str
+        :rtype: ConvertToViewData
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -1042,7 +1203,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(ConvertToViewData, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -1104,7 +1265,7 @@ class SqlDesignApi:
         _auth_settings = ['oauth2']  # noqa: E501
 
         _response_types_map = {
-            '200': "str",
+            '200': "ConvertToViewData",
             '400': "LusidProblemDetails",
         }
 
@@ -1126,15 +1287,15 @@ class SqlDesignApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, **kwargs) -> WriterDesign:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=True, **kwargs) -> WriterDesign:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[WriterDesign, Awaitable[WriterDesign]]:  # noqa: E501
         """[EXPERIMENTAL] PutSqlToWriterDesign: Generates a SQL-writer-design object from SQL string, if possible.  # noqa: E501
 
         SQL to attempt to create a Writer Design object from  # noqa: E501
@@ -1157,7 +1318,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: str
+        :rtype: WriterDesign
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -1204,7 +1365,7 @@ class SqlDesignApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(WriterDesign, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -1270,7 +1431,7 @@ class SqlDesignApi:
         _auth_settings = ['oauth2']  # noqa: E501
 
         _response_types_map = {
-            '200': "str",
+            '200': "WriterDesign",
             '400': "LusidProblemDetails",
         }
 

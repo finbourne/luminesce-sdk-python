@@ -60,6 +60,7 @@ from luminesce.models.column import Column
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
+from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.data_type import DataType
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 from luminesce.models.feedback_event_args import FeedbackEventArgs
@@ -67,8 +68,13 @@ from luminesce.models.feedback_level import FeedbackLevel
 from luminesce.models.field_design import FieldDesign
 from luminesce.models.field_type import FieldType
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
+from luminesce.models.file_reader_builder_response import FileReaderBuilderResponse
 from luminesce.models.filter_term_design import FilterTermDesign
 from luminesce.models.id_selector_definition import IdSelectorDefinition
+from luminesce.models.intellisense_item import IntellisenseItem
+from luminesce.models.intellisense_request import IntellisenseRequest
+from luminesce.models.intellisense_response import IntellisenseResponse
+from luminesce.models.intellisense_type import IntellisenseType
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_problem_details import LusidProblemDetails
