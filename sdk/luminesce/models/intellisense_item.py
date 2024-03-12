@@ -30,9 +30,9 @@ class IntellisenseItem(BaseModel):
     value: constr(strict=True, min_length=1) = Field(..., description="The value to substitute in")
     meta: Optional[StrictStr] = Field(None, description="The light-grey text shown to the right of the Caption in the popup")
     score: Optional[StrictInt] = Field(None, description="How important is this.  Bigger is more important.")
-    doc_html: Optional[StrictStr] = Field(None, alias="docHtml", description="Popup further info (as in a whole documentation article!)")
+    doc_html: Optional[StrictStr] = Field(None, alias="docHTML", description="Popup further info (as in a whole documentation article!)")
     type: Optional[IntellisenseType] = None
-    __properties = ["caption", "value", "meta", "score", "docHtml", "type"]
+    __properties = ["caption", "value", "meta", "score", "docHTML", "type"]
 
     class Config:
         """Pydantic configuration"""
@@ -66,7 +66,7 @@ class IntellisenseItem(BaseModel):
         # set to None if doc_html (nullable) is None
         # and __fields_set__ contains the field
         if self.doc_html is None and "doc_html" in self.__fields_set__:
-            _dict['docHtml'] = None
+            _dict['docHTML'] = None
 
         return _dict
 
@@ -84,7 +84,7 @@ class IntellisenseItem(BaseModel):
             "value": obj.get("value"),
             "meta": obj.get("meta"),
             "score": obj.get("score"),
-            "doc_html": obj.get("docHtml"),
+            "doc_html": obj.get("docHTML"),
             "type": obj.get("type")
         })
         return _obj
