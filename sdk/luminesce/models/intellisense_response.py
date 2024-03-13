@@ -28,7 +28,7 @@ class IntellisenseResponse(BaseModel):
     """
     auto_complete_list: conlist(IntellisenseItem) = Field(..., alias="autoCompleteList", description="The available items at this point")
     try_again_soon_for_more: StrictBool = Field(..., alias="tryAgainSoonForMore", description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)")
-    sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The overall SQL this is for with a character marker for where the Intellisense is for")
+    sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The SQL this is for with characters indicating the location the pop-up is for")
     __properties = ["autoCompleteList", "tryAgainSoonForMore", "sqlWithMarker"]
 
     class Config:

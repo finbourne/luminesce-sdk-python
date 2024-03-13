@@ -40,6 +40,9 @@ from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.data_type import DataType
+from luminesce.models.error_highlight_item import ErrorHighlightItem
+from luminesce.models.error_highlight_request import ErrorHighlightRequest
+from luminesce.models.error_highlight_response import ErrorHighlightResponse
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.feedback_level import FeedbackLevel
