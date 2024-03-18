@@ -1,5 +1,6 @@
 # CursorPosition
 
+Represents a cursor location
 
 ## Properties
 Name | Type | Description | Notes

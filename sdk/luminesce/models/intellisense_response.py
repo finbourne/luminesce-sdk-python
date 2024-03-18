@@ -24,7 +24,7 @@ from luminesce.models.intellisense_item import IntellisenseItem
 
 class IntellisenseResponse(BaseModel):
     """
-    IntellisenseResponse
+    Available intellisense response information  # noqa: E501
     """
     auto_complete_list: conlist(IntellisenseItem) = Field(..., alias="autoCompleteList", description="The available items at this point")
     try_again_soon_for_more: StrictBool = Field(..., alias="tryAgainSoonForMore", description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)")

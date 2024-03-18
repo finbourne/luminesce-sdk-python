@@ -274,7 +274,7 @@ api_client_factory = ApiClientFactory(config_loaders=config_loaders)
 async with api_client_factory:
     # Create an instance of the API class
     api_instance = api_client_factory.build(luminesce.SqlDesignApi)
-    error_highlight_request = {"lines":["select mx(x) x from y"]} # ErrorHighlightRequest | 
+    error_highlight_request = {"lines":["select mx(x) x from y"],"ensureSomeTextIsSelected":false} # ErrorHighlightRequest | 
 
     try:
         # [EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)

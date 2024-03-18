@@ -1,5 +1,6 @@
 # IntellisenseResponse
 
+Available intellisense response information
 
 ## Properties
 Name | Type | Description | Notes

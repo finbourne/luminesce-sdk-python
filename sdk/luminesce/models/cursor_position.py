@@ -23,7 +23,7 @@ from pydantic import BaseModel, Field, StrictInt
 
 class CursorPosition(BaseModel):
     """
-    CursorPosition
+    Represents a cursor location  # noqa: E501
     """
     row: StrictInt = Field(..., description="Row (0 based) of the user's cursor position")
     column: StrictInt = Field(..., description="Column (0 based) of the user's cursor position")

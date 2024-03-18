@@ -18,15 +18,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
-from pydantic import BaseModel, Field, StrictStr, conlist
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
 
 class ErrorHighlightRequest(BaseModel):
     """
-    ErrorHighlightRequest
+    Request for Error highlighting  # noqa: E501
     """
     lines: conlist(StrictStr) = Field(..., description="The lines of text the user currently has in the editor")
-    __properties = ["lines"]
+    ensure_some_text_is_selected: Optional[StrictBool] = Field(None, alias="ensureSomeTextIsSelected", description="If an editor requires some selection of non-whitespace this can be set to true to force  at least one visible character to be selected.")
+    __properties = ["lines", "ensureSomeTextIsSelected"]
 
     class Config:
         """Pydantic configuration"""
@@ -64,6 +65,7 @@ class ErrorHighlightRequest(BaseModel):
             return ErrorHighlightRequest.parse_obj(obj)
 
         _obj = ErrorHighlightRequest.parse_obj({
-            "lines": obj.get("lines")
+            "lines": obj.get("lines"),
+            "ensure_some_text_is_selected": obj.get("ensureSomeTextIsSelected")
         })
         return _obj

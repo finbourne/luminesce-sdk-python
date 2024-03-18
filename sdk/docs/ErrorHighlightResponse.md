@@ -1,5 +1,6 @@
 # ErrorHighlightResponse
 
+Response for error highlighting
 
 ## Properties
 Name | Type | Description | Notes

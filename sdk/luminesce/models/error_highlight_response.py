@@ -24,7 +24,7 @@ from luminesce.models.error_highlight_item import ErrorHighlightItem
 
 class ErrorHighlightResponse(BaseModel):
     """
-    ErrorHighlightResponse
+    Response for error highlighting  # noqa: E501
     """
     errors: conlist(ErrorHighlightItem) = Field(..., description="The errors within the Sql")
     sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The SQL this is for, with characters indicating the error locations")
