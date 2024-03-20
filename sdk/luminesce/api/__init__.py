@@ -11,3 +11,15 @@ from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
 from luminesce.api.sql_design_api import SqlDesignApi
 from luminesce.api.sql_execution_api import SqlExecutionApi
 
+
+__all__ = [
+    "ApplicationMetadataApi",
+    "BinaryDownloadingApi",
+    "CertificateManagementApi",
+    "CurrentTableFieldCatalogApi",
+    "HistoricallyExecutedQueriesApi",
+    "MultiQueryExecutionApi",
+    "SqlBackgroundExecutionApi",
+    "SqlDesignApi",
+    "SqlExecutionApi"
+]

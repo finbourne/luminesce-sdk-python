@@ -46,6 +46,8 @@ class LuminesceBinaryType(str, Enum):
     SQL_DB_PROVIDERS_SQ_LITE = 'SqlDb_Providers_SqLite'
     SQL_DB_PROVIDERS_DUCK_DB = 'SqlDb_Providers_DuckDb'
     JDBC_DRIVER = 'Jdbc_Driver'
+    POWER_BI_CONNECTOR = 'PowerBi_Connector'
+    ODBC_WIN64_DRIVER = 'Odbc_Win64_Driver'
 
     @classmethod
     def from_json(cls, json_str: str) -> LuminesceBinaryType:
