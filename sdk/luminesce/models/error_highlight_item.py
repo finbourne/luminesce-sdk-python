@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictInt, constr
 from luminesce.models.cursor_position import CursorPosition
 
@@ -28,9 +28,10 @@ class ErrorHighlightItem(BaseModel):
     """
     start: CursorPosition = Field(...)
     stop: CursorPosition = Field(...)
+    no_viable_alternative_start: Optional[CursorPosition] = Field(None, alias="noViableAlternativeStart")
     length: StrictInt = Field(..., description="The length of the error token counting line breaks if any")
     message: constr(strict=True, min_length=1) = Field(..., description="The error message")
-    __properties = ["start", "stop", "length", "message"]
+    __properties = ["start", "stop", "noViableAlternativeStart", "length", "message"]
 
     class Config:
         """Pydantic configuration"""
@@ -62,6 +63,9 @@ class ErrorHighlightItem(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of stop
         if self.stop:
             _dict['stop'] = self.stop.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of no_viable_alternative_start
+        if self.no_viable_alternative_start:
+            _dict['noViableAlternativeStart'] = self.no_viable_alternative_start.to_dict()
         return _dict
 
     @classmethod
@@ -76,6 +80,7 @@ class ErrorHighlightItem(BaseModel):
         _obj = ErrorHighlightItem.parse_obj({
             "start": CursorPosition.from_dict(obj.get("start")) if obj.get("start") is not None else None,
             "stop": CursorPosition.from_dict(obj.get("stop")) if obj.get("stop") is not None else None,
+            "no_viable_alternative_start": CursorPosition.from_dict(obj.get("noViableAlternativeStart")) if obj.get("noViableAlternativeStart") is not None else None,
             "length": obj.get("length"),
             "message": obj.get("message")
         })
