@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictInt, constr
+from pydantic.v1 import BaseModel, Field, StrictInt, constr
 from luminesce.models.cursor_position import CursorPosition
 
 class ErrorHighlightItem(BaseModel):

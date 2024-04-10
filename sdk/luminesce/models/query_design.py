@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, constr
 from luminesce.models.available_field import AvailableField
 from luminesce.models.field_design import FieldDesign
 from luminesce.models.order_by_term_design import OrderByTermDesign

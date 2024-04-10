@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List
-from pydantic import BaseModel, Field, conlist, constr
+from pydantic.v1 import BaseModel, Field, conlist, constr
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 
 class ErrorHighlightResponse(BaseModel):

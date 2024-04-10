@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 from luminesce.models.access_controlled_action import AccessControlledAction
 from luminesce.models.access_controlled_resource_identifier_part_schema_attribute import AccessControlledResourceIdentifierPartSchemaAttribute
 

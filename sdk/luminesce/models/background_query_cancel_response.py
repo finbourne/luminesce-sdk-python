@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.task_status import TaskStatus
 

@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictInt, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, conlist, constr
 from luminesce.models.auto_detect_type import AutoDetectType
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.options_csv import OptionsCsv

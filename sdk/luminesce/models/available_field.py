@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, constr
 from luminesce.models.data_type import DataType
 from luminesce.models.field_type import FieldType
 

@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List
-from pydantic import BaseModel, Field, StrictBool, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
 from luminesce.models.intellisense_item import IntellisenseItem
 
 class IntellisenseResponse(BaseModel):

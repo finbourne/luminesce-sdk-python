@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict
-from pydantic import BaseModel, Field, constr
+from pydantic.v1 import BaseModel, Field, constr
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 
 class FilterTermDesign(BaseModel):

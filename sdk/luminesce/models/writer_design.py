@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, conlist, constr
+from pydantic.v1 import BaseModel, Field, conlist, constr
 from luminesce.models.available_parameter import AvailableParameter
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 

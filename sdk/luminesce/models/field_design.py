@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
 from luminesce.models.aggregation import Aggregation
 from luminesce.models.data_type import DataType
 from luminesce.models.filter_term_design import FilterTermDesign

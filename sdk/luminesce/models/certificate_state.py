@@ -19,7 +19,7 @@ import json
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
 from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 from luminesce.models.link import Link
