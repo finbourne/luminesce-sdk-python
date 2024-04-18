@@ -36,6 +36,7 @@ class IntellisenseType(str, Enum):
     TABLE = 'Table'
     COLUMN = 'Column'
     PARAMETER = 'Parameter'
+    SCALARVARIABLE = 'ScalarVariable'
 
     @classmethod
     def from_json(cls, json_str: str) -> IntellisenseType:
