@@ -20,6 +20,7 @@ import json
 
 from typing import Any, Dict, List
 from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.intellisense_item import IntellisenseItem
 
 class IntellisenseResponse(BaseModel):
@@ -29,7 +30,9 @@ class IntellisenseResponse(BaseModel):
     auto_complete_list: conlist(IntellisenseItem) = Field(..., alias="autoCompleteList", description="The available items at this point")
     try_again_soon_for_more: StrictBool = Field(..., alias="tryAgainSoonForMore", description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)")
     sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The SQL this is for with characters indicating the location the pop-up is for")
-    __properties = ["autoCompleteList", "tryAgainSoonForMore", "sqlWithMarker"]
+    start_replacement_position: CursorPosition = Field(..., alias="startReplacementPosition")
+    end_replacement_position: CursorPosition = Field(..., alias="endReplacementPosition")
+    __properties = ["autoCompleteList", "tryAgainSoonForMore", "sqlWithMarker", "startReplacementPosition", "endReplacementPosition"]
 
     class Config:
         """Pydantic configuration"""
@@ -62,6 +65,12 @@ class IntellisenseResponse(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['autoCompleteList'] = _items
+        # override the default output from pydantic by calling `to_dict()` of start_replacement_position
+        if self.start_replacement_position:
+            _dict['startReplacementPosition'] = self.start_replacement_position.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of end_replacement_position
+        if self.end_replacement_position:
+            _dict['endReplacementPosition'] = self.end_replacement_position.to_dict()
         return _dict
 
     @classmethod
@@ -76,6 +85,8 @@ class IntellisenseResponse(BaseModel):
         _obj = IntellisenseResponse.parse_obj({
             "auto_complete_list": [IntellisenseItem.from_dict(_item) for _item in obj.get("autoCompleteList")] if obj.get("autoCompleteList") is not None else None,
             "try_again_soon_for_more": obj.get("tryAgainSoonForMore"),
-            "sql_with_marker": obj.get("sqlWithMarker")
+            "sql_with_marker": obj.get("sqlWithMarker"),
+            "start_replacement_position": CursorPosition.from_dict(obj.get("startReplacementPosition")) if obj.get("startReplacementPosition") is not None else None,
+            "end_replacement_position": CursorPosition.from_dict(obj.get("endReplacementPosition")) if obj.get("endReplacementPosition") is not None else None
         })
         return _obj
