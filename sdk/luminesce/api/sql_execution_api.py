@@ -57,7 +57,7 @@ class SqlExecutionApi:
     def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryCsv: Executes Sql, returned in CSV format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -99,7 +99,7 @@ class SqlExecutionApi:
     def get_by_query_csv_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryCsv: Executes Sql, returned in CSV format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -217,6 +217,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -248,7 +249,7 @@ class SqlExecutionApi:
     def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -284,7 +285,7 @@ class SqlExecutionApi:
     def get_by_query_excel_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -384,6 +385,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -415,7 +417,7 @@ class SqlExecutionApi:
     def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryJson: Executes Sql, returned in JSON format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -453,7 +455,7 @@ class SqlExecutionApi:
     def get_by_query_json_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryJson: Executes Sql, returned in JSON format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -559,6 +561,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -590,7 +593,7 @@ class SqlExecutionApi:
     def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQueryParquet: Executes Sql, returned in Parquet (.parquet) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -626,7 +629,7 @@ class SqlExecutionApi:
     def get_by_query_parquet_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryParquet: Executes Sql, returned in Parquet (.parquet) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -726,6 +729,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -757,7 +761,7 @@ class SqlExecutionApi:
     def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -795,7 +799,7 @@ class SqlExecutionApi:
     def get_by_query_pipe_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -901,6 +905,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -932,7 +937,7 @@ class SqlExecutionApi:
     def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -968,7 +973,7 @@ class SqlExecutionApi:
     def get_by_query_sqlite_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1068,6 +1073,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1099,7 +1105,7 @@ class SqlExecutionApi:
     def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryXml: Executes Sql, returned in Xml format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1137,7 +1143,7 @@ class SqlExecutionApi:
     def get_by_query_xml_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryXml: Executes Sql, returned in Xml format, where the sql is simply in the url.  # noqa: E501
 
-         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1243,6 +1249,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1274,7 +1281,7 @@ class SqlExecutionApi:
     def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryCsv: Executes Sql, returned in CSV format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1316,7 +1323,7 @@ class SqlExecutionApi:
     def put_by_query_csv_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryCsv: Executes Sql, returned in CSV format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1441,6 +1448,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1472,7 +1480,7 @@ class SqlExecutionApi:
     def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1508,7 +1516,7 @@ class SqlExecutionApi:
     def put_by_query_excel_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1615,6 +1623,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1646,7 +1655,7 @@ class SqlExecutionApi:
     def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryJson: Executes Sql, returned in JSON format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1684,7 +1693,7 @@ class SqlExecutionApi:
     def put_by_query_json_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryJson: Executes Sql, returned in JSON format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1797,6 +1806,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1828,7 +1838,7 @@ class SqlExecutionApi:
     def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQueryParquet: Executes Sql, returned in Parquet format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1864,7 +1874,7 @@ class SqlExecutionApi:
     def put_by_query_parquet_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryParquet: Executes Sql, returned in Parquet format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1971,6 +1981,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -2002,7 +2013,7 @@ class SqlExecutionApi:
     def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2040,7 +2051,7 @@ class SqlExecutionApi:
     def put_by_query_pipe_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2153,6 +2164,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -2184,7 +2196,7 @@ class SqlExecutionApi:
     def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2220,7 +2232,7 @@ class SqlExecutionApi:
     def put_by_query_sqlite_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2327,6 +2339,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "bytearray",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -2358,7 +2371,7 @@ class SqlExecutionApi:
     def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryXml: Executes Sql, returned in Xml format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2396,7 +2409,7 @@ class SqlExecutionApi:
     def put_by_query_xml_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryXml: Executes Sql, returned in Xml format, where the sql is the post-body url.  # noqa: E501
 
-         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized   # noqa: E501
+         For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2509,6 +2522,7 @@ class SqlExecutionApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(

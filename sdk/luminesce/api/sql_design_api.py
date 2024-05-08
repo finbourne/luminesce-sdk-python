@@ -201,6 +201,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "FileReaderBuilderResponse",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -359,6 +360,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "IntellisenseResponse",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -517,6 +519,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "ErrorHighlightResponse",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -675,6 +678,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -937,6 +941,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1103,6 +1108,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "FileReaderBuilderDef",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1269,6 +1275,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "QueryDesign",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1427,6 +1434,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "ConvertToViewData",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1593,6 +1601,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "WriterDesign",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1751,6 +1760,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
@@ -1909,6 +1919,7 @@ class SqlDesignApi:
         _response_types_map = {
             '200': "str",
             '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
         }
 
         return self.api_client.call_api(
