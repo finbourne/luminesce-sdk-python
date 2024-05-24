@@ -3,6 +3,7 @@ from luminesce.extensions.configuration_loaders import (
     ConfigurationLoader,
     SecretsFileConfigurationLoader,
     EnvironmentVariablesConfigurationLoader,
+    FileTokenConfigurationLoader,
     ArgsConfigurationLoader,
 )
 from luminesce.extensions.api_client import SyncApiClient
@@ -13,6 +14,7 @@ __all__ = [
     "ConfigurationLoader",
     "SecretsFileConfigurationLoader",
     "EnvironmentVariablesConfigurationLoader",
+    "FileTokenConfigurationLoader"
     "ArgsConfigurationLoader",
     "SyncApiClient"
 ]
