@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "luminesce-sdk"
-version = "2.1.45"
+version = "2.1.46"
 description = "FINBOURNE Luminesce Web API"
 authors = ["FINBOURNE Technology <info@finbourne.com>"]
 license = "MIT"
