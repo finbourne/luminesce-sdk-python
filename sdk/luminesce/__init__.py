@@ -74,6 +74,8 @@ from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 from luminesce.models.file_reader_builder_response import FileReaderBuilderResponse
 from luminesce.models.filter_term_design import FilterTermDesign
 from luminesce.models.id_selector_definition import IdSelectorDefinition
+from luminesce.models.inlined_property_design import InlinedPropertyDesign
+from luminesce.models.inlined_property_item import InlinedPropertyItem
 from luminesce.models.intellisense_item import IntellisenseItem
 from luminesce.models.intellisense_request import IntellisenseRequest
 from luminesce.models.intellisense_response import IntellisenseResponse
@@ -161,6 +163,8 @@ __all__ = [
     "FileReaderBuilderResponse",
     "FilterTermDesign",
     "IdSelectorDefinition",
+    "InlinedPropertyDesign",
+    "InlinedPropertyItem",
     "IntellisenseItem",
     "IntellisenseRequest",
     "IntellisenseResponse",
