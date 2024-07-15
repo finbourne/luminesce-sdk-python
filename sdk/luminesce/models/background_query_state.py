@@ -41,6 +41,7 @@ class BackgroundQueryState(str, Enum):
     LOADED = 'Loaded'
     CLEARED = 'Cleared'
     DISPOSED = 'Disposed'
+    OWNERTERMINATED = 'OwnerTerminated'
 
     @classmethod
     def from_json(cls, json_str: str) -> BackgroundQueryState:

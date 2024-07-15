@@ -74,6 +74,7 @@ from luminesce.models.order_by_term_design import OrderByTermDesign
 from luminesce.models.query_design import QueryDesign
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
+from luminesce.models.scalar_parameter import ScalarParameter
 from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
 from luminesce.models.task_status import TaskStatus
@@ -142,6 +143,7 @@ __all__ = [
     "QueryDesign",
     "QueryDesignerBinaryOperator",
     "ResourceListOfAccessControlledResource",
+    "ScalarParameter",
     "Source",
     "SourceType",
     "TaskStatus",

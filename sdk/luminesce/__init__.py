@@ -21,6 +21,7 @@ from luminesce.api.application_metadata_api import ApplicationMetadataApi
 from luminesce.api.binary_downloading_api import BinaryDownloadingApi
 from luminesce.api.certificate_management_api import CertificateManagementApi
 from luminesce.api.current_table_field_catalog_api import CurrentTableFieldCatalogApi
+from luminesce.api.health_checking_endpoint_api import HealthCheckingEndpointApi
 from luminesce.api.historically_executed_queries_api import HistoricallyExecutedQueriesApi
 from luminesce.api.multi_query_execution_api import MultiQueryExecutionApi
 from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
@@ -96,6 +97,7 @@ from luminesce.models.order_by_term_design import OrderByTermDesign
 from luminesce.models.query_design import QueryDesign
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
+from luminesce.models.scalar_parameter import ScalarParameter
 from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
 from luminesce.models.task_status import TaskStatus
@@ -120,6 +122,7 @@ __all__ = [
     "BinaryDownloadingApi",
     "CertificateManagementApi",
     "CurrentTableFieldCatalogApi",
+    "HealthCheckingEndpointApi",
     "HistoricallyExecutedQueriesApi",
     "MultiQueryExecutionApi",
     "SqlBackgroundExecutionApi",
@@ -185,6 +188,7 @@ __all__ = [
     "QueryDesign",
     "QueryDesignerBinaryOperator",
     "ResourceListOfAccessControlledResource",
+    "ScalarParameter",
     "Source",
     "SourceType",
     "TaskStatus",
