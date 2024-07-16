@@ -1192,7 +1192,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_query**
-> BackgroundQueryResponse start_query(body, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
+> BackgroundQueryResponse start_query(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
 
 StartQuery: Starts to Execute LuminesceSql in the background.
 
@@ -1250,13 +1250,14 @@ async with api_client_factory:
     # Create an instance of the API class
     api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
     body = select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 # str | The LuminesceSql query to kick off.
+    scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Intentionally slow test query' # str | A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`. (optional)
     timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h) (optional) (default to 0)
     keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
 
     try:
         # StartQuery: Starts to Execute LuminesceSql in the background.
-        api_response = await api_instance.start_query(body, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
+        api_response = await api_instance.start_query(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
         print("The response of SqlBackgroundExecutionApi->start_query:\n")
         pprint(api_response)
     except Exception as e:
@@ -1269,6 +1270,7 @@ async with api_client_factory:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | **str**| The LuminesceSql query to kick off. | 
+ **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| A name for this query.  This goes into logs and is available in &#x60;Sys.Logs.HcQueryStart&#x60;. | [optional] 
  **timeout_seconds** | **int**| Maximum time the query may run for, in seconds: &lt;0 → ∞, 0 → 7200 (2h) | [optional] [default to 0]
  **keep_for_seconds** | **int**| Maximum time the result may be kept for, in seconds: &lt;0 → 1200 (20m), 0 → 28800 (8h), max &#x3D; 2,678,400 (31d) | [optional] [default to 0]
