@@ -22,7 +22,7 @@ from typing import overload, Optional, Union, Awaitable
 from typing_extensions import Annotated
 from pydantic.v1 import Field, StrictBool, StrictInt, StrictStr
 
-from typing import Optional, Union
+from typing import Dict, Optional, Union
 
 
 from luminesce.api_client import ApiClient
@@ -46,26 +46,28 @@ class SqlExecutionApi:
         self.api_client = api_client
 
     @overload
-    async def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_by_query_csv(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryCsv: Executes Sql, returned in CSV format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_csv(query, query_name, download, timeout, delimiter, escape, async_req=True)
+        >>> thread = api.get_by_query_csv(query, scalar_parameters, query_name, download, timeout, delimiter, escape, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -93,21 +95,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_csv_with_http_info(query, query_name, download, timeout, delimiter, escape, **kwargs)  # noqa: E501
+        return self.get_by_query_csv_with_http_info(query, scalar_parameters, query_name, download, timeout, delimiter, escape, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_csv_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_csv_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryCsv: Executes Sql, returned in CSV format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_csv_with_http_info(query, query_name, download, timeout, delimiter, escape, async_req=True)
+        >>> thread = api.get_by_query_csv_with_http_info(query, scalar_parameters, query_name, download, timeout, delimiter, escape, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -147,6 +151,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout',
@@ -185,6 +190,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -238,26 +246,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def get_by_query_excel(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_excel(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_excel(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -279,21 +289,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_excel_with_http_info(query, query_name, timeout, **kwargs)  # noqa: E501
+        return self.get_by_query_excel_with_http_info(query, scalar_parameters, query_name, timeout, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_excel_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_excel_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_excel_with_http_info(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_excel_with_http_info(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -327,6 +339,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'timeout'
         ]
@@ -362,6 +375,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -406,26 +422,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryJson: Executes Sql, returned in JSON format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_json(query, query_name, timeout, json_proper, async_req=True)
+        >>> thread = api.get_by_query_json(query, scalar_parameters, query_name, timeout, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -449,21 +467,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_json_with_http_info(query, query_name, timeout, json_proper, **kwargs)  # noqa: E501
+        return self.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_json_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_json_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryJson: Executes Sql, returned in JSON format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_json_with_http_info(query, query_name, timeout, json_proper, async_req=True)
+        >>> thread = api.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -499,6 +519,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'timeout',
             'json_proper'
@@ -535,6 +556,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -582,26 +606,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def get_by_query_parquet(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQueryParquet: Executes Sql, returned in Parquet (.parquet) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_parquet(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_parquet(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -623,21 +649,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_parquet_with_http_info(query, query_name, timeout, **kwargs)  # noqa: E501
+        return self.get_by_query_parquet_with_http_info(query, scalar_parameters, query_name, timeout, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_parquet_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_parquet_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryParquet: Executes Sql, returned in Parquet (.parquet) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_parquet_with_http_info(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_parquet_with_http_info(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -671,6 +699,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'timeout'
         ]
@@ -706,6 +735,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -750,26 +782,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_by_query_pipe(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_pipe(query, query_name, download, timeout, async_req=True)
+        >>> thread = api.get_by_query_pipe(query, scalar_parameters, query_name, download, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -793,21 +827,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_pipe_with_http_info(query, query_name, download, timeout, **kwargs)  # noqa: E501
+        return self.get_by_query_pipe_with_http_info(query, scalar_parameters, query_name, download, timeout, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_pipe_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_pipe_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_pipe_with_http_info(query, query_name, download, timeout, async_req=True)
+        >>> thread = api.get_by_query_pipe_with_http_info(query, scalar_parameters, query_name, download, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -843,6 +879,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout'
@@ -879,6 +916,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -926,26 +966,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def get_by_query_sqlite(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """GetByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_sqlite(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_sqlite(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -967,21 +1009,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_sqlite_with_http_info(query, query_name, timeout, **kwargs)  # noqa: E501
+        return self.get_by_query_sqlite_with_http_info(query, scalar_parameters, query_name, timeout, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_sqlite_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_sqlite_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded) format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_sqlite_with_http_info(query, query_name, timeout, async_req=True)
+        >>> thread = api.get_by_query_sqlite_with_http_info(query, scalar_parameters, query_name, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout: In seconds: <0 → ∞, 0 → 120s
@@ -1015,6 +1059,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'timeout'
         ]
@@ -1050,6 +1095,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -1094,26 +1142,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_by_query_xml(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryXml: Executes Sql, returned in Xml format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_xml(query, query_name, download, timeout, async_req=True)
+        >>> thread = api.get_by_query_xml(query, scalar_parameters, query_name, download, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -1137,21 +1187,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_xml_with_http_info(query, query_name, download, timeout, **kwargs)  # noqa: E501
+        return self.get_by_query_xml_with_http_info(query, scalar_parameters, query_name, download, timeout, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_xml_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_xml_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryXml: Executes Sql, returned in Xml format, where the sql is simply in the url.  # noqa: E501
 
          For simple single-line query execution via the url. e.g. `select ^ from Sys.Field order by 1, 2`  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_xml_with_http_info(query, query_name, download, timeout, async_req=True)
+        >>> thread = api.get_by_query_xml_with_http_info(query, scalar_parameters, query_name, download, timeout, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
         :type query: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -1187,6 +1239,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'query',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout'
@@ -1223,6 +1276,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -1270,26 +1326,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_by_query_csv(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryCsv: Executes Sql, returned in CSV format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_csv(body, query_name, download, timeout_seconds, delimiter, escape, async_req=True)
+        >>> thread = api.put_by_query_csv(body, scalar_parameters, query_name, download, timeout_seconds, delimiter, escape, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -1317,21 +1375,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_csv_with_http_info(body, query_name, download, timeout_seconds, delimiter, escape, **kwargs)  # noqa: E501
+        return self.put_by_query_csv_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, delimiter, escape, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_csv_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_csv_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, delimiter : Annotated[Optional[StrictStr], Field(description="Delimiter string to override the default")] = None, escape : Annotated[Optional[StrictStr], Field(description="Escape character to override the default")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryCsv: Executes Sql, returned in CSV format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_csv_with_http_info(body, query_name, download, timeout_seconds, delimiter, escape, async_req=True)
+        >>> thread = api.put_by_query_csv_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, delimiter, escape, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -1371,6 +1431,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout_seconds',
@@ -1406,6 +1467,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -1469,26 +1533,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def put_by_query_excel(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_excel(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_excel(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1510,21 +1576,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_excel_with_http_info(body, query_name, timeout_seconds, **kwargs)  # noqa: E501
+        return self.put_by_query_excel_with_http_info(body, scalar_parameters, query_name, timeout_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_excel_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_excel_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryExcel: Executes Sql, returned in Excel (xlsx) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_excel_with_http_info(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_excel_with_http_info(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1558,6 +1626,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'timeout_seconds'
         ]
@@ -1590,6 +1659,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -1644,26 +1716,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryJson: Executes Sql, returned in JSON format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_json(body, query_name, timeout_seconds, json_proper, async_req=True)
+        >>> thread = api.put_by_query_json(body, scalar_parameters, query_name, timeout_seconds, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1687,21 +1761,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_json_with_http_info(body, query_name, timeout_seconds, json_proper, **kwargs)  # noqa: E501
+        return self.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_json_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_json_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryJson: Executes Sql, returned in JSON format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_json_with_http_info(body, query_name, timeout_seconds, json_proper, async_req=True)
+        >>> thread = api.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1737,6 +1813,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'timeout_seconds',
             'json_proper'
@@ -1770,6 +1847,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -1827,26 +1907,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def put_by_query_parquet(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQueryParquet: Executes Sql, returned in Parquet format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_parquet(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_parquet(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1868,21 +1950,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_parquet_with_http_info(body, query_name, timeout_seconds, **kwargs)  # noqa: E501
+        return self.put_by_query_parquet_with_http_info(body, scalar_parameters, query_name, timeout_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_parquet_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_parquet_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryParquet: Executes Sql, returned in Parquet format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_parquet_with_http_info(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_parquet_with_http_info(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -1916,6 +2000,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'timeout_seconds'
         ]
@@ -1948,6 +2033,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -2002,26 +2090,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_by_query_pipe(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_pipe(body, query_name, download, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_pipe(body, scalar_parameters, query_name, download, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -2045,21 +2135,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_pipe_with_http_info(body, query_name, download, timeout_seconds, **kwargs)  # noqa: E501
+        return self.put_by_query_pipe_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_pipe_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_pipe_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryPipe: Executes Sql, returned in pipe-delimited format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_pipe_with_http_info(body, query_name, download, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_pipe_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -2095,6 +2187,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout_seconds'
@@ -2128,6 +2221,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -2185,26 +2281,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def put_by_query_sqlite(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """PutByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_sqlite(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_sqlite(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -2226,21 +2324,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_sqlite_with_http_info(body, query_name, timeout_seconds, **kwargs)  # noqa: E501
+        return self.put_by_query_sqlite_with_http_info(body, scalar_parameters, query_name, timeout_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_sqlite_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_sqlite_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQuerySqlite: Executes Sql, returned in SqLite DB (sqlite3) format (as a file to be downloaded), where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_sqlite_with_http_info(body, query_name, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_sqlite_with_http_info(body, scalar_parameters, query_name, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param timeout_seconds: In seconds: <0 → ∞, 0 → 120s
@@ -2274,6 +2374,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'timeout_seconds'
         ]
@@ -2306,6 +2407,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
@@ -2360,26 +2464,28 @@ class SqlExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_by_query_xml(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryXml: Executes Sql, returned in Xml format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_xml(body, query_name, download, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_xml(body, scalar_parameters, query_name, download, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -2403,21 +2509,23 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_xml_with_http_info(body, query_name, download, timeout_seconds, **kwargs)  # noqa: E501
+        return self.put_by_query_xml_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_xml_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_xml_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 → ∞, 0 → 120s")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryXml: Executes Sql, returned in Xml format, where the sql is the post-body url.  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer Sql. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_xml_with_http_info(body, query_name, download, timeout_seconds, async_req=True)
+        >>> thread = api.put_by_query_xml_with_http_info(body, scalar_parameters, query_name, download, timeout_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
         :type body: str
+        :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
+        :type scalar_parameters: Dict[str, str]
         :param query_name: Name to apply to the query in logs and `Sys.Logs.HcQueryStart`
         :type query_name: str
         :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
@@ -2453,6 +2561,7 @@ class SqlExecutionApi:
 
         _all_params = [
             'body',
+            'scalar_parameters',
             'query_name',
             'download',
             'timeout_seconds'
@@ -2486,6 +2595,9 @@ class SqlExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('scalar_parameters') is not None:  # noqa: E501
+            _query_params.append(('scalarParameters', _params['scalar_parameters']))
+
         if _params.get('query_name') is not None:  # noqa: E501
             _query_params.append(('queryName', _params['query_name']))
 
