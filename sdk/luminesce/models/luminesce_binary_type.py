@@ -45,6 +45,8 @@ class LuminesceBinaryType(str, Enum):
     SQL_DB_PROVIDERS_SYBASE_ASE = 'SqlDb_Providers_SybaseAse'
     SQL_DB_PROVIDERS_SQ_LITE = 'SqlDb_Providers_SqLite'
     SQL_DB_PROVIDERS_DUCK_DB = 'SqlDb_Providers_DuckDb'
+    SQL_DB_PROVIDERS_AWS_DYNAMO_DB = 'SqlDb_Providers_AwsDynamoDb'
+    SQL_DB_PROVIDERS_SQL_SERVER_ORACLE = 'SqlDb_Providers_SqlServer_Oracle'
     JDBC_DRIVER = 'Jdbc_Driver'
     POWER_BI_CONNECTOR = 'PowerBi_Connector'
     ODBC_WIN64_DRIVER = 'Odbc_Win64_Driver'
