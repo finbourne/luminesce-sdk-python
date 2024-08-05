@@ -31,6 +31,6 @@ background_query_progress_response_dict = background_query_progress_response_ins
 # create an instance of BackgroundQueryProgressResponse from a dict
 background_query_progress_response_form_dict = background_query_progress_response.from_dict(background_query_progress_response_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

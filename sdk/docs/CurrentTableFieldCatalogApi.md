@@ -18,67 +18,54 @@ GetCatalog: Shows Table and Field level information on Providers that are curren
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    CurrentTableFieldCatalogApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    CurrentTableFieldCatalogApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+        free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
+        json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+        use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
 
+        try:
+            # GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+            api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling CurrentTableFieldCatalogApi->get_catalog: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.CurrentTableFieldCatalogApi)
-    free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-    json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
-    use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
-
-    try:
-        # GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
-        api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
-        print("The response of CurrentTableFieldCatalogApi->get_catalog:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling CurrentTableFieldCatalogApi->get_catalog: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -92,10 +79,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -106,7 +89,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_fields**
 > str get_fields(table_like=table_like)
@@ -117,65 +100,52 @@ GetFields: Shows Table level information on Providers that are currently running
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    CurrentTableFieldCatalogApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    CurrentTableFieldCatalogApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+        table_like = '%' # str |  (optional) (default to '%')
 
+        try:
+            # GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+            api_response = await api_instance.get_fields(table_like=table_like)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling CurrentTableFieldCatalogApi->get_fields: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.CurrentTableFieldCatalogApi)
-    table_like = '%' # str |  (optional) (default to '%')
-
-    try:
-        # GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)
-        api_response = await api_instance.get_fields(table_like=table_like)
-        print("The response of CurrentTableFieldCatalogApi->get_fields:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling CurrentTableFieldCatalogApi->get_fields: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -187,10 +157,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -201,7 +167,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_providers**
 > str get_providers(free_text_search=free_text_search, use_cache=use_cache)
@@ -212,66 +178,53 @@ GetProviders: Shows Table level information on Providers that are currently runn
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    CurrentTableFieldCatalogApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    CurrentTableFieldCatalogApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+        free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
+        use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
 
+        try:
+            # GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+            api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling CurrentTableFieldCatalogApi->get_providers: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.CurrentTableFieldCatalogApi)
-    free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-    use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
-
-    try:
-        # GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)
-        api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
-        print("The response of CurrentTableFieldCatalogApi->get_providers:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling CurrentTableFieldCatalogApi->get_providers: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -284,10 +237,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -298,5 +247,5 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 

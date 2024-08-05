@@ -31,6 +31,6 @@ mappable_field_dict = mappable_field_instance.to_dict()
 # create an instance of MappableField from a dict
 mappable_field_form_dict = mappable_field.from_dict(mappable_field_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

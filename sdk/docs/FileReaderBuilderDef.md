@@ -38,6 +38,6 @@ file_reader_builder_def_dict = file_reader_builder_def_instance.to_dict()
 # create an instance of FileReaderBuilderDef from a dict
 file_reader_builder_def_form_dict = file_reader_builder_def.from_dict(file_reader_builder_def_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

@@ -17,67 +17,53 @@ Method | HTTP request | Description
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
-from luminesce.models.luminesce_binary_type import LuminesceBinaryType
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    BinaryDownloadingApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    BinaryDownloadingApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(BinaryDownloadingApi)
+        type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to download (each requires separate licenses and entitlements) (optional)
+        version = 'version_example' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
 
+        try:
+            # [EXPERIMENTAL] DownloadBinary: Downloads the latest version (or specific if needs be) of the specified Luminesce Binary, given the required entitlements.
+            api_response = await api_instance.download_binary(type=type, version=version)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling BinaryDownloadingApi->download_binary: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.BinaryDownloadingApi)
-    type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to download (each requires separate licenses and entitlements) (optional)
-    version = 'version_example' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
-
-    try:
-        # [EXPERIMENTAL] DownloadBinary: Downloads the latest version (or specific if needs be) of the specified Luminesce Binary, given the required entitlements.
-        api_response = await api_instance.download_binary(type=type, version=version)
-        print("The response of BinaryDownloadingApi->download_binary:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling BinaryDownloadingApi->download_binary: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -89,10 +75,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 **bytearray**
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -106,7 +88,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_binary_versions**
 > List[str] get_binary_versions(type=type)
@@ -117,66 +99,52 @@ Name | Type | Description  | Notes
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
-from luminesce.models.luminesce_binary_type import LuminesceBinaryType
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    BinaryDownloadingApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    BinaryDownloadingApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(BinaryDownloadingApi)
+        type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to fetch available versions of (optional)
 
+        try:
+            # [EXPERIMENTAL] GetBinaryVersions: Gets the list of available versions of a user-downloadable binary from Nexus
+            api_response = await api_instance.get_binary_versions(type=type)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling BinaryDownloadingApi->get_binary_versions: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.BinaryDownloadingApi)
-    type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to fetch available versions of (optional)
-
-    try:
-        # [EXPERIMENTAL] GetBinaryVersions: Gets the list of available versions of a user-downloadable binary from Nexus
-        api_response = await api_instance.get_binary_versions(type=type)
-        print("The response of BinaryDownloadingApi->get_binary_versions:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling BinaryDownloadingApi->get_binary_versions: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -187,10 +155,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 **List[str]**
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -204,5 +168,5 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 

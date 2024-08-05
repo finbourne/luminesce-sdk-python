@@ -29,6 +29,6 @@ access_controlled_resource_identifier_part_schema_attribute_dict = access_contro
 # create an instance of AccessControlledResourceIdentifierPartSchemaAttribute from a dict
 access_controlled_resource_identifier_part_schema_attribute_form_dict = access_controlled_resource_identifier_part_schema_attribute.from_dict(access_controlled_resource_identifier_part_schema_attribute_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

@@ -30,6 +30,6 @@ convert_to_view_data_dict = convert_to_view_data_instance.to_dict()
 # create an instance of ConvertToViewData from a dict
 convert_to_view_data_form_dict = convert_to_view_data.from_dict(convert_to_view_data_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

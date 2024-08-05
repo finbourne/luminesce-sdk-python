@@ -27,66 +27,52 @@ Cancel the query (if still running) / clear the data (if already returned) The f
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
-from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
+        try:
+            # CancelQuery: Cancels (if running) or clears the data from (if completed) a previously started query
+            api_response = await api_instance.cancel_query(execution_id)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->cancel_query: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-
-    try:
-        # CancelQuery: Cancels (if running) or clears the data from (if completed) a previously started query
-        api_response = await api_instance.cancel_query(execution_id)
-        print("The response of SqlBackgroundExecutionApi->cancel_query:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->cancel_query: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -98,10 +84,6 @@ Name | Type | Description  | Notes
 
 [**BackgroundQueryCancelResponse**](BackgroundQueryCancelResponse.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -112,7 +94,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_csv**
 > str fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape)
@@ -123,74 +105,61 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
+        delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
+        escape = 'escape_example' # str | Escape character to override the default (optional)
 
+        try:
+            # FetchQueryResultCsv: Fetches the result from a previously started query, in CSV format.
+            api_response = await api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_csv: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-    delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
-    escape = 'escape_example' # str | Escape character to override the default (optional)
-
-    try:
-        # FetchQueryResultCsv: Fetches the result from a previously started query, in CSV format.
-        api_response = await api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_csv:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_csv: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -211,10 +180,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -227,7 +192,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_excel**
 > bytearray fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
@@ -238,69 +203,56 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
 
+        try:
+            # FetchQueryResultExcel: Fetches the result from a previously started query, in Excel format.
+            api_response = await api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_excel: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-
-    try:
-        # FetchQueryResultExcel: Fetches the result from a previously started query, in Excel format.
-        api_response = await api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_excel:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_excel: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -316,10 +268,6 @@ Name | Type | Description  | Notes
 
 **bytearray**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -332,7 +280,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_histogram**
 > str fetch_query_result_histogram(execution_id, timestamp_field_name, start_at=start_at, end_at=end_at, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
@@ -343,71 +291,58 @@ Fetch the histogram in Json format (if available, or if not simply being informe
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        timestamp_field_name = 'timestamp_field_name_example' # str | Name of the timestamp field used in building the histogram
+        start_at = '2013-10-20T19:20:30+01:00' # datetime | Start point (of the timestampFieldName field) for the histogram (optional)
+        end_at = '2013-10-20T19:20:30+01:00' # datetime | End point (of the timestampFieldName field) for the histogram (optional)
+        bucket_size = 'bucket_size_example' # str | Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
 
+        try:
+            # FetchQueryResultHistogram: Fetches the result from a previously started query, converts it to a histogram (counts in buckets).
+            api_response = await api_instance.fetch_query_result_histogram(execution_id, timestamp_field_name, start_at=start_at, end_at=end_at, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_histogram: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    timestamp_field_name = 'timestamp_field_name_example' # str | Name of the timestamp field used in building the histogram
-    start_at = '2013-10-20T19:20:30+01:00' # datetime | Start point (of the timestampFieldName field) for the histogram (optional)
-    end_at = '2013-10-20T19:20:30+01:00' # datetime | End point (of the timestampFieldName field) for the histogram (optional)
-    bucket_size = 'bucket_size_example' # str | Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
-
-    try:
-        # FetchQueryResultHistogram: Fetches the result from a previously started query, converts it to a histogram (counts in buckets).
-        api_response = await api_instance.fetch_query_result_histogram(execution_id, timestamp_field_name, start_at=start_at, end_at=end_at, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_histogram:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_histogram: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -425,10 +360,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -441,7 +372,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_json**
 > str fetch_query_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
@@ -452,71 +383,58 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
 
+        try:
+            # FetchQueryResultJson: Fetches the result from a previously started query, in JSON string format.  Please move to '/jsonProper' instead.  This may be marked as Deprecated in the future.
+            api_response = await api_instance.fetch_query_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_json: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-
-    try:
-        # FetchQueryResultJson: Fetches the result from a previously started query, in JSON string format.  Please move to '/jsonProper' instead.  This may be marked as Deprecated in the future.
-        api_response = await api_instance.fetch_query_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_json:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_json: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -534,10 +452,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -550,7 +464,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_json_proper**
 > str fetch_query_result_json_proper(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
@@ -561,72 +475,59 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
 
+        try:
+            # FetchQueryResultJsonProper: Fetches the result from a previously started query, in JSON format.
+            api_response = await api_instance.fetch_query_result_json_proper(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_json_proper: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-
-    try:
-        # FetchQueryResultJsonProper: Fetches the result from a previously started query, in JSON format.
-        api_response = await api_instance.fetch_query_result_json_proper(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_json_proper:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_json_proper: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -645,10 +546,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -661,7 +558,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_parquet**
 > bytearray fetch_query_result_parquet(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
@@ -672,69 +569,56 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
 
+        try:
+            # FetchQueryResultParquet: Fetches the result from a previously started query, in Parquet format.
+            api_response = await api_instance.fetch_query_result_parquet(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_parquet: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-
-    try:
-        # FetchQueryResultParquet: Fetches the result from a previously started query, in Parquet format.
-        api_response = await api_instance.fetch_query_result_parquet(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_parquet:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_parquet: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -750,10 +634,6 @@ Name | Type | Description  | Notes
 
 **bytearray**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -766,7 +646,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_pipe**
 > str fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
@@ -777,72 +657,59 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
 
+        try:
+            # FetchQueryResultPipe: Fetches the result from a previously started query, in pipe-delimited format.
+            api_response = await api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_pipe: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-
-    try:
-        # FetchQueryResultPipe: Fetches the result from a previously started query, in pipe-delimited format.
-        api_response = await api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_pipe:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_pipe: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -861,10 +728,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -877,7 +740,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_sqlite**
 > bytearray fetch_query_result_sqlite(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
@@ -888,69 +751,56 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
 
+        try:
+            # FetchQueryResultSqlite: Fetches the result from a previously started query, in SqLite format.
+            api_response = await api_instance.fetch_query_result_sqlite(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_sqlite: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-
-    try:
-        # FetchQueryResultSqlite: Fetches the result from a previously started query, in SqLite format.
-        api_response = await api_instance.fetch_query_result_sqlite(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_sqlite:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_sqlite: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -966,10 +816,6 @@ Name | Type | Description  | Notes
 
 **bytearray**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -982,7 +828,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_xml**
 > str fetch_query_result_xml(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
@@ -993,72 +839,59 @@ Fetch the data in various formats (if available, or if not simply being informed
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
 
+        try:
+            # FetchQueryResultXml: Fetches the result from a previously started query, in Xml format.
+            api_response = await api_instance.fetch_query_result_xml(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_xml: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-
-    try:
-        # FetchQueryResultXml: Fetches the result from a previously started query, in Xml format.
-        api_response = await api_instance.fetch_query_result_xml(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page)
-        print("The response of SqlBackgroundExecutionApi->fetch_query_result_xml:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->fetch_query_result_xml: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -1077,10 +910,6 @@ Name | Type | Description  | Notes
 
 **str**
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -1093,7 +922,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_progress_of**
 > BackgroundQueryProgressResponse get_progress_of(execution_id, build_from_logs)
@@ -1104,67 +933,53 @@ View progress information (up until this point) The following error codes are to
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
-from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+        build_from_logs = True # bool | Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course) (default to True)
 
+        try:
+            # GetProgressOf: View progress information (up until this point)
+            api_response = await api_instance.get_progress_of(execution_id, build_from_logs)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->get_progress_of: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    build_from_logs = True # bool | Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course) (default to True)
-
-    try:
-        # GetProgressOf: View progress information (up until this point)
-        api_response = await api_instance.get_progress_of(execution_id, build_from_logs)
-        print("The response of SqlBackgroundExecutionApi->get_progress_of:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->get_progress_of: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -1177,10 +992,6 @@ Name | Type | Description  | Notes
 
 [**BackgroundQueryProgressResponse**](BackgroundQueryProgressResponse.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: Not defined
@@ -1191,7 +1002,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **start_query**
 > BackgroundQueryResponse start_query(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
@@ -1202,70 +1013,56 @@ StartQuery: Starts to Execute LuminesceSql in the background.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 ```python
-from __future__ import print_function
-import time
-import luminesce
-from luminesce.rest import ApiException
-from luminesce.models.background_query_response import BackgroundQueryResponse
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
 from pprint import pprint
-
-import os
 from luminesce import (
     ApiClientFactory,
-    SqlBackgroundExecutionApi,
-    EnvironmentVariablesConfigurationLoader,
-    SecretsFileConfigurationLoader,
-    ArgsConfigurationLoader
+    SqlBackgroundExecutionApi
 )
 
-# Use the luminesce ApiClientFactory to build Api instances with a configured api client
-# By default this will read config from environment variables
-# Then from a secrets.json file found in the current working directory
-api_client_factory = ApiClientFactory()
+async def main():
 
-# The ApiClientFactory can be passed an iterable of configuration loaders to read configuration from
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
 
-api_url = "https://fbn-prd.lusid.com/honeycomb"
-# Path to a secrets.json file containing authentication credentials
-# See https://support.lusid.com/knowledgebase/article/KA-01667/en-us
-# for a detailed guide to setting up the SDK make authenticated calls to LUSID APIs
-secrets_path = os.getenv("FBN_SECRETS_PATH")
-app_name="LusidJupyterNotebook"
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
 
-config_loaders = [
-	EnvironmentVariablesConfigurationLoader(),
-	SecretsFileConfigurationLoader(api_secrets_file=secrets_path),
-	ArgsConfigurationLoader(api_url=api_url, app_name=app_name)
-]
-api_client_factory = ApiClientFactory(config_loaders=config_loaders)
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+        body = select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 # str | The LuminesceSql query to kick off.
+        scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
+        query_name = 'Intentionally slow test query' # str | A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`. (optional)
+        timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h) (optional) (default to 0)
+        keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
 
+        try:
+            # StartQuery: Starts to Execute LuminesceSql in the background.
+            api_response = await api_instance.start_query(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlBackgroundExecutionApi->start_query: %s\n" % e)
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-
-
-
-# Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-async with api_client_factory:
-    # Create an instance of the API class
-    api_instance = api_client_factory.build(luminesce.SqlBackgroundExecutionApi)
-    body = select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 # str | The LuminesceSql query to kick off.
-    scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
-    query_name = 'Intentionally slow test query' # str | A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`. (optional)
-    timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h) (optional) (default to 0)
-    keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
-
-    try:
-        # StartQuery: Starts to Execute LuminesceSql in the background.
-        api_response = await api_instance.start_query(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
-        print("The response of SqlBackgroundExecutionApi->start_query:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SqlBackgroundExecutionApi->start_query: %s\n" % e)
+asyncio.run(main())
 ```
-
 
 ### Parameters
 
@@ -1281,10 +1078,6 @@ Name | Type | Description  | Notes
 
 [**BackgroundQueryResponse**](BackgroundQueryResponse.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
  - **Content-Type**: text/plain
@@ -1297,5 +1090,5 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 

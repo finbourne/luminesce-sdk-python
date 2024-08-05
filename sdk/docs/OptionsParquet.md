@@ -24,6 +24,6 @@ options_parquet_dict = options_parquet_instance.to_dict()
 # create an instance of OptionsParquet from a dict
 options_parquet_form_dict = options_parquet.from_dict(options_parquet_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

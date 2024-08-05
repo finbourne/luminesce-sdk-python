@@ -35,6 +35,6 @@ options_csv_dict = options_csv_instance.to_dict()
 # create an instance of OptionsCsv from a dict
 options_csv_form_dict = options_csv.from_dict(options_csv_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

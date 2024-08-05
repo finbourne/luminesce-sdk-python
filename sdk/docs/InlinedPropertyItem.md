@@ -27,6 +27,6 @@ inlined_property_item_dict = inlined_property_item_instance.to_dict()
 # create an instance of InlinedPropertyItem from a dict
 inlined_property_item_form_dict = inlined_property_item.from_dict(inlined_property_item_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 

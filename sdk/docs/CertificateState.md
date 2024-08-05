@@ -37,6 +37,6 @@ certificate_state_dict = certificate_state_instance.to_dict()
 # create an instance of CertificateState from a dict
 certificate_state_form_dict = certificate_state.from_dict(certificate_state_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
 
