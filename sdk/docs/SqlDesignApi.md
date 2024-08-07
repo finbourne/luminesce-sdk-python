@@ -7,8 +7,8 @@ Method | HTTP request | Description
 [**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | [EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design
 [**put_inlined_properties_design_sql_to_design**](SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Generates a SQL-inlined-properties-design object from SQL string, if possible.
 [**put_inlined_properties_design_to_sql**](SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Generates inlined properties SQL from a structured design
-[**put_intellisense**](SqlDesignApi.md#put_intellisense) | **PUT** /api/Sql/intellisense | [EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
-[**put_intellisense_error**](SqlDesignApi.md#put_intellisense_error) | **PUT** /api/Sql/intellisenseError | [EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
+[**put_intellisense**](SqlDesignApi.md#put_intellisense) | **PUT** /api/Sql/intellisense | PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
+[**put_intellisense_error**](SqlDesignApi.md#put_intellisense_error) | **PUT** /api/Sql/intellisenseError | PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
 [**put_query_design_to_sql**](SqlDesignApi.md#put_query_design_to_sql) | **PUT** /api/Sql/fromdesign | [EXPERIMENTAL] PutQueryDesignToSql: Generates SQL from a structured query design
 [**put_query_to_format**](SqlDesignApi.md#put_query_to_format) | **PUT** /api/Sql/pretty | PutQueryToFormat: Formats SQL into a more readable form, a.k.a. Pretty-Print the SQL.
 [**put_sql_to_extract_scalar_parameters**](SqlDesignApi.md#put_sql_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters | [EXPERIMENTAL] PutSqlToExtractScalarParameters: Generates information about all the scalar parameters defined in the given SQL statement
@@ -277,7 +277,7 @@ Name | Type | Description  | Notes
 # **put_intellisense**
 > IntellisenseResponse put_intellisense(intellisense_request)
 
-[EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
+PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
 
 SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.
 
@@ -326,7 +326,7 @@ async def main():
         intellisense_request = IntellisenseRequest.from_dict({"lines":["select *","from somewhere"],"position":{"row":0,"column":4}}) # IntellisenseRequest | 
 
         try:
-            # [EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
+            # PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location
             api_response = await api_instance.put_intellisense(intellisense_request)
             pprint(api_response)
         except ApiException as e:
@@ -362,7 +362,7 @@ Name | Type | Description  | Notes
 # **put_intellisense_error**
 > ErrorHighlightResponse put_intellisense_error(error_highlight_request)
 
-[EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
+PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
 
 SQL (by line) to syntax check and return error ranges from within, if any.
 
@@ -411,7 +411,7 @@ async def main():
         error_highlight_request = ErrorHighlightRequest.from_dict({"lines":["select mx(x) x from y"],"ensureSomeTextIsSelected":false}) # ErrorHighlightRequest | 
 
         try:
-            # [EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
+            # PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)
             api_response = await api_instance.put_intellisense_error(error_highlight_request)
             pprint(api_response)
         except ApiException as e:

@@ -551,7 +551,7 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_intellisense(self, intellisense_request : IntellisenseRequest, async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
-        """[EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
+        """PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
 
         SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -583,7 +583,7 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_intellisense_with_http_info(self, intellisense_request : IntellisenseRequest, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
+        """PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
 
         SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -710,7 +710,7 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_intellisense_error(self, error_highlight_request : ErrorHighlightRequest, async_req: Optional[bool]=None, **kwargs) -> Union[ErrorHighlightResponse, Awaitable[ErrorHighlightResponse]]:  # noqa: E501
-        """[EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
+        """PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
 
         SQL (by line) to syntax check and return error ranges from within, if any.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -742,7 +742,7 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_intellisense_error_with_http_info(self, error_highlight_request : ErrorHighlightRequest, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
+        """PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
 
         SQL (by line) to syntax check and return error ranges from within, if any.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
