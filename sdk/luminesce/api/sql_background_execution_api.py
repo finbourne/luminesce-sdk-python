@@ -2007,15 +2007,15 @@ class SqlBackgroundExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[StrictBool, Field(..., description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")], **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    async def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @overload
-    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[StrictBool, Field(..., description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")], async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[StrictBool, Field(..., description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
+    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
         """GetProgressOf: View progress information (up until this point)  # noqa: E501
 
         View progress information (up until this point) The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
@@ -2027,7 +2027,7 @@ class SqlBackgroundExecutionApi:
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
-        :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course) (required)
+        :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)
         :type build_from_logs: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2049,7 +2049,7 @@ class SqlBackgroundExecutionApi:
         return self.get_progress_of_with_http_info(execution_id, build_from_logs, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_progress_of_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[StrictBool, Field(..., description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_progress_of_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetProgressOf: View progress information (up until this point)  # noqa: E501
 
         View progress information (up until this point) The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
@@ -2061,7 +2061,7 @@ class SqlBackgroundExecutionApi:
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
-        :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course) (required)
+        :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  False will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds`  since the query completed (as well as 'this was not a query at all' of course)
         :type build_from_logs: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2123,12 +2123,12 @@ class SqlBackgroundExecutionApi:
         if _params['execution_id']:
             _path_params['executionId'] = _params['execution_id']
 
-        if _params['build_from_logs']:
-            _path_params['buildFromLogs'] = _params['build_from_logs']
-
 
         # process the query parameters
         _query_params = []
+        if _params.get('build_from_logs') is not None:  # noqa: E501
+            _query_params.append(('buildFromLogs', _params['build_from_logs']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
