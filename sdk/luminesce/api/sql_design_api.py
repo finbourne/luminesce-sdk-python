@@ -24,6 +24,7 @@ from pydantic.v1 import Field, StrictBool, StrictInt, StrictStr
 
 from typing import List, Optional
 
+from luminesce.models.case_statement_design import CaseStatementDesign
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
@@ -55,6 +56,324 @@ class SqlDesignApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+    @overload
+    async def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, **kwargs) -> CaseStatementDesign:  # noqa: E501
+        ...
+
+    @overload
+    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> CaseStatementDesign:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CaseStatementDesign, Awaitable[CaseStatementDesign]]:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.  # noqa: E501
+
+        SQL to attempt to create an case statement Design object from  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_case_statement_design_sql_to_design(body, async_req=True)
+        >>> result = thread.get()
+
+        :param body: SQL query to generate the case statement design object from
+        :type body: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: CaseStatementDesign
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the put_case_statement_design_sql_to_design_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.put_case_statement_design_sql_to_design_with_http_info(body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def put_case_statement_design_sql_to_design_with_http_info(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.  # noqa: E501
+
+        SQL to attempt to create an case statement Design object from  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_case_statement_design_sql_to_design_with_http_info(body, async_req=True)
+        >>> result = thread.get()
+
+        :param body: SQL query to generate the case statement design object from
+        :type body: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(CaseStatementDesign, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method put_case_statement_design_sql_to_design" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['body'] is not None:
+            _body_params = _params['body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['text/plain']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "CaseStatementDesign",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/Sql/tocasestatementdesign', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @overload
+    async def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
+        ...
+
+    @overload
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design  # noqa: E501
+
+        CaseStatementDesign object to try and create a SQL query from  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_case_statement_design_to_sql(case_statement_design, async_req=True)
+        >>> result = thread.get()
+
+        :param case_statement_design: Structured file read design object to generate SQL from (required)
+        :type case_statement_design: CaseStatementDesign
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: str
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the put_case_statement_design_to_sql_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.put_case_statement_design_to_sql_with_http_info(case_statement_design, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def put_case_statement_design_to_sql_with_http_info(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design  # noqa: E501
+
+        CaseStatementDesign object to try and create a SQL query from  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.put_case_statement_design_to_sql_with_http_info(case_statement_design, async_req=True)
+        >>> result = thread.get()
+
+        :param case_statement_design: Structured file read design object to generate SQL from (required)
+        :type case_statement_design: CaseStatementDesign
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'case_statement_design'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method put_case_statement_design_to_sql" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['case_statement_design'] is not None:
+            _body_params = _params['case_statement_design']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json-patch+json', 'application/json', 'text/json', 'application/*+json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "str",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/Sql/fromcasestatementdesign', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
 
     @overload
     async def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501

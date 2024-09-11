@@ -4,6 +4,8 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**put_case_statement_design_sql_to_design**](SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.
+[**put_case_statement_design_to_sql**](SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design
 [**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | [EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design
 [**put_inlined_properties_design_sql_to_design**](SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Generates a SQL-inlined-properties-design object from SQL string, if possible.
 [**put_inlined_properties_design_to_sql**](SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Generates inlined properties SQL from a structured design
@@ -19,6 +21,175 @@ Method | HTTP request | Description
 [**put_view_design_to_sql**](SqlDesignApi.md#put_view_design_to_sql) | **PUT** /api/Sql/fromviewdesign | [EXPERIMENTAL] PutViewDesignToSql: Generates view creation sql from a structured view creation design
 [**put_writer_design_to_sql**](SqlDesignApi.md#put_writer_design_to_sql) | **PUT** /api/Sql/fromwriterdesign | [EXPERIMENTAL] PutWriterDesignToSql: Generates writer SQL from a valid writer-design structure
 
+
+# **put_case_statement_design_sql_to_design**
+> CaseStatementDesign put_case_statement_design_sql_to_design(body=body)
+
+[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.
+
+SQL to attempt to create an case statement Design object from
+
+### Example
+
+```python
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
+from pprint import pprint
+from luminesce import (
+    ApiClientFactory,
+    SqlDesignApi
+)
+
+async def main():
+
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
+
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
+
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlDesignApi)
+        body = CASE 
+ WHEN [currency] = 'US' THEN 'USD' 
+ WHEN [currency] = 'Gb' THEN 'GBP' 
+ ELSE [currency] 
+ END # str | SQL query to generate the case statement design object from (optional)
+
+        try:
+            # [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.
+            api_response = await api_instance.put_case_statement_design_sql_to_design(body=body)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlDesignApi->put_case_statement_design_sql_to_design: %s\n" % e)
+
+asyncio.run(main())
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **str**| SQL query to generate the case statement design object from | [optional] 
+
+### Return type
+
+[**CaseStatementDesign**](CaseStatementDesign.md)
+
+### HTTP request headers
+
+ - **Content-Type**: text/plain
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+# **put_case_statement_design_to_sql**
+> str put_case_statement_design_to_sql(case_statement_design)
+
+[EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design
+
+CaseStatementDesign object to try and create a SQL query from
+
+### Example
+
+```python
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.models import *
+from pprint import pprint
+from luminesce import (
+    ApiClientFactory,
+    SqlDesignApi
+)
+
+async def main():
+
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
+
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+    api_client_factory = ApiClientFactory()
+
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlDesignApi)
+
+        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+        # Change the lines below to switch approach
+        # case_statement_design = CaseStatementDesign()
+        # case_statement_design = CaseStatementDesign.from_json("")
+        case_statement_design = CaseStatementDesign.from_dict({"selectedField":"currency","caseStatementItems":[{"filter":"Eq","source":"USD","target":"US"}]}) # CaseStatementDesign | Structured file read design object to generate SQL from
+
+        try:
+            # [EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design
+            api_response = await api_instance.put_case_statement_design_to_sql(case_statement_design)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlDesignApi->put_case_statement_design_to_sql: %s\n" % e)
+
+asyncio.run(main())
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **case_statement_design** | [**CaseStatementDesign**](CaseStatementDesign.md)| Structured file read design object to generate SQL from | 
+
+### Return type
+
+**str**
+
+### HTTP request headers
+
+ - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_file_read_design_to_sql**
 > FileReaderBuilderResponse put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query)

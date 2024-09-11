@@ -29,6 +29,8 @@ from luminesce.models.background_query_cancel_response import BackgroundQueryCan
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from luminesce.models.background_query_state import BackgroundQueryState
+from luminesce.models.case_statement_design import CaseStatementDesign
+from luminesce.models.case_statement_item import CaseStatementItem
 from luminesce.models.certificate_action import CertificateAction
 from luminesce.models.certificate_file_type import CertificateFileType
 from luminesce.models.certificate_state import CertificateState
@@ -98,6 +100,8 @@ __all__ = [
     "BackgroundQueryProgressResponse",
     "BackgroundQueryResponse",
     "BackgroundQueryState",
+    "CaseStatementDesign",
+    "CaseStatementItem",
     "CertificateAction",
     "CertificateFileType",
     "CertificateState",

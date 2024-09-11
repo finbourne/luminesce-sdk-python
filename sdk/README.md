@@ -35,6 +35,8 @@ Class | Method | HTTP request | Description
 *SqlBackgroundExecutionApi* | [**fetch_query_result_xml**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetches the result from a previously started query, in Xml format.
 *SqlBackgroundExecutionApi* | [**get_progress_of**](docs/SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View progress information (up until this point)
 *SqlBackgroundExecutionApi* | [**start_query**](docs/SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Starts to Execute LuminesceSql in the background.
+*SqlDesignApi* | [**put_case_statement_design_sql_to_design**](docs/SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.
+*SqlDesignApi* | [**put_case_statement_design_to_sql**](docs/SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design
 *SqlDesignApi* | [**put_file_read_design_to_sql**](docs/SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | [EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design
 *SqlDesignApi* | [**put_inlined_properties_design_sql_to_design**](docs/SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Generates a SQL-inlined-properties-design object from SQL string, if possible.
 *SqlDesignApi* | [**put_inlined_properties_design_to_sql**](docs/SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Generates inlined properties SQL from a structured design
@@ -83,6 +85,8 @@ Class | Method | HTTP request | Description
  - [BackgroundQueryProgressResponse](docs/BackgroundQueryProgressResponse.md)
  - [BackgroundQueryResponse](docs/BackgroundQueryResponse.md)
  - [BackgroundQueryState](docs/BackgroundQueryState.md)
+ - [CaseStatementDesign](docs/CaseStatementDesign.md)
+ - [CaseStatementItem](docs/CaseStatementItem.md)
  - [CertificateAction](docs/CertificateAction.md)
  - [CertificateFileType](docs/CertificateFileType.md)
  - [CertificateState](docs/CertificateState.md)
