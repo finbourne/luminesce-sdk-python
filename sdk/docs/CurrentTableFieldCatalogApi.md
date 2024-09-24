@@ -4,23 +4,24 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_catalog**](CurrentTableFieldCatalogApi.md#get_catalog) | **GET** /api/Catalog | GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
-[**get_fields**](CurrentTableFieldCatalogApi.md#get_fields) | **GET** /api/Catalog/fields | GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)
-[**get_providers**](CurrentTableFieldCatalogApi.md#get_providers) | **GET** /api/Catalog/providers | GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+[**get_catalog**](CurrentTableFieldCatalogApi.md#get_catalog) | **GET** /api/Catalog | GetCatalog: Flattened Table/Faield Catalog
+[**get_fields**](CurrentTableFieldCatalogApi.md#get_fields) | **GET** /api/Catalog/fields | GetFields: Lists field/parameter information for providers
+[**get_providers**](CurrentTableFieldCatalogApi.md#get_providers) | **GET** /api/Catalog/providers | GetProviders: Lists providers available
 
 
 # **get_catalog**
 > str get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
 
-GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+GetCatalog: Flattened Table/Faield Catalog
 
- Returns the User's full version of the catalog (Providers and their fields)  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
+ Returns the User's full version of the catalog (Providers, their fields and associated information) that are currently running that you have access to (in Json format).  This is the entire catalog flattened, which is often quite large and always a bit repetitive.   The internal results are cached for several minutes.  Consider using `api/Catalog/providers` and `api/Catalog/fields` for a more granular and incremental loading flow.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
 ### Example
 
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -47,6 +48,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -58,7 +67,10 @@ async def main():
         use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
 
         try:
-            # GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache, opts=opts)
+
+            # GetCatalog: Flattened Table/Faield Catalog
             api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
             pprint(api_response)
         except ApiException as e:
@@ -94,15 +106,16 @@ Name | Type | Description  | Notes
 # **get_fields**
 > str get_fields(table_like=table_like)
 
-GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+GetFields: Lists field/parameter information for providers
 
- Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
+ Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
 ### Example
 
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -129,6 +142,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -138,7 +159,10 @@ async def main():
         table_like = '%' # str |  (optional) (default to '%')
 
         try:
-            # GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.get_fields(table_like=table_like, opts=opts)
+
+            # GetFields: Lists field/parameter information for providers
             api_response = await api_instance.get_fields(table_like=table_like)
             pprint(api_response)
         except ApiException as e:
@@ -172,15 +196,16 @@ Name | Type | Description  | Notes
 # **get_providers**
 > str get_providers(free_text_search=free_text_search, use_cache=use_cache)
 
-GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+GetProviders: Lists providers available
 
- Returns the User's full version of the catalog but only the table/provider-level information  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
+ Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
 ### Example
 
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -207,6 +232,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -217,7 +250,10 @@ async def main():
         use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
 
         try:
-            # GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache, opts=opts)
+
+            # GetProviders: Lists providers available
             api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
             pprint(api_response)
         except ApiException as e:

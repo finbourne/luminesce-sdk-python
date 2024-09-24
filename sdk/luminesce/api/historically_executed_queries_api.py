@@ -36,6 +36,7 @@ from luminesce.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
 )
+from luminesce.extensions.configuration_options import ConfigurationOptions
 
 
 class HistoricallyExecutedQueriesApi:
@@ -60,7 +61,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def cancel_history(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryCancelResponse, Awaitable[BackgroundQueryCancelResponse]]:  # noqa: E501
-        """CancelHistory: Cancels (if running) or clears the data from (if completed) a previously started History query  # noqa: E501
+        """CancelHistory: Cancels / Clears data from a query history search  # noqa: E501
 
         Cancel the query (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -73,10 +74,9 @@ class HistoricallyExecutedQueriesApi:
         :type execution_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -92,7 +92,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def cancel_history_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
-        """CancelHistory: Cancels (if running) or clears the data from (if completed) a previously started History query  # noqa: E501
+        """CancelHistory: Cancels / Clears data from a query history search  # noqa: E501
 
         Cancel the query (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -113,10 +113,9 @@ class HistoricallyExecutedQueriesApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -141,7 +140,8 @@ class HistoricallyExecutedQueriesApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -197,6 +197,7 @@ class HistoricallyExecutedQueriesApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -210,7 +211,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def fetch_history_result_histogram(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], bucket_size : Annotated[Optional[StrictStr], Field(description="Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated.")] = None, filter : Annotated[Optional[constr(strict=True, max_length=16384, min_length=0)], Field(description="An ODATA filter per Finbourne.Filtering syntax.")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """FetchHistoryResultHistogram: Fetches the result from a previously started query, converts it to a histogram (counts in buckets).  # noqa: E501
+        """FetchHistoryResultHistogram: Makes a histogram of results from a query history search  # noqa: E501
 
         Fetch the histogram in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -229,10 +230,9 @@ class HistoricallyExecutedQueriesApi:
         :type json_proper: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -248,7 +248,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def fetch_history_result_histogram_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], bucket_size : Annotated[Optional[StrictStr], Field(description="Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated.")] = None, filter : Annotated[Optional[constr(strict=True, max_length=16384, min_length=0)], Field(description="An ODATA filter per Finbourne.Filtering syntax.")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """FetchHistoryResultHistogram: Fetches the result from a previously started query, converts it to a histogram (counts in buckets).  # noqa: E501
+        """FetchHistoryResultHistogram: Makes a histogram of results from a query history search  # noqa: E501
 
         Fetch the histogram in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -275,10 +275,9 @@ class HistoricallyExecutedQueriesApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -306,7 +305,8 @@ class HistoricallyExecutedQueriesApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -373,6 +373,7 @@ class HistoricallyExecutedQueriesApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -386,7 +387,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def fetch_history_result_json(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], sort_by : Annotated[Optional[constr(strict=True, max_length=16384, min_length=1)], Field(description="Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[constr(strict=True, max_length=16384, min_length=0)], Field(description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field(description="Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field(description="Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """FetchHistoryResultJson: Fetches the result from a previously started query, in JSON format.  # noqa: E501
+        """FetchHistoryResultJson: Fetches JSON results from a query history search  # noqa: E501
 
         Fetch the data in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -413,10 +414,9 @@ class HistoricallyExecutedQueriesApi:
         :type json_proper: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -432,7 +432,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def fetch_history_result_json_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], sort_by : Annotated[Optional[constr(strict=True, max_length=16384, min_length=1)], Field(description="Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[constr(strict=True, max_length=16384, min_length=0)], Field(description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field(description="Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field(description="Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """FetchHistoryResultJson: Fetches the result from a previously started query, in JSON format.  # noqa: E501
+        """FetchHistoryResultJson: Fetches JSON results from a query history search  # noqa: E501
 
         Fetch the data in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -467,10 +467,9 @@ class HistoricallyExecutedQueriesApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -502,7 +501,8 @@ class HistoricallyExecutedQueriesApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -581,6 +581,7 @@ class HistoricallyExecutedQueriesApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -594,7 +595,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def get_history(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
-        """GetHistory: Shows queries executed in a given historical time window (in Json format).  # noqa: E501
+        """GetHistory: Starts a background query history search  # noqa: E501
 
          Starts to load the historical query logs for a certain time range, search criteria, etc.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -615,10 +616,9 @@ class HistoricallyExecutedQueriesApi:
         :type may_use_native_store: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -634,7 +634,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def get_history_with_http_info(self, start_at : Annotated[Optional[datetime], Field(description="Date time to start the search from.  Will default to Now - 1 Day")] = None, end_at : Annotated[Optional[datetime], Field(description="Date time to end the search at.  Defaults to now.")] = None, free_text_search : Annotated[Optional[StrictStr], Field(description="Some test that must be in at least one field returned.")] = None, show_all : Annotated[Optional[StrictBool], Field(description="For users with extra permissions, they may optionally see other users' queries.")] = None, may_use_native_store : Annotated[Optional[StrictBool], Field(description="Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """GetHistory: Shows queries executed in a given historical time window (in Json format).  # noqa: E501
+        """GetHistory: Starts a background query history search  # noqa: E501
 
          Starts to load the historical query logs for a certain time range, search criteria, etc.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -663,10 +663,9 @@ class HistoricallyExecutedQueriesApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -695,7 +694,8 @@ class HistoricallyExecutedQueriesApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -769,6 +769,7 @@ class HistoricallyExecutedQueriesApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -782,7 +783,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def get_progress_of_history(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
-        """GetProgressOfHistory: View progress information (up until this point) of a history query  # noqa: E501
+        """GetProgressOfHistory: View progress of a query history search  # noqa: E501
 
         View progress information (up until this point) of previously started History query The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -795,10 +796,9 @@ class HistoricallyExecutedQueriesApi:
         :type execution_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -814,7 +814,7 @@ class HistoricallyExecutedQueriesApi:
 
     @validate_arguments
     def get_progress_of_history_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
-        """GetProgressOfHistory: View progress information (up until this point) of a history query  # noqa: E501
+        """GetProgressOfHistory: View progress of a query history search  # noqa: E501
 
         View progress information (up until this point) of previously started History query The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -835,10 +835,9 @@ class HistoricallyExecutedQueriesApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -863,7 +862,8 @@ class HistoricallyExecutedQueriesApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -919,5 +919,6 @@ class HistoricallyExecutedQueriesApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))

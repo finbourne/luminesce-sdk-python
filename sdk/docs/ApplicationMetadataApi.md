@@ -19,6 +19,7 @@ GetServicesAsAccessControlledResources: Get resources available for access contr
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -45,6 +46,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -53,6 +62,9 @@ async def main():
         api_instance = api_client_factory.build(ApplicationMetadataApi)
 
         try:
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.get_services_as_access_controlled_resources(opts=opts)
+
             # GetServicesAsAccessControlledResources: Get resources available for access control
             api_response = await api_instance.get_services_as_access_controlled_resources()
             pprint(api_response)

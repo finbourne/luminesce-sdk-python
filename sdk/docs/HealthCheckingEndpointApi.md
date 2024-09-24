@@ -4,21 +4,22 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**fake_node_reclaim**](HealthCheckingEndpointApi.md#fake_node_reclaim) | **GET** /fakeNodeReclaim | [INTERNAL] FakeNodeReclaim: An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place.
+[**fake_node_reclaim**](HealthCheckingEndpointApi.md#fake_node_reclaim) | **GET** /fakeNodeReclaim | [INTERNAL] FakeNodeReclaim: Helps testing of AWS node reclaim behaviour
 
 
 # **fake_node_reclaim**
 > object fake_node_reclaim(seconds_until_reclaim=seconds_until_reclaim)
 
-[INTERNAL] FakeNodeReclaim: An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place.
+[INTERNAL] FakeNodeReclaim: Helps testing of AWS node reclaim behaviour
 
-Internal testing controller to simulate having received an AWS node reclaim warning, or similar.
+ An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place. Simulates having received an AWS node reclaim warning, or similar.
 
 ### Example
 
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -45,6 +46,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -54,7 +63,10 @@ async def main():
         seconds_until_reclaim = 119 # int | the number of seconds from which to assume node termination (optional) (default to 119)
 
         try:
-            # [INTERNAL] FakeNodeReclaim: An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place.
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.fake_node_reclaim(seconds_until_reclaim=seconds_until_reclaim, opts=opts)
+
+            # [INTERNAL] FakeNodeReclaim: Helps testing of AWS node reclaim behaviour
             api_response = await api_instance.fake_node_reclaim(seconds_until_reclaim=seconds_until_reclaim)
             pprint(api_response)
         except ApiException as e:

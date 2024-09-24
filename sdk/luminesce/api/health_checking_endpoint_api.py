@@ -31,6 +31,7 @@ from luminesce.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
 )
+from luminesce.extensions.configuration_options import ConfigurationOptions
 
 
 class HealthCheckingEndpointApi:
@@ -55,9 +56,9 @@ class HealthCheckingEndpointApi:
 
     @validate_arguments
     def fake_node_reclaim(self, seconds_until_reclaim : Annotated[Optional[StrictInt], Field(description="the number of seconds from which to assume node termination")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[object, Awaitable[object]]:  # noqa: E501
-        """[INTERNAL] FakeNodeReclaim: An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place.  # noqa: E501
+        """[INTERNAL] FakeNodeReclaim: Helps testing of AWS node reclaim behaviour  # noqa: E501
 
-        Internal testing controller to simulate having received an AWS node reclaim warning, or similar.  # noqa: E501
+         An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place. Simulates having received an AWS node reclaim warning, or similar.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -68,10 +69,9 @@ class HealthCheckingEndpointApi:
         :type seconds_until_reclaim: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -87,9 +87,9 @@ class HealthCheckingEndpointApi:
 
     @validate_arguments
     def fake_node_reclaim_with_http_info(self, seconds_until_reclaim : Annotated[Optional[StrictInt], Field(description="the number of seconds from which to assume node termination")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[INTERNAL] FakeNodeReclaim: An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place.  # noqa: E501
+        """[INTERNAL] FakeNodeReclaim: Helps testing of AWS node reclaim behaviour  # noqa: E501
 
-        Internal testing controller to simulate having received an AWS node reclaim warning, or similar.  # noqa: E501
+         An internal Method used to mark the next SIGTERM as though an Aws Node reclaim were about to take place. Simulates having received an AWS node reclaim warning, or similar.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -108,10 +108,9 @@ class HealthCheckingEndpointApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -136,7 +135,8 @@ class HealthCheckingEndpointApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -192,5 +192,6 @@ class HealthCheckingEndpointApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))

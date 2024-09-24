@@ -4,23 +4,24 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate&#39;s public or private key - if any
-[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
-[**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | [EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
+[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
+[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: Lists previously minted certificates
+[**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
 
 
 # **download_certificate**
 > bytearray download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
 
-[EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any
+[EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
 
- Downloads your latest Domain or User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden 
+ Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden 
 
 ### Example
 
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -47,6 +48,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -58,7 +67,10 @@ async def main():
         may_auto_create = False # bool | If no matching cert is available, should an attempt be made to Create/Renew it with default options? (optional) (default to False)
 
         try:
-            # [EXPERIMENTAL] DownloadCertificate: Downloads your latest Domain or User certificate's public or private key - if any
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create, opts=opts)
+
+            # [EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
             api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
             pprint(api_response)
         except ApiException as e:
@@ -96,7 +108,7 @@ Name | Type | Description  | Notes
 # **list_certificates**
 > List[CertificateState] list_certificates()
 
-[EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
+[EXPERIMENTAL] ListCertificates: Lists previously minted certificates
 
  Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
@@ -105,6 +117,7 @@ Name | Type | Description  | Notes
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -131,6 +144,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -139,7 +160,10 @@ async def main():
         api_instance = api_client_factory.build(CertificateManagementApi)
 
         try:
-            # [EXPERIMENTAL] ListCertificates: Lists all the certificates previously minted to which you have access
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.list_certificates(opts=opts)
+
+            # [EXPERIMENTAL] ListCertificates: Lists previously minted certificates
             api_response = await api_instance.list_certificates()
             pprint(api_response)
         except ApiException as e:
@@ -172,7 +196,7 @@ This endpoint does not need any parameter.
 # **manage_certificate**
 > CertificateState manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
 
-[EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
+[EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
 
  Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden 
 
@@ -181,6 +205,7 @@ This endpoint does not need any parameter.
 ```python
 import asyncio
 from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
@@ -207,6 +232,14 @@ async def main():
     # Use the luminesce ApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
     api_client_factory = ApiClientFactory()
 
     # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
@@ -221,7 +254,10 @@ async def main():
         dry_run = True # bool | True will just validate the request, but perform no changes to any system (optional) (default to True)
 
         try:
-            # [EXPERIMENTAL] ManageCertificate: Manages a new certificate (Create / Renew / Revoke)
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, opts=opts)
+
+            # [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
             api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
             pprint(api_response)
         except ApiException as e:

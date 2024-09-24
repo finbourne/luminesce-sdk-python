@@ -37,6 +37,7 @@ from luminesce.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
 )
+from luminesce.extensions.configuration_options import ConfigurationOptions
 
 
 class MultiQueryExecutionApi:
@@ -61,7 +62,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def cancel_multi_query(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryCancelResponse, Awaitable[BackgroundQueryCancelResponse]]:  # noqa: E501
-        """CancelMultiQuery: Cancels (if running) or clears the data from (if completed) a previously started query-set  # noqa: E501
+        """CancelMultiQuery: Cancels / Clears a previously started query-set  # noqa: E501
 
         Cancel the query-set (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -74,10 +75,9 @@ class MultiQueryExecutionApi:
         :type execution_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -93,7 +93,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def cancel_multi_query_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
-        """CancelMultiQuery: Cancels (if running) or clears the data from (if completed) a previously started query-set  # noqa: E501
+        """CancelMultiQuery: Cancels / Clears a previously started query-set  # noqa: E501
 
         Cancel the query-set (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -114,10 +114,9 @@ class MultiQueryExecutionApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -142,7 +141,8 @@ class MultiQueryExecutionApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -198,6 +198,7 @@ class MultiQueryExecutionApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -211,7 +212,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def get_progress_of_multi_query(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundMultiQueryProgressResponse, Awaitable[BackgroundMultiQueryProgressResponse]]:  # noqa: E501
-        """GetProgressOfMultiQuery: View progress information (up until this point) for the entire query-set  # noqa: E501
+        """GetProgressOfMultiQuery: View progress information for the entire query-set  # noqa: E501
 
         View progress information (up until this point) for the entire query-set The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -224,10 +225,9 @@ class MultiQueryExecutionApi:
         :type execution_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -243,7 +243,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def get_progress_of_multi_query_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
-        """GetProgressOfMultiQuery: View progress information (up until this point) for the entire query-set  # noqa: E501
+        """GetProgressOfMultiQuery: View progress information for the entire query-set  # noqa: E501
 
         View progress information (up until this point) for the entire query-set The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -264,10 +264,9 @@ class MultiQueryExecutionApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -292,7 +291,8 @@ class MultiQueryExecutionApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -348,6 +348,7 @@ class MultiQueryExecutionApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -361,7 +362,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def start_queries(self, type : Annotated[MultiQueryDefinitionType, Field(..., description="An enum value defining the set of statements being executed")], body : Annotated[StrictStr, Field(..., description="A \"search\" value (e.g. 'Apple' on an instrument search, a `Finbourne.Filtering` expression of Insights, etc.)  In the cases where \"Nothing\" is valid for a `Finbourne.Filtering` expression, pass `True`.")], as_at : Annotated[Optional[datetime], Field(description="The AsAt time used by any bitemporal provider in the queries.")] = None, effective_at : Annotated[Optional[datetime], Field(description="The EffectiveAt time used by any bitemporal provider in the queries.")] = None, limit1 : Annotated[Optional[StrictInt], Field(description="A limit that is applied to first-level queries (e.g. Instruments themselves)")] = None, limit2 : Annotated[Optional[StrictInt], Field(description="A limit that is applied to second-level queries (e.g. Holdings based on the set of Instruments found)")] = None, input1 : Annotated[Optional[StrictStr], Field(description="A value available to queries, these vary by 'type' and are only used by some types at all.  e.g. a start-date of some sort")] = None, input2 : Annotated[Optional[StrictStr], Field(description="A second value available to queries, these vary by 'type' and are only used by some types at all.")] = None, input3 : Annotated[Optional[StrictStr], Field(description="A third value available to queries, these vary by 'type' and are only used by some types at all.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 1200s (20m)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundMultiQueryResponse, Awaitable[BackgroundMultiQueryResponse]]:  # noqa: E501
-        """StartQueries: Starts to Execute the LuminesceSql statements in the background.  # noqa: E501
+        """StartQueries: Runs a given set of Sql queries in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready), on a per result basis - view progress information (up until this point), for all results in one go - cancel the queries (if still running) / clear the data (if already returned)  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -394,10 +395,9 @@ class MultiQueryExecutionApi:
         :type keep_for_seconds: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -413,7 +413,7 @@ class MultiQueryExecutionApi:
 
     @validate_arguments
     def start_queries_with_http_info(self, type : Annotated[MultiQueryDefinitionType, Field(..., description="An enum value defining the set of statements being executed")], body : Annotated[StrictStr, Field(..., description="A \"search\" value (e.g. 'Apple' on an instrument search, a `Finbourne.Filtering` expression of Insights, etc.)  In the cases where \"Nothing\" is valid for a `Finbourne.Filtering` expression, pass `True`.")], as_at : Annotated[Optional[datetime], Field(description="The AsAt time used by any bitemporal provider in the queries.")] = None, effective_at : Annotated[Optional[datetime], Field(description="The EffectiveAt time used by any bitemporal provider in the queries.")] = None, limit1 : Annotated[Optional[StrictInt], Field(description="A limit that is applied to first-level queries (e.g. Instruments themselves)")] = None, limit2 : Annotated[Optional[StrictInt], Field(description="A limit that is applied to second-level queries (e.g. Holdings based on the set of Instruments found)")] = None, input1 : Annotated[Optional[StrictStr], Field(description="A value available to queries, these vary by 'type' and are only used by some types at all.  e.g. a start-date of some sort")] = None, input2 : Annotated[Optional[StrictStr], Field(description="A second value available to queries, these vary by 'type' and are only used by some types at all.")] = None, input3 : Annotated[Optional[StrictStr], Field(description="A third value available to queries, these vary by 'type' and are only used by some types at all.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 1200s (20m)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """StartQueries: Starts to Execute the LuminesceSql statements in the background.  # noqa: E501
+        """StartQueries: Runs a given set of Sql queries in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready), on a per result basis - view progress information (up until this point), for all results in one go - cancel the queries (if still running) / clear the data (if already returned)  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -454,10 +454,9 @@ class MultiQueryExecutionApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -492,7 +491,8 @@ class MultiQueryExecutionApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -593,5 +593,6 @@ class MultiQueryExecutionApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))

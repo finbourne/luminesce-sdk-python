@@ -31,6 +31,7 @@ from luminesce.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
 )
+from luminesce.extensions.configuration_options import ConfigurationOptions
 
 
 class CurrentTableFieldCatalogApi:
@@ -55,9 +56,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field(description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetCatalog: Flattened Table/Faield Catalog  # noqa: E501
 
-         Returns the User's full version of the catalog (Providers and their fields)  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog (Providers, their fields and associated information) that are currently running that you have access to (in Json format).  This is the entire catalog flattened, which is often quite large and always a bit repetitive.   The internal results are cached for several minutes.  Consider using `api/Catalog/providers` and `api/Catalog/fields` for a more granular and incremental loading flow.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -72,10 +73,9 @@ class CurrentTableFieldCatalogApi:
         :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -91,9 +91,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_catalog_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field(description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """GetCatalog: Shows Table and Field level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetCatalog: Flattened Table/Faield Catalog  # noqa: E501
 
-         Returns the User's full version of the catalog (Providers and their fields)  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog (Providers, their fields and associated information) that are currently running that you have access to (in Json format).  This is the entire catalog flattened, which is often quite large and always a bit repetitive.   The internal results are cached for several minutes.  Consider using `api/Catalog/providers` and `api/Catalog/fields` for a more granular and incremental loading flow.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -116,10 +116,9 @@ class CurrentTableFieldCatalogApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -146,7 +145,8 @@ class CurrentTableFieldCatalogApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -208,6 +208,7 @@ class CurrentTableFieldCatalogApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -221,9 +222,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_fields(self, table_like : Optional[StrictStr] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetFields: Lists field/parameter information for providers  # noqa: E501
 
-         Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -234,10 +235,9 @@ class CurrentTableFieldCatalogApi:
         :type table_like: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -253,9 +253,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_fields_with_http_info(self, table_like : Optional[StrictStr] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """GetFields: Shows Table level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetFields: Lists field/parameter information for providers  # noqa: E501
 
-         Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -274,10 +274,9 @@ class CurrentTableFieldCatalogApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -302,7 +301,8 @@ class CurrentTableFieldCatalogApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -358,6 +358,7 @@ class CurrentTableFieldCatalogApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -371,9 +372,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field(description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetProviders: Lists providers available  # noqa: E501
 
-         Returns the User's full version of the catalog but only the table/provider-level information  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -386,10 +387,9 @@ class CurrentTableFieldCatalogApi:
         :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -405,9 +405,9 @@ class CurrentTableFieldCatalogApi:
 
     @validate_arguments
     def get_providers_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field(description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """GetProviders: Shows Table level information on Providers that are currently running that you have access to (in Json format)  # noqa: E501
+        """GetProviders: Lists providers available  # noqa: E501
 
-         Returns the User's full version of the catalog but only the table/provider-level information  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -428,10 +428,9 @@ class CurrentTableFieldCatalogApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -457,7 +456,8 @@ class CurrentTableFieldCatalogApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -516,5 +516,6 @@ class CurrentTableFieldCatalogApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))

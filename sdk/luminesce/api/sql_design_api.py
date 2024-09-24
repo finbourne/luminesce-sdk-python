@@ -43,6 +43,7 @@ from luminesce.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
 )
+from luminesce.extensions.configuration_options import ConfigurationOptions
 
 
 class SqlDesignApi:
@@ -58,32 +59,31 @@ class SqlDesignApi:
         self.api_client = api_client
 
     @overload
-    async def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, **kwargs) -> CaseStatementDesign:  # noqa: E501
+    async def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL to attempt to create an case statement Design object from")] = None, **kwargs) -> CaseStatementDesign:  # noqa: E501
         ...
 
     @overload
-    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> CaseStatementDesign:  # noqa: E501
+    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL to attempt to create an case statement Design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> CaseStatementDesign:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CaseStatementDesign, Awaitable[CaseStatementDesign]]:  # noqa: E501
-        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.  # noqa: E501
+    def put_case_statement_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL to attempt to create an case statement Design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CaseStatementDesign, Awaitable[CaseStatementDesign]]:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL to a case statement design object  # noqa: E501
 
-        SQL to attempt to create an case statement Design object from  # noqa: E501
+        Converts a SQL query to a CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_case_statement_design_sql_to_design(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the case statement design object from
+        :param body: SQL to attempt to create an case statement Design object from
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -98,17 +98,17 @@ class SqlDesignApi:
         return self.put_case_statement_design_sql_to_design_with_http_info(body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_case_statement_design_sql_to_design_with_http_info(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the case statement design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL queries to a CaseStatementDesign object.  # noqa: E501
+    def put_case_statement_design_sql_to_design_with_http_info(self, body : Annotated[Optional[StrictStr], Field(description="SQL to attempt to create an case statement Design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Converts SQL to a case statement design object  # noqa: E501
 
-        SQL to attempt to create an case statement Design object from  # noqa: E501
+        Converts a SQL query to a CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_case_statement_design_sql_to_design_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the case statement design object from
+        :param body: SQL to attempt to create an case statement Design object from
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -120,10 +120,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -148,7 +147,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -213,36 +213,36 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design  # noqa: E501
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Converts a case statement design object to SQL  # noqa: E501
 
-        CaseStatementDesign object to try and create a SQL query from  # noqa: E501
+        Generates a SQL case statement query from a structured CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_case_statement_design_to_sql(case_statement_design, async_req=True)
         >>> result = thread.get()
 
-        :param case_statement_design: Structured file read design object to generate SQL from (required)
+        :param case_statement_design: CaseStatementDesign object to try and create a SQL query from (required)
         :type case_statement_design: CaseStatementDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -257,17 +257,17 @@ class SqlDesignApi:
         return self.put_case_statement_design_to_sql_with_http_info(case_statement_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_case_statement_design_to_sql_with_http_info(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Generates SQL case statement queries from a structured design  # noqa: E501
+    def put_case_statement_design_to_sql_with_http_info(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutCaseStatementDesignToSql: Converts a case statement design object to SQL  # noqa: E501
 
-        CaseStatementDesign object to try and create a SQL query from  # noqa: E501
+        Generates a SQL case statement query from a structured CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_case_statement_design_to_sql_with_http_info(case_statement_design, async_req=True)
         >>> result = thread.get()
 
-        :param case_statement_design: Structured file read design object to generate SQL from (required)
+        :param case_statement_design: CaseStatementDesign object to try and create a SQL query from (required)
         :type case_statement_design: CaseStatementDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -279,10 +279,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -307,7 +306,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -372,6 +372,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -385,9 +386,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderResponse, Awaitable[FileReaderBuilderResponse]]:  # noqa: E501
-        """[EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design  # noqa: E501
+        """[EXPERIMENTAL] PutFileReadDesignToSql: Makes file read SQL from a design object  # noqa: E501
 
-        SQL Designer specification to generate SQL from  # noqa: E501
+        Generates SQL from a FileReaderBuilderDef object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -400,10 +401,9 @@ class SqlDesignApi:
         :type execute_query: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -419,9 +419,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_file_read_design_to_sql_with_http_info(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutFileReadDesignToSql: Generates file read SQL from a structured query design  # noqa: E501
+        """[EXPERIMENTAL] PutFileReadDesignToSql: Makes file read SQL from a design object  # noqa: E501
 
-        SQL Designer specification to generate SQL from  # noqa: E501
+        Generates SQL from a FileReaderBuilderDef object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -442,10 +442,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -471,7 +470,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -539,36 +539,36 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the inlined properties design object from")] = None, **kwargs) -> InlinedPropertyDesign:  # noqa: E501
+    async def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to attempt to generate the inlined properties design object from")] = None, **kwargs) -> InlinedPropertyDesign:  # noqa: E501
         ...
 
     @overload
-    def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the inlined properties design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> InlinedPropertyDesign:  # noqa: E501
+    def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to attempt to generate the inlined properties design object from")] = None, async_req: Optional[bool]=True, **kwargs) -> InlinedPropertyDesign:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the inlined properties design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[InlinedPropertyDesign, Awaitable[InlinedPropertyDesign]]:  # noqa: E501
-        """[EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Generates a SQL-inlined-properties-design object from SQL string, if possible.  # noqa: E501
+    def put_inlined_properties_design_sql_to_design(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to attempt to generate the inlined properties design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[InlinedPropertyDesign, Awaitable[InlinedPropertyDesign]]:  # noqa: E501
+        """[EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Makes an inlined properties design from SQL  # noqa: E501
 
-        SQL to attempt to create an inlined properties Design object from  # noqa: E501
+        Generates a SQL-inlined-properties-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_inlined_properties_design_sql_to_design(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the inlined properties design object from
+        :param body: SQL query to attempt to generate the inlined properties design object from
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -583,17 +583,17 @@ class SqlDesignApi:
         return self.put_inlined_properties_design_sql_to_design_with_http_info(body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_inlined_properties_design_sql_to_design_with_http_info(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the inlined properties design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Generates a SQL-inlined-properties-design object from SQL string, if possible.  # noqa: E501
+    def put_inlined_properties_design_sql_to_design_with_http_info(self, body : Annotated[Optional[StrictStr], Field(description="SQL query to attempt to generate the inlined properties design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Makes an inlined properties design from SQL  # noqa: E501
 
-        SQL to attempt to create an inlined properties Design object from  # noqa: E501
+        Generates a SQL-inlined-properties-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_inlined_properties_design_sql_to_design_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param body: SQL query to generate the inlined properties design object from
+        :param body: SQL query to attempt to generate the inlined properties design object from
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -605,10 +605,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -633,7 +632,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -698,36 +698,36 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Structured file read design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """[EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Generates inlined properties SQL from a structured design  # noqa: E501
+    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Makes inlined properties SQL from a design object  # noqa: E501
 
-        Inlined properties Designer specification to generate SQL from  # noqa: E501
+        Generates inlined properties SQL from a structured design  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_inlined_properties_design_to_sql(inlined_property_design, async_req=True)
         >>> result = thread.get()
 
-        :param inlined_property_design: Structured file read design object to generate SQL from (required)
+        :param inlined_property_design: Inlined properties Designer specification to generate SQL from (required)
         :type inlined_property_design: InlinedPropertyDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -742,17 +742,17 @@ class SqlDesignApi:
         return self.put_inlined_properties_design_to_sql_with_http_info(inlined_property_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_inlined_properties_design_to_sql_with_http_info(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Structured file read design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Generates inlined properties SQL from a structured design  # noqa: E501
+    def put_inlined_properties_design_to_sql_with_http_info(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Makes inlined properties SQL from a design object  # noqa: E501
 
-        Inlined properties Designer specification to generate SQL from  # noqa: E501
+        Generates inlined properties SQL from a structured design  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_inlined_properties_design_to_sql_with_http_info(inlined_property_design, async_req=True)
         >>> result = thread.get()
 
-        :param inlined_property_design: Structured file read design object to generate SQL from (required)
+        :param inlined_property_design: Inlined properties Designer specification to generate SQL from (required)
         :type inlined_property_design: InlinedPropertyDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -764,10 +764,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -792,7 +791,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -857,36 +857,36 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_intellisense(self, intellisense_request : IntellisenseRequest, **kwargs) -> IntellisenseResponse:  # noqa: E501
+    async def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> IntellisenseResponse:  # noqa: E501
         ...
 
     @overload
-    def put_intellisense(self, intellisense_request : IntellisenseRequest, async_req: Optional[bool]=True, **kwargs) -> IntellisenseResponse:  # noqa: E501
+    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=True, **kwargs) -> IntellisenseResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_intellisense(self, intellisense_request : IntellisenseRequest, async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
-        """PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
+    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
+        """PutIntellisense: Makes a intellisense prompts given an SQL snip-it  # noqa: E501
 
-        SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
+        Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid SQL) and cursor location  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_intellisense(intellisense_request, async_req=True)
         >>> result = thread.get()
 
-        :param intellisense_request: (required)
+        :param intellisense_request: SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from. (required)
         :type intellisense_request: IntellisenseRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -901,17 +901,17 @@ class SqlDesignApi:
         return self.put_intellisense_with_http_info(intellisense_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_intellisense_with_http_info(self, intellisense_request : IntellisenseRequest, **kwargs) -> ApiResponse:  # noqa: E501
-        """PutIntellisense: Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid) and cursor location  # noqa: E501
+    def put_intellisense_with_http_info(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """PutIntellisense: Makes a intellisense prompts given an SQL snip-it  # noqa: E501
 
-        SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.  # noqa: E501
+        Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid SQL) and cursor location  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_intellisense_with_http_info(intellisense_request, async_req=True)
         >>> result = thread.get()
 
-        :param intellisense_request: (required)
+        :param intellisense_request: SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from. (required)
         :type intellisense_request: IntellisenseRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -923,10 +923,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -951,7 +950,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1016,36 +1016,36 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def put_intellisense_error(self, error_highlight_request : ErrorHighlightRequest, **kwargs) -> ErrorHighlightResponse:  # noqa: E501
+    async def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ErrorHighlightResponse:  # noqa: E501
         ...
 
     @overload
-    def put_intellisense_error(self, error_highlight_request : ErrorHighlightRequest, async_req: Optional[bool]=True, **kwargs) -> ErrorHighlightResponse:  # noqa: E501
+    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=True, **kwargs) -> ErrorHighlightResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_intellisense_error(self, error_highlight_request : ErrorHighlightRequest, async_req: Optional[bool]=None, **kwargs) -> Union[ErrorHighlightResponse, Awaitable[ErrorHighlightResponse]]:  # noqa: E501
-        """PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
+    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=None, **kwargs) -> Union[ErrorHighlightResponse, Awaitable[ErrorHighlightResponse]]:  # noqa: E501
+        """PutIntellisenseError: Expresses error ranges from SQL  # noqa: E501
 
-        SQL (by line) to syntax check and return error ranges from within, if any.  # noqa: E501
+        Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_intellisense_error(error_highlight_request, async_req=True)
         >>> result = thread.get()
 
-        :param error_highlight_request: (required)
+        :param error_highlight_request: SQL (by line) to syntax check and return error ranges from within, if any. (required)
         :type error_highlight_request: ErrorHighlightRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1060,17 +1060,17 @@ class SqlDesignApi:
         return self.put_intellisense_error_with_http_info(error_highlight_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_intellisense_error_with_http_info(self, error_highlight_request : ErrorHighlightRequest, **kwargs) -> ApiResponse:  # noqa: E501
-        """PutIntellisenseError: Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  # noqa: E501
+    def put_intellisense_error_with_http_info(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """PutIntellisenseError: Expresses error ranges from SQL  # noqa: E501
 
-        SQL (by line) to syntax check and return error ranges from within, if any.  # noqa: E501
+        Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.put_intellisense_error_with_http_info(error_highlight_request, async_req=True)
         >>> result = thread.get()
 
-        :param error_highlight_request: (required)
+        :param error_highlight_request: SQL (by line) to syntax check and return error ranges from within, if any. (required)
         :type error_highlight_request: ErrorHighlightRequest
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1082,10 +1082,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -1110,7 +1109,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1175,6 +1175,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -1188,9 +1189,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """[EXPERIMENTAL] PutQueryDesignToSql: Generates SQL from a structured query design  # noqa: E501
+        """[EXPERIMENTAL] PutQueryDesignToSql: Makes SQL from a structured query design  # noqa: E501
 
-        SQL Designer specification to generate SQL from  # noqa: E501
+        Generates SQL from a QueryDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1201,10 +1202,9 @@ class SqlDesignApi:
         :type query_design: QueryDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1220,9 +1220,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_query_design_to_sql_with_http_info(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutQueryDesignToSql: Generates SQL from a structured query design  # noqa: E501
+        """[EXPERIMENTAL] PutQueryDesignToSql: Makes SQL from a structured query design  # noqa: E501
 
-        SQL Designer specification to generate SQL from  # noqa: E501
+        Generates SQL from a QueryDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1241,10 +1241,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -1269,7 +1268,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1334,6 +1334,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -1347,9 +1348,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_query_to_format(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Pretty-Print. Even if it doesn't parse an attempt will be made to format it")], trailing_commas : Annotated[Optional[StrictBool], Field(description="Should commas be after an expression (as opposed to before)")] = None, uppercase_keywords : Annotated[Optional[StrictBool], Field(description="Should key words be capitalized")] = None, break_join_on_sections : Annotated[Optional[StrictBool], Field(description="Should clauses on joins be given line breaks?")] = None, space_after_expanded_comma : Annotated[Optional[StrictBool], Field(description="Should comma-lists have spaces after the commas?")] = None, keyword_standardization : Annotated[Optional[StrictBool], Field(description="Should the \"nicest\" key words be used? (e.g. JOIN -> INNER JOIN)")] = None, expand_comma_lists : Annotated[Optional[StrictBool], Field(description="Should comma-lists (e.g. select a,b,c) have line breaks added?")] = None, expand_in_lists : Annotated[Optional[StrictBool], Field(description="Should IN-lists have line breaks added?")] = None, expand_boolean_expressions : Annotated[Optional[StrictBool], Field(description="Should boolean expressions have line breaks added?")] = None, expand_between_conditions : Annotated[Optional[StrictBool], Field(description="Should between conditions have line breaks added?")] = None, expand_case_statements : Annotated[Optional[StrictBool], Field(description="Should case-statements have line breaks added?")] = None, max_line_width : Annotated[Optional[StrictInt], Field(description="Maximum number of characters to allow on one line (if possible)")] = None, space_before_trailing_single_line_comments : Annotated[Optional[StrictBool], Field(description="Should the be a space before trailing single line comments?")] = None, multiline_comment_extra_line_break : Annotated[Optional[StrictBool], Field(description="Should an additional line break be added after multi-line comments?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """PutQueryToFormat: Formats SQL into a more readable form, a.k.a. Pretty-Print the SQL.  # noqa: E501
+        """PutQueryToFormat: Formats SQL into a more readable form  # noqa: E501
 
-         This formats SQL (given a set of options as to how to do so). It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b    on a.x = b.x where x > y    or y != z ```   # noqa: E501
+         This formats SQL (given a set of options as to how to do so), a.k.a. Pretty-Print the SQL. It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b    on a.x = b.x where x > y    or y != z ```   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1386,10 +1387,9 @@ class SqlDesignApi:
         :type multiline_comment_extra_line_break: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1405,9 +1405,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_query_to_format_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Pretty-Print. Even if it doesn't parse an attempt will be made to format it")], trailing_commas : Annotated[Optional[StrictBool], Field(description="Should commas be after an expression (as opposed to before)")] = None, uppercase_keywords : Annotated[Optional[StrictBool], Field(description="Should key words be capitalized")] = None, break_join_on_sections : Annotated[Optional[StrictBool], Field(description="Should clauses on joins be given line breaks?")] = None, space_after_expanded_comma : Annotated[Optional[StrictBool], Field(description="Should comma-lists have spaces after the commas?")] = None, keyword_standardization : Annotated[Optional[StrictBool], Field(description="Should the \"nicest\" key words be used? (e.g. JOIN -> INNER JOIN)")] = None, expand_comma_lists : Annotated[Optional[StrictBool], Field(description="Should comma-lists (e.g. select a,b,c) have line breaks added?")] = None, expand_in_lists : Annotated[Optional[StrictBool], Field(description="Should IN-lists have line breaks added?")] = None, expand_boolean_expressions : Annotated[Optional[StrictBool], Field(description="Should boolean expressions have line breaks added?")] = None, expand_between_conditions : Annotated[Optional[StrictBool], Field(description="Should between conditions have line breaks added?")] = None, expand_case_statements : Annotated[Optional[StrictBool], Field(description="Should case-statements have line breaks added?")] = None, max_line_width : Annotated[Optional[StrictInt], Field(description="Maximum number of characters to allow on one line (if possible)")] = None, space_before_trailing_single_line_comments : Annotated[Optional[StrictBool], Field(description="Should the be a space before trailing single line comments?")] = None, multiline_comment_extra_line_break : Annotated[Optional[StrictBool], Field(description="Should an additional line break be added after multi-line comments?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """PutQueryToFormat: Formats SQL into a more readable form, a.k.a. Pretty-Print the SQL.  # noqa: E501
+        """PutQueryToFormat: Formats SQL into a more readable form  # noqa: E501
 
-         This formats SQL (given a set of options as to how to do so). It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b    on a.x = b.x where x > y    or y != z ```   # noqa: E501
+         This formats SQL (given a set of options as to how to do so), a.k.a. Pretty-Print the SQL. It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b    on a.x = b.x where x > y    or y != z ```   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1452,10 +1452,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -1493,7 +1492,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1597,6 +1597,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -1610,9 +1611,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_extract_scalar_parameters(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], async_req: Optional[bool]=None, **kwargs) -> Union[List[ScalarParameter], Awaitable[List[ScalarParameter]]]:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToExtractScalarParameters: Generates information about all the scalar parameters defined in the given SQL statement  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToExtractScalarParameters: Extracts scalar parameter information from SQL  # noqa: E501
 
-        SQL to extract scalar parameters from  # noqa: E501
+        Extracts information about all the scalar parameters defined in the given SQL statement  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1623,10 +1624,9 @@ class SqlDesignApi:
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1642,9 +1642,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_extract_scalar_parameters_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToExtractScalarParameters: Generates information about all the scalar parameters defined in the given SQL statement  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToExtractScalarParameters: Extracts scalar parameter information from SQL  # noqa: E501
 
-        SQL to extract scalar parameters from  # noqa: E501
+        Extracts information about all the scalar parameters defined in the given SQL statement  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1663,10 +1663,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -1691,7 +1690,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1756,6 +1756,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -1769,9 +1770,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_file_read_design(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderDef, Awaitable[FileReaderBuilderDef]]:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToFileReadDesign: Generates a SQL-file-read-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToFileReadDesign: Makes a design object from file-read SQL  # noqa: E501
 
-        SQL to attempt to create a Design object from  # noqa: E501
+        Generates a SQL-file-read-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1784,10 +1785,9 @@ class SqlDesignApi:
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1803,9 +1803,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_file_read_design_with_http_info(self, determine_available_sources : Annotated[Optional[StrictBool], Field(description="Should the available sources be determined from `Sys.Registration`")] = None, body : Annotated[Optional[StrictStr], Field(description="SQL query to generate the file read design object from")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToFileReadDesign: Generates a SQL-file-read-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToFileReadDesign: Makes a design object from file-read SQL  # noqa: E501
 
-        SQL to attempt to create a Design object from  # noqa: E501
+        Generates a SQL-file-read-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1826,10 +1826,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -1855,7 +1854,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -1923,6 +1923,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -1936,9 +1937,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[QueryDesign, Awaitable[QueryDesign]]:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToQueryDesign: Generates a SQL-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToQueryDesign: Makes a SQL-design object from SQL if possible  # noqa: E501
 
-        SQL to attempt to create a Design object from  # noqa: E501
+        Generates a QueryDesign object from simple SQL if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1951,10 +1952,9 @@ class SqlDesignApi:
         :type validate_with_metadata: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1970,9 +1970,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_query_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToQueryDesign: Generates a SQL-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToQueryDesign: Makes a SQL-design object from SQL if possible  # noqa: E501
 
-        SQL to attempt to create a Design object from  # noqa: E501
+        Generates a QueryDesign object from simple SQL if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1993,10 +1993,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -2022,7 +2021,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -2090,6 +2090,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -2103,9 +2104,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_view_design(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], async_req: Optional[bool]=None, **kwargs) -> Union[ConvertToViewData, Awaitable[ConvertToViewData]]:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToViewDesign: Generates a structured view creation design from existing view creation SQL.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToViewDesign: Makes a view-design from view creation SQL  # noqa: E501
 
-        SQL which creates a view into a structured ConvertToViewData object  # noqa: E501
+        Converts SQL which creates a view into a structured ConvertToViewData object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2116,10 +2117,9 @@ class SqlDesignApi:
         :type body: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2135,9 +2135,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_view_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL Query to generate the ConvertToViewData object from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToViewDesign: Generates a structured view creation design from existing view creation SQL.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToViewDesign: Makes a view-design from view creation SQL  # noqa: E501
 
-        SQL which creates a view into a structured ConvertToViewData object  # noqa: E501
+        Converts SQL which creates a view into a structured ConvertToViewData object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2156,10 +2156,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -2184,7 +2183,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -2249,6 +2249,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -2262,9 +2263,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_writer_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[WriterDesign, Awaitable[WriterDesign]]:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToWriterDesign: Generates a SQL-writer-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToWriterDesign: Makes a SQL-writer-design object from SQL  # noqa: E501
 
-        SQL to attempt to create a Writer Design object from  # noqa: E501
+        Generates a SQL-writer-design object (WriterDesign) from a SQL query, if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2277,10 +2278,9 @@ class SqlDesignApi:
         :type merge_additional_mapping_fields: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2296,9 +2296,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_sql_to_writer_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the writer design object from")], merge_additional_mapping_fields : Annotated[Optional[StrictBool], Field(description="Should `Sys.Field` be used to find additional potential fields to map from? (not always possible)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutSqlToWriterDesign: Generates a SQL-writer-design object from SQL string, if possible.  # noqa: E501
+        """[EXPERIMENTAL] PutSqlToWriterDesign: Makes a SQL-writer-design object from SQL  # noqa: E501
 
-        SQL to attempt to create a Writer Design object from  # noqa: E501
+        Generates a SQL-writer-design object (WriterDesign) from a SQL query, if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2319,10 +2319,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -2348,7 +2347,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -2416,6 +2416,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -2429,9 +2430,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """[EXPERIMENTAL] PutViewDesignToSql: Generates view creation sql from a structured view creation design  # noqa: E501
+        """[EXPERIMENTAL] PutViewDesignToSql: Makes view creation sql from a view-design  # noqa: E501
 
-        Converts a ConvertToView specification into SQL that creates a view  # noqa: E501
+        Converts a ConvertToView specification into SQL that creates a view  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2442,10 +2443,9 @@ class SqlDesignApi:
         :type convert_to_view_data: ConvertToViewData
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2461,9 +2461,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_view_design_to_sql_with_http_info(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutViewDesignToSql: Generates view creation sql from a structured view creation design  # noqa: E501
+        """[EXPERIMENTAL] PutViewDesignToSql: Makes view creation sql from a view-design  # noqa: E501
 
-        Converts a ConvertToView specification into SQL that creates a view  # noqa: E501
+        Converts a ConvertToView specification into SQL that creates a view  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2482,10 +2482,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -2510,7 +2509,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -2575,6 +2575,7 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
 
@@ -2588,9 +2589,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
-        """[EXPERIMENTAL] PutWriterDesignToSql: Generates writer SQL from a valid writer-design structure  # noqa: E501
+        """[EXPERIMENTAL] PutWriterDesignToSql: Makes writer SQL from a writer-design object  # noqa: E501
 
-        SQL Writer Design specification to generate Writer SQL from  # noqa: E501
+        Generates writer SQL from a valid WriterDesign structure  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2601,10 +2602,9 @@ class SqlDesignApi:
         :type writer_design: WriterDesign
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2620,9 +2620,9 @@ class SqlDesignApi:
 
     @validate_arguments
     def put_writer_design_to_sql_with_http_info(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] PutWriterDesignToSql: Generates writer SQL from a valid writer-design structure  # noqa: E501
+        """[EXPERIMENTAL] PutWriterDesignToSql: Makes writer SQL from a writer-design object  # noqa: E501
 
-        SQL Writer Design specification to generate Writer SQL from  # noqa: E501
+        Generates writer SQL from a valid WriterDesign structure  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2641,10 +2641,9 @@ class SqlDesignApi:
         :param _return_http_data_only: response data instead of ApiResponse
                                        object with status code, headers, etc
         :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the authentication
                               in the spec for a single request.
@@ -2669,7 +2668,8 @@ class SqlDesignApi:
                 '_request_timeout',
                 '_request_auth',
                 '_content_type',
-                '_headers'
+                '_headers',
+                'opts'
             ]
         )
 
@@ -2734,5 +2734,6 @@ class SqlDesignApi:
             _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
             _preload_content=_params.get('_preload_content', True),
             _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
             collection_formats=_collection_formats,
             _request_auth=_params.get('_request_auth'))
