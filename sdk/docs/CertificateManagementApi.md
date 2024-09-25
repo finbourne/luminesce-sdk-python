@@ -4,15 +4,15 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
-[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: Lists previously minted certificates
+[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
+[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: List previously minted certificates
 [**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
 
 
 # **download_certificate**
 > bytearray download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
 
-[EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
+[EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
 
  Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden 
 
@@ -70,7 +70,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create, opts=opts)
 
-            # [EXPERIMENTAL] DownloadCertificate: Download Domain or your personal certificates
+            # [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
             api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
             pprint(api_response)
         except ApiException as e:
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 # **list_certificates**
 > List[CertificateState] list_certificates()
 
-[EXPERIMENTAL] ListCertificates: Lists previously minted certificates
+[EXPERIMENTAL] ListCertificates: List previously minted certificates
 
  Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
@@ -163,7 +163,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.list_certificates(opts=opts)
 
-            # [EXPERIMENTAL] ListCertificates: Lists previously minted certificates
+            # [EXPERIMENTAL] ListCertificates: List previously minted certificates
             api_response = await api_instance.list_certificates()
             pprint(api_response)
         except ApiException as e:

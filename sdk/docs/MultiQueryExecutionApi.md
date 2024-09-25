@@ -4,15 +4,15 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancel_multi_query**](MultiQueryExecutionApi.md#cancel_multi_query) | **DELETE** /api/MultiQueryBackground/{executionId} | CancelMultiQuery: Cancels / Clears a previously started query-set
-[**get_progress_of_multi_query**](MultiQueryExecutionApi.md#get_progress_of_multi_query) | **GET** /api/MultiQueryBackground/{executionId} | GetProgressOfMultiQuery: View progress information for the entire query-set
-[**start_queries**](MultiQueryExecutionApi.md#start_queries) | **PUT** /api/MultiQueryBackground | StartQueries: Runs a given set of Sql queries in the background
+[**cancel_multi_query**](MultiQueryExecutionApi.md#cancel_multi_query) | **DELETE** /api/MultiQueryBackground/{executionId} | CancelMultiQuery: Cancel / Clear a previously started query-set
+[**get_progress_of_multi_query**](MultiQueryExecutionApi.md#get_progress_of_multi_query) | **GET** /api/MultiQueryBackground/{executionId} | GetProgressOfMultiQuery: View progress of the entire query-set load
+[**start_queries**](MultiQueryExecutionApi.md#start_queries) | **PUT** /api/MultiQueryBackground | StartQueries: Run a given set of Sql queries in the background
 
 
 # **cancel_multi_query**
 > BackgroundQueryCancelResponse cancel_multi_query(execution_id)
 
-CancelMultiQuery: Cancels / Clears a previously started query-set
+CancelMultiQuery: Cancel / Clear a previously started query-set
 
 Cancel the query-set (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. 
 
@@ -68,7 +68,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.cancel_multi_query(execution_id, opts=opts)
 
-            # CancelMultiQuery: Cancels / Clears a previously started query-set
+            # CancelMultiQuery: Cancel / Clear a previously started query-set
             api_response = await api_instance.cancel_multi_query(execution_id)
             pprint(api_response)
         except ApiException as e:
@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 # **get_progress_of_multi_query**
 > BackgroundMultiQueryProgressResponse get_progress_of_multi_query(execution_id)
 
-GetProgressOfMultiQuery: View progress information for the entire query-set
+GetProgressOfMultiQuery: View progress of the entire query-set load
 
 View progress information (up until this point) for the entire query-set The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.
 
@@ -158,7 +158,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.get_progress_of_multi_query(execution_id, opts=opts)
 
-            # GetProgressOfMultiQuery: View progress information for the entire query-set
+            # GetProgressOfMultiQuery: View progress of the entire query-set load
             api_response = await api_instance.get_progress_of_multi_query(execution_id)
             pprint(api_response)
         except ApiException as e:
@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
 # **start_queries**
 > BackgroundMultiQueryResponse start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
 
-StartQueries: Runs a given set of Sql queries in the background
+StartQueries: Run a given set of Sql queries in the background
 
  Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready), on a per result basis - view progress information (up until this point), for all results in one go - cancel the queries (if still running) / clear the data (if already returned)  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden 
 
@@ -258,7 +258,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, opts=opts)
 
-            # StartQueries: Runs a given set of Sql queries in the background
+            # StartQueries: Run a given set of Sql queries in the background
             api_response = await api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
             pprint(api_response)
         except ApiException as e:

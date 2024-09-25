@@ -4,17 +4,17 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancel_history**](HistoricallyExecutedQueriesApi.md#cancel_history) | **DELETE** /api/History/{executionId} | CancelHistory: Cancels / Clears data from a query history search
-[**fetch_history_result_histogram**](HistoricallyExecutedQueriesApi.md#fetch_history_result_histogram) | **GET** /api/History/{executionId}/histogram | FetchHistoryResultHistogram: Makes a histogram of results from a query history search
-[**fetch_history_result_json**](HistoricallyExecutedQueriesApi.md#fetch_history_result_json) | **GET** /api/History/{executionId}/json | FetchHistoryResultJson: Fetches JSON results from a query history search
-[**get_history**](HistoricallyExecutedQueriesApi.md#get_history) | **GET** /api/History | GetHistory: Starts a background query history search
-[**get_progress_of_history**](HistoricallyExecutedQueriesApi.md#get_progress_of_history) | **GET** /api/History/{executionId} | GetProgressOfHistory: View progress of a query history search
+[**cancel_history**](HistoricallyExecutedQueriesApi.md#cancel_history) | **DELETE** /api/History/{executionId} | CancelHistory: Cancel / Clear data from a history search
+[**fetch_history_result_histogram**](HistoricallyExecutedQueriesApi.md#fetch_history_result_histogram) | **GET** /api/History/{executionId}/histogram | FetchHistoryResultHistogram: Make a histogram of results of a history search
+[**fetch_history_result_json**](HistoricallyExecutedQueriesApi.md#fetch_history_result_json) | **GET** /api/History/{executionId}/json | FetchHistoryResultJson: Fetch JSON results from a query history search
+[**get_history**](HistoricallyExecutedQueriesApi.md#get_history) | **GET** /api/History | GetHistory: Start a background history search
+[**get_progress_of_history**](HistoricallyExecutedQueriesApi.md#get_progress_of_history) | **GET** /api/History/{executionId} | GetProgressOfHistory: View progress of a history search
 
 
 # **cancel_history**
 > BackgroundQueryCancelResponse cancel_history(execution_id)
 
-CancelHistory: Cancels / Clears data from a query history search
+CancelHistory: Cancel / Clear data from a history search
 
 Cancel the query (if still running) / clear the data (if already returned) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. 
 
@@ -70,7 +70,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.cancel_history(execution_id, opts=opts)
 
-            # CancelHistory: Cancels / Clears data from a query history search
+            # CancelHistory: Cancel / Clear data from a history search
             api_response = await api_instance.cancel_history(execution_id)
             pprint(api_response)
         except ApiException as e:
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 # **fetch_history_result_histogram**
 > str fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
 
-FetchHistoryResultHistogram: Makes a histogram of results from a query history search
+FetchHistoryResultHistogram: Make a histogram of results of a history search
 
 Fetch the histogram in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.
 
@@ -163,7 +163,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper, opts=opts)
 
-            # FetchHistoryResultHistogram: Makes a histogram of results from a query history search
+            # FetchHistoryResultHistogram: Make a histogram of results of a history search
             api_response = await api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
             pprint(api_response)
         except ApiException as e:
@@ -202,7 +202,7 @@ Name | Type | Description  | Notes
 # **fetch_history_result_json**
 > str fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper)
 
-FetchHistoryResultJson: Fetches JSON results from a query history search
+FetchHistoryResultJson: Fetch JSON results from a query history search
 
 Fetch the data in Json format (if available, or if not simply being informed it is not yet ready) The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.
 
@@ -265,7 +265,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper, opts=opts)
 
-            # FetchHistoryResultJson: Fetches JSON results from a query history search
+            # FetchHistoryResultJson: Fetch JSON results from a query history search
             api_response = await api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper)
             pprint(api_response)
         except ApiException as e:
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 # **get_history**
 > BackgroundQueryResponse get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
 
-GetHistory: Starts a background query history search
+GetHistory: Start a background history search
 
  Starts to load the historical query logs for a certain time range, search criteria, etc.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
@@ -368,7 +368,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store, opts=opts)
 
-            # GetHistory: Starts a background query history search
+            # GetHistory: Start a background history search
             api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
             pprint(api_response)
         except ApiException as e:
@@ -406,7 +406,7 @@ Name | Type | Description  | Notes
 # **get_progress_of_history**
 > BackgroundQueryProgressResponse get_progress_of_history(execution_id)
 
-GetProgressOfHistory: View progress of a query history search
+GetProgressOfHistory: View progress of a history search
 
 View progress information (up until this point) of previously started History query The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.
 
@@ -462,7 +462,7 @@ async def main():
             # uncomment the below to set overrides at the request level
             # api_response = await api_instance.get_progress_of_history(execution_id, opts=opts)
 
-            # GetProgressOfHistory: View progress of a query history search
+            # GetProgressOfHistory: View progress of a history search
             api_response = await api_instance.get_progress_of_history(execution_id)
             pprint(api_response)
         except ApiException as e:
