@@ -4,6 +4,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_provider_template_for_export**](SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
 [**put_case_statement_design_sql_to_design**](SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
 [**put_case_statement_design_to_sql**](SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
 [**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | [EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
@@ -21,6 +22,100 @@ Method | HTTP request | Description
 [**put_view_design_to_sql**](SqlDesignApi.md#put_view_design_to_sql) | **PUT** /api/Sql/fromviewdesign | [EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
 [**put_writer_design_to_sql**](SqlDesignApi.md#put_writer_design_to_sql) | **PUT** /api/Sql/fromwriterdesign | [EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
 
+
+# **get_provider_template_for_export**
+> bytearray get_provider_template_for_export(provider, content_type)
+
+GetProviderTemplateForExport: Makes a fields template for file importing via a writer
+
+Generates a template file for all the writable fields for a given provider returned in CSV or Excel (xlsx) format (as a file to be downloaded)
+
+### Example
+
+```python
+import asyncio
+from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
+from luminesce.models import *
+from pprint import pprint
+from luminesce import (
+    ApiClientFactory,
+    SqlDesignApi
+)
+
+async def main():
+
+    with open("secrets.json", "w") as file:
+        file.write('''
+{
+    "api":
+    {
+        "tokenUrl":"<your-token-url>",
+        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+        "username":"<your-username>",
+        "password":"<your-password>",
+        "clientId":"<your-client-id>",
+        "clientSecret":"<your-client-secret>"
+    }
+}''')
+
+    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = ApiClientFactory(opts=opts)
+
+    api_client_factory = ApiClientFactory()
+
+    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
+    async with api_client_factory:
+        # Create an instance of the API class
+        api_instance = api_client_factory.build(SqlDesignApi)
+        provider = 'provider_example' # str | Name of the provider for which this template is for
+        content_type = 'content_type_example' # str | File content type for the Template. csv or excel
+
+        try:
+            # uncomment the below to set overrides at the request level
+            # api_response = await api_instance.get_provider_template_for_export(provider, content_type, opts=opts)
+
+            # GetProviderTemplateForExport: Makes a fields template for file importing via a writer
+            api_response = await api_instance.get_provider_template_for_export(provider, content_type)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SqlDesignApi->get_provider_template_for_export: %s\n" % e)
+
+asyncio.run(main())
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **str**| Name of the provider for which this template is for | 
+ **content_type** | **str**| File content type for the Template. csv or excel | 
+
+### Return type
+
+**bytearray**
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_case_statement_design_sql_to_design**
 > CaseStatementDesign put_case_statement_design_sql_to_design(body=body)
