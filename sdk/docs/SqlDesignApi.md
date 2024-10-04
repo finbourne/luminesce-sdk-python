@@ -269,9 +269,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # case_statement_design = CaseStatementDesign()
         # case_statement_design = CaseStatementDesign.from_json("")
-        case_statement_design = CaseStatementDesign.from_dict({"selectedField":"currency","caseStatementItems":[{"filter":"Eq","source":"USD","target":"US"}]}) # CaseStatementDesign | CaseStatementDesign object to try and create a SQL query from
+        # case_statement_design = CaseStatementDesign.from_dict({})
+        case_statement_design = CaseStatementDesign()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -366,9 +366,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # file_reader_builder_def = FileReaderBuilderDef()
         # file_reader_builder_def = FileReaderBuilderDef.from_json("")
-        file_reader_builder_def = FileReaderBuilderDef.from_dict({"limit":0,"source":{"location":"Drive","type":"Csv"},"filePath":"/some/folder","folderFilter":".*\\.csv","addFileName":true}) # FileReaderBuilderDef | Structured file read design object to generate SQL from
+        # file_reader_builder_def = FileReaderBuilderDef.from_dict({})
+        file_reader_builder_def = FileReaderBuilderDef()
         execute_query = True # bool | Should the generated query be executed to build preview data or determine errors.> (optional) (default to True)
 
         try:
@@ -559,9 +559,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # inlined_property_design = InlinedPropertyDesign()
         # inlined_property_design = InlinedPropertyDesign.from_json("")
-        inlined_property_design = InlinedPropertyDesign.from_dict({"providerName":"Lusid.portfolio","inlinedPropertyItems":[{"key":"fieldKey","name":"fieldName","isMain":true,"description":"some description"}]}) # InlinedPropertyDesign | Inlined properties Designer specification to generate SQL from
+        # inlined_property_design = InlinedPropertyDesign.from_dict({})
+        inlined_property_design = InlinedPropertyDesign()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -656,9 +656,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # intellisense_request = IntellisenseRequest()
         # intellisense_request = IntellisenseRequest.from_json("")
-        intellisense_request = IntellisenseRequest.from_dict({"lines":["select *","from somewhere"],"position":{"row":0,"column":4}}) # IntellisenseRequest | SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.
+        # intellisense_request = IntellisenseRequest.from_dict({})
+        intellisense_request = IntellisenseRequest()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -753,9 +753,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # error_highlight_request = ErrorHighlightRequest()
         # error_highlight_request = ErrorHighlightRequest.from_json("")
-        error_highlight_request = ErrorHighlightRequest.from_dict({"lines":["select mx(x) x from y"],"ensureSomeTextIsSelected":false}) # ErrorHighlightRequest | SQL (by line) to syntax check and return error ranges from within, if any.
+        # error_highlight_request = ErrorHighlightRequest.from_dict({})
+        error_highlight_request = ErrorHighlightRequest()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -850,9 +850,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # query_design = QueryDesign()
         # query_design = QueryDesign.from_json("")
-        query_design = QueryDesign.from_dict({"tableName":"Sys.Field","fields":[{"name":"TableName","dataType":"Text","shouldSelect":true,"filters":[{"operator":"Eq","value":"Sys.Registration"}],"aggregations":[]},{"name":"FieldName","dataType":"Text","shouldSelect":true,"filters":[],"aggregations":[{"type":"count_distinct","alias":"NumberOfFields"}]}],"orderBy":[{"field":"DataType","direction":"asc"}],"limit":42,"warnings":[],"availableFields":[]}) # QueryDesign | Structured Query design object to generate SQL from
+        # query_design = QueryDesign.from_dict({})
+        query_design = QueryDesign()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -1554,9 +1554,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # convert_to_view_data = ConvertToViewData()
         # convert_to_view_data = ConvertToViewData.from_json("")
-        convert_to_view_data = ConvertToViewData.from_dict({"query":"select * from Lusid.Instrument.bond","name":"Views.MyView","description":"This is a tooltip for the view as a whole","documentationLink":"https://mydocumentationlink.com","viewParameters":[{"name":"MyTextParam","dataType":"Text","value":"Portfolio","isTableDataMandatory":false,"description":"This is a parameter tooltip"},{"name":"EffectiveAt","dataType":"Date","value":"2023-05-03","isTableDataMandatory":false,"description":"This is a parameter tooltip"},{"name":"IsActive","dataType":"Boolean","value":"true","isTableDataMandatory":true,"description":"This is a parameter tooltip"},{"name":"EndUserTable","dataType":"Table","value":"@end_user_table","isTableDataMandatory":true,"description":"This is a parameter tooltip"}],"otherParameters":{}}) # ConvertToViewData | Structured Query design object to generate SQL from
+        # convert_to_view_data = ConvertToViewData.from_dict({})
+        convert_to_view_data = ConvertToViewData()
 
         try:
             # uncomment the below to set overrides at the request level
@@ -1651,9 +1651,9 @@ async def main():
 
         # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
         # Change the lines below to switch approach
-        # writer_design = WriterDesign()
         # writer_design = WriterDesign.from_json("")
-        writer_design = WriterDesign.from_dict({"sql":"\n@x = select SomeScope as Scope from Somewhere;\nselect * from Lusid.Instrument.Bond where ToWriter = @x","availableToMapFrom":[{"expression":"SomeScope","alias":"Scope","flags":"None"}],"parameter":{"providerName":"Lusid.Instrument.Bond","parameterName":"ToWrite","fields":[{"name":"Scope","type":"Text","description":"Scope of the instrument","mapping":{"expression":"SomeScope","alias":"Scope","flags":"None"}},{"name":"DisplayName","type":"Text"}]},"availableParameters":[{"providerName":"Lusid.Instrument.Bond","parameterName":"ToWrite","fields":[{"name":"Scope","type":"Text","description":"Scope of the instrument","mapping":{"expression":"SomeScope","alias":"Scope","flags":"None"}},{"name":"DisplayName","type":"Text"}]},{"providerName":"Email.Send","parameterName":"ToSend","fields":[{"name":"Subject","type":"Text"},{"name":"Body","type":"Text"}]}]}) # WriterDesign | Structured Writer Design design object to generate Writer SQL from
+        # writer_design = WriterDesign.from_dict({})
+        writer_design = WriterDesign()
 
         try:
             # uncomment the below to set overrides at the request level
