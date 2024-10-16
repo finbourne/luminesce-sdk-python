@@ -18,8 +18,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
-from pydantic.v1 import BaseModel, Field, constr
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, constr
 
 class CaseStatementItem(BaseModel):
     """
@@ -28,7 +28,8 @@ class CaseStatementItem(BaseModel):
     filter: constr(strict=True, min_length=1) = Field(..., description="The operator in the case statement SQL expression")
     source: constr(strict=True, min_length=1) = Field(..., description="The expression that is on the LHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target")
     target: constr(strict=True, min_length=1) = Field(..., description="The expression that is on the RHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target")
-    __properties = ["filter", "source", "target"]
+    is_target_non_literal: Optional[StrictBool] = Field(None, alias="isTargetNonLiteral", description="The Target can be a literal value or a non literal (field) and  hence will be interpreted differently.  This can be determined from the UI and passed down as a true / false")
+    __properties = ["filter", "source", "target", "isTargetNonLiteral"]
 
     class Config:
         """Pydantic configuration"""
@@ -68,6 +69,7 @@ class CaseStatementItem(BaseModel):
         _obj = CaseStatementItem.parse_obj({
             "filter": obj.get("filter"),
             "source": obj.get("source"),
-            "target": obj.get("target")
+            "target": obj.get("target"),
+            "is_target_non_literal": obj.get("isTargetNonLiteral")
         })
         return _obj
