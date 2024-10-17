@@ -2230,26 +2230,28 @@ class SqlBackgroundExecutionApi:
             _request_auth=_params.get('_request_auth'))
 
     @overload
-    async def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    async def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field(description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @overload
-    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field(description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
+    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field(description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
         """StartQuery: Start to Execute Sql in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready) - view progress information (up until this point) - cancel the query (if still running) / clear the data (if already returned)  This can still error on things like an outright syntax error, but more runtime errors (e.g. from providers) will not cause this to error (that will happen when attempting to fetch data)  Here is an example that intentionally takes one minute to run:  ```sql select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 ```  This is the only place in the Luminesce WebAPI where the following is supported. This will allow for the same user running a character-identical query not kick off a new query but simply be returned a reference  to the already running one for up to `N` seconds (where `N` should be `<=` `keepForSeconds`).  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.start_query(body, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
+        >>> thread = api.start_query(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: The LuminesceSql query to kick off. (required)
         :type body: str
+        :param execution_id: An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.
+        :type execution_id: str
         :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
         :type scalar_parameters: Dict[str, str]
         :param query_name: A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.
@@ -2274,21 +2276,23 @@ class SqlBackgroundExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.start_query_with_http_info(body, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, **kwargs)  # noqa: E501
+        return self.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def start_query_with_http_info(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def start_query_with_http_info(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field(description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, StrictStr]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field(description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """StartQuery: Start to Execute Sql in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready) - view progress information (up until this point) - cancel the query (if still running) / clear the data (if already returned)  This can still error on things like an outright syntax error, but more runtime errors (e.g. from providers) will not cause this to error (that will happen when attempting to fetch data)  Here is an example that intentionally takes one minute to run:  ```sql select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 ```  This is the only place in the Luminesce WebAPI where the following is supported. This will allow for the same user running a character-identical query not kick off a new query but simply be returned a reference  to the already running one for up to `N` seconds (where `N` should be `<=` `keepForSeconds`).  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.start_query_with_http_info(body, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
+        >>> thread = api.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
         >>> result = thread.get()
 
         :param body: The LuminesceSql query to kick off. (required)
         :type body: str
+        :param execution_id: An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.  It might be ignored / replaced, for example if using the query cache and a cached query is found.
+        :type execution_id: str
         :param scalar_parameters: Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.
         :type scalar_parameters: Dict[str, str]
         :param query_name: A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.
@@ -2325,6 +2329,7 @@ class SqlBackgroundExecutionApi:
 
         _all_params = [
             'body',
+            'execution_id',
             'scalar_parameters',
             'query_name',
             'timeout_seconds',
@@ -2360,6 +2365,9 @@ class SqlBackgroundExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('execution_id') is not None:  # noqa: E501
+            _query_params.append(('executionId', _params['execution_id']))
+
         if _params.get('scalar_parameters') is not None:  # noqa: E501
             _query_params.append(('scalarParameters', _params['scalar_parameters']))
 
