@@ -6,6 +6,7 @@ Representation of a set of inlined properties for a given provider so that SQL c
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **provider_name** | **str** | The provider name for which these properties are to be inlined | [optional] 
+**provider_name_extension** | **str** | The provider extension name for extended providers | [optional] 
 **inlined_property_items** | [**List[InlinedPropertyItem]**](InlinedPropertyItem.md) | Collection of Inlined properties | [optional] 
 
 ## Example

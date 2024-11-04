@@ -27,8 +27,9 @@ class InlinedPropertyDesign(BaseModel):
     Representation of a set of inlined properties for a given provider so that SQL can be generated to be able to inline properties into luminesce  # noqa: E501
     """
     provider_name: Optional[StrictStr] = Field(None, alias="providerName", description="The provider name for which these properties are to be inlined")
+    provider_name_extension: Optional[StrictStr] = Field(None, alias="providerNameExtension", description="The provider extension name for extended providers")
     inlined_property_items: Optional[conlist(InlinedPropertyItem)] = Field(None, alias="inlinedPropertyItems", description="Collection of Inlined properties")
-    __properties = ["providerName", "inlinedPropertyItems"]
+    __properties = ["providerName", "providerNameExtension", "inlinedPropertyItems"]
 
     class Config:
         """Pydantic configuration"""
@@ -66,6 +67,11 @@ class InlinedPropertyDesign(BaseModel):
         if self.provider_name is None and "provider_name" in self.__fields_set__:
             _dict['providerName'] = None
 
+        # set to None if provider_name_extension (nullable) is None
+        # and __fields_set__ contains the field
+        if self.provider_name_extension is None and "provider_name_extension" in self.__fields_set__:
+            _dict['providerNameExtension'] = None
+
         # set to None if inlined_property_items (nullable) is None
         # and __fields_set__ contains the field
         if self.inlined_property_items is None and "inlined_property_items" in self.__fields_set__:
@@ -84,6 +90,7 @@ class InlinedPropertyDesign(BaseModel):
 
         _obj = InlinedPropertyDesign.parse_obj({
             "provider_name": obj.get("providerName"),
+            "provider_name_extension": obj.get("providerNameExtension"),
             "inlined_property_items": [InlinedPropertyItem.from_dict(_item) for _item in obj.get("inlinedPropertyItems")] if obj.get("inlinedPropertyItems") is not None else None
         })
         return _obj
