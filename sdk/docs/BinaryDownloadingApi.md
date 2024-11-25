@@ -18,33 +18,32 @@ Method | HTTP request | Description
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     BinaryDownloadingApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -53,28 +52,29 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(BinaryDownloadingApi)
-        type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to download (each requires separate licenses and entitlements) (optional)
-        version = 'version_example' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(BinaryDownloadingApi)
+    type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to download (each requires separate licenses and entitlements) (optional)
+    version = 'version_example' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.download_binary(type=type, version=version, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.download_binary(type=type, version=version, opts=opts)
 
-            # [EXPERIMENTAL] DownloadBinary: Download a Luminesce Binary you may run on-site
-            api_response = await api_instance.download_binary(type=type, version=version)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling BinaryDownloadingApi->download_binary: %s\n" % e)
+        # [EXPERIMENTAL] DownloadBinary: Download a Luminesce Binary you may run on-site
+        api_response = api_instance.download_binary(type=type, version=version)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling BinaryDownloadingApi->download_binary: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -112,33 +112,32 @@ Name | Type | Description  | Notes
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     BinaryDownloadingApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -147,27 +146,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(BinaryDownloadingApi)
-        type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to fetch available versions of (optional)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(BinaryDownloadingApi)
+    type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to fetch available versions of (optional)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_binary_versions(type=type, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_binary_versions(type=type, opts=opts)
 
-            # [EXPERIMENTAL] GetBinaryVersions: List available versions of binaries
-            api_response = await api_instance.get_binary_versions(type=type)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling BinaryDownloadingApi->get_binary_versions: %s\n" % e)
+        # [EXPERIMENTAL] GetBinaryVersions: List available versions of binaries
+        api_response = api_instance.get_binary_versions(type=type)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling BinaryDownloadingApi->get_binary_versions: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

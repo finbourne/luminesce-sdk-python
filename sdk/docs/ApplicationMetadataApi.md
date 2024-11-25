@@ -17,33 +17,32 @@ GetServicesAsAccessControlledResources: Get resources available for access contr
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     ApplicationMetadataApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -52,26 +51,27 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(ApplicationMetadataApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(ApplicationMetadataApi)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_services_as_access_controlled_resources(opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_services_as_access_controlled_resources(opts=opts)
 
-            # GetServicesAsAccessControlledResources: Get resources available for access control
-            api_response = await api_instance.get_services_as_access_controlled_resources()
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling ApplicationMetadataApi->get_services_as_access_controlled_resources: %s\n" % e)
+        # GetServicesAsAccessControlledResources: Get resources available for access control
+        api_response = api_instance.get_services_as_access_controlled_resources()
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling ApplicationMetadataApi->get_services_as_access_controlled_resources: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

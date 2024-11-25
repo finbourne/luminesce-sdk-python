@@ -19,33 +19,32 @@ Method | HTTP request | Description
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CertificateManagementApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -54,29 +53,30 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CertificateManagementApi)
-        type = luminesce.CertificateType() # CertificateType | User or Domain level cert (Domain level requires additional entitlements) (optional)
-        file_type = luminesce.CertificateFileType() # CertificateFileType | Should the public key or private key be downloaded? (both must be in place to run providers) (optional)
-        may_auto_create = False # bool | If no matching cert is available, should an attempt be made to Create/Renew it with default options? (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CertificateManagementApi)
+    type = luminesce.CertificateType() # CertificateType | User or Domain level cert (Domain level requires additional entitlements) (optional)
+    file_type = luminesce.CertificateFileType() # CertificateFileType | Should the public key or private key be downloaded? (both must be in place to run providers) (optional)
+    may_auto_create = False # bool | If no matching cert is available, should an attempt be made to Create/Renew it with default options? (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create, opts=opts)
 
-            # [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
-            api_response = await api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CertificateManagementApi->download_certificate: %s\n" % e)
+        # [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
+        api_response = api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CertificateManagementApi->download_certificate: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -115,33 +115,32 @@ Name | Type | Description  | Notes
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CertificateManagementApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -150,26 +149,27 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CertificateManagementApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CertificateManagementApi)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.list_certificates(opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.list_certificates(opts=opts)
 
-            # [EXPERIMENTAL] ListCertificates: List previously minted certificates
-            api_response = await api_instance.list_certificates()
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CertificateManagementApi->list_certificates: %s\n" % e)
+        # [EXPERIMENTAL] ListCertificates: List previously minted certificates
+        api_response = api_instance.list_certificates()
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CertificateManagementApi->list_certificates: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -203,33 +203,32 @@ This endpoint does not need any parameter.
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CertificateManagementApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -238,32 +237,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CertificateManagementApi)
-        action = luminesce.CertificateAction() # CertificateAction | The Action to perform, e.g. Create / Renew / Revoke (optional)
-        type = luminesce.CertificateType() # CertificateType | User or Domain level cert (Domain level requires additional entitlements) (optional)
-        version = 1 # int | Version number of the cert, the request will fail to validate if incorrect (optional) (default to 1)
-        validity_start = '2013-10-20T19:20:30+01:00' # datetime | When should the cert first be valid (defaults to the current time in UTC) (optional)
-        validity_end = '2013-10-20T19:20:30+01:00' # datetime | When should the cert no longer be valid (defaults to 13 months from now) (optional)
-        dry_run = True # bool | True will just validate the request, but perform no changes to any system (optional) (default to True)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CertificateManagementApi)
+    action = luminesce.CertificateAction() # CertificateAction | The Action to perform, e.g. Create / Renew / Revoke (optional)
+    type = luminesce.CertificateType() # CertificateType | User or Domain level cert (Domain level requires additional entitlements) (optional)
+    version = 1 # int | Version number of the cert, the request will fail to validate if incorrect (optional) (default to 1)
+    validity_start = '2013-10-20T19:20:30+01:00' # datetime | When should the cert first be valid (defaults to the current time in UTC) (optional)
+    validity_end = '2013-10-20T19:20:30+01:00' # datetime | When should the cert no longer be valid (defaults to 13 months from now) (optional)
+    dry_run = True # bool | True will just validate the request, but perform no changes to any system (optional) (default to True)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, opts=opts)
 
-            # [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
-            api_response = await api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CertificateManagementApi->manage_certificate: %s\n" % e)
+        # [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
+        api_response = api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CertificateManagementApi->manage_certificate: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

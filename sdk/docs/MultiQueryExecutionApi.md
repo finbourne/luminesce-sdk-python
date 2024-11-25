@@ -19,33 +19,32 @@ Cancel the query-set (if still running) / clear the data (if already returned) T
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     MultiQueryExecutionApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -54,27 +53,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(MultiQueryExecutionApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(MultiQueryExecutionApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.cancel_multi_query(execution_id, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.cancel_multi_query(execution_id, opts=opts)
 
-            # CancelMultiQuery: Cancel / Clear a previously started query-set
-            api_response = await api_instance.cancel_multi_query(execution_id)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling MultiQueryExecutionApi->cancel_multi_query: %s\n" % e)
+        # CancelMultiQuery: Cancel / Clear a previously started query-set
+        api_response = api_instance.cancel_multi_query(execution_id)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling MultiQueryExecutionApi->cancel_multi_query: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -109,33 +109,32 @@ View progress information (up until this point) for the entire query-set The fol
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     MultiQueryExecutionApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -144,27 +143,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(MultiQueryExecutionApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(MultiQueryExecutionApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_progress_of_multi_query(execution_id, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_progress_of_multi_query(execution_id, opts=opts)
 
-            # GetProgressOfMultiQuery: View progress of the entire query-set load
-            api_response = await api_instance.get_progress_of_multi_query(execution_id)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling MultiQueryExecutionApi->get_progress_of_multi_query: %s\n" % e)
+        # GetProgressOfMultiQuery: View progress of the entire query-set load
+        api_response = api_instance.get_progress_of_multi_query(execution_id)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling MultiQueryExecutionApi->get_progress_of_multi_query: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -199,33 +199,32 @@ StartQueries: Run a given set of Sql queries in the background
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     MultiQueryExecutionApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -234,37 +233,38 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(MultiQueryExecutionApi)
-        type = luminesce.MultiQueryDefinitionType() # MultiQueryDefinitionType | An enum value defining the set of statements being executed
-        body = Apple # str | A \"search\" value (e.g. 'Apple' on an instrument search, a `Finbourne.Filtering` expression of Insights, etc.)  In the cases where \"Nothing\" is valid for a `Finbourne.Filtering` expression, pass `True`.
-        as_at = '2013-10-20T19:20:30+01:00' # datetime | The AsAt time used by any bitemporal provider in the queries. (optional)
-        effective_at = '2013-10-20T19:20:30+01:00' # datetime | The EffectiveAt time used by any bitemporal provider in the queries. (optional)
-        limit1 = 56 # int | A limit that is applied to first-level queries (e.g. Instruments themselves) (optional)
-        limit2 = 56 # int | A limit that is applied to second-level queries (e.g. Holdings based on the set of Instruments found) (optional)
-        input1 = 'input1_example' # str | A value available to queries, these vary by 'type' and are only used by some types at all.  e.g. a start-date of some sort (optional)
-        input2 = 'input2_example' # str | A second value available to queries, these vary by 'type' and are only used by some types at all. (optional)
-        input3 = 'input3_example' # str | A third value available to queries, these vary by 'type' and are only used by some types at all. (optional)
-        timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 1200s (20m) (optional) (default to 0)
-        keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(MultiQueryExecutionApi)
+    type = luminesce.MultiQueryDefinitionType() # MultiQueryDefinitionType | An enum value defining the set of statements being executed
+    body = Apple # str | A \"search\" value (e.g. 'Apple' on an instrument search, a `Finbourne.Filtering` expression of Insights, etc.)  In the cases where \"Nothing\" is valid for a `Finbourne.Filtering` expression, pass `True`.
+    as_at = '2013-10-20T19:20:30+01:00' # datetime | The AsAt time used by any bitemporal provider in the queries. (optional)
+    effective_at = '2013-10-20T19:20:30+01:00' # datetime | The EffectiveAt time used by any bitemporal provider in the queries. (optional)
+    limit1 = 56 # int | A limit that is applied to first-level queries (e.g. Instruments themselves) (optional)
+    limit2 = 56 # int | A limit that is applied to second-level queries (e.g. Holdings based on the set of Instruments found) (optional)
+    input1 = 'input1_example' # str | A value available to queries, these vary by 'type' and are only used by some types at all.  e.g. a start-date of some sort (optional)
+    input2 = 'input2_example' # str | A second value available to queries, these vary by 'type' and are only used by some types at all. (optional)
+    input3 = 'input3_example' # str | A third value available to queries, these vary by 'type' and are only used by some types at all. (optional)
+    timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 1200s (20m) (optional) (default to 0)
+    keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, opts=opts)
 
-            # StartQueries: Run a given set of Sql queries in the background
-            api_response = await api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling MultiQueryExecutionApi->start_queries: %s\n" % e)
+        # StartQueries: Run a given set of Sql queries in the background
+        api_response = api_instance.start_queries(type, body, as_at=as_at, effective_at=effective_at, limit1=limit1, limit2=limit2, input1=input1, input2=input2, input3=input3, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling MultiQueryExecutionApi->start_queries: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

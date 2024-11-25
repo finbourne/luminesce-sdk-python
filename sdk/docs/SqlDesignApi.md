@@ -33,33 +33,32 @@ Generates a template file for all the writable fields for a given provider retur
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -68,28 +67,29 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        provider = 'provider_example' # str | Name of the provider for which this template is for
-        content_type = 'content_type_example' # str | File content type for the Template. csv or excel
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    provider = 'provider_example' # str | Name of the provider for which this template is for
+    content_type = 'content_type_example' # str | File content type for the Template. csv or excel
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_provider_template_for_export(provider, content_type, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_provider_template_for_export(provider, content_type, opts=opts)
 
-            # GetProviderTemplateForExport: Makes a fields template for file importing via a writer
-            api_response = await api_instance.get_provider_template_for_export(provider, content_type)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->get_provider_template_for_export: %s\n" % e)
+        # GetProviderTemplateForExport: Makes a fields template for file importing via a writer
+        api_response = api_instance.get_provider_template_for_export(provider, content_type)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->get_provider_template_for_export: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -127,33 +127,32 @@ Converts a SQL query to a CaseStatementDesign object  > This method is generally
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -162,31 +161,32 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = CASE 
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = CASE 
  WHEN [currency] = 'US' THEN 'USD' 
  WHEN [currency] = 'Gb' THEN 'GBP' 
  ELSE [currency] 
  END # str | SQL to attempt to create an case statement Design object from (optional)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_case_statement_design_sql_to_design(body=body, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_case_statement_design_sql_to_design(body=body, opts=opts)
 
-            # [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
-            api_response = await api_instance.put_case_statement_design_sql_to_design(body=body)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_case_statement_design_sql_to_design: %s\n" % e)
+        # [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
+        api_response = api_instance.put_case_statement_design_sql_to_design(body=body)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_case_statement_design_sql_to_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -223,33 +223,32 @@ Generates a SQL case statement query from a structured CaseStatementDesign objec
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -258,32 +257,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # case_statement_design = CaseStatementDesign.from_json("")
-        # case_statement_design = CaseStatementDesign.from_dict({})
-        case_statement_design = CaseStatementDesign()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # case_statement_design = CaseStatementDesign.from_json("")
+    # case_statement_design = CaseStatementDesign.from_dict({})
+    case_statement_design = CaseStatementDesign()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_case_statement_design_to_sql(case_statement_design, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_case_statement_design_to_sql(case_statement_design, opts=opts)
 
-            # [EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
-            api_response = await api_instance.put_case_statement_design_to_sql(case_statement_design)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_case_statement_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
+        api_response = api_instance.put_case_statement_design_to_sql(case_statement_design)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_case_statement_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -320,33 +320,32 @@ Generates SQL from a FileReaderBuilderDef object  > This method is generally onl
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -355,33 +354,34 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # file_reader_builder_def = FileReaderBuilderDef.from_json("")
-        # file_reader_builder_def = FileReaderBuilderDef.from_dict({})
-        file_reader_builder_def = FileReaderBuilderDef()
-        execute_query = True # bool | Should the generated query be executed to build preview data or determine errors.> (optional) (default to True)
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # file_reader_builder_def = FileReaderBuilderDef.from_json("")
+    # file_reader_builder_def = FileReaderBuilderDef.from_dict({})
+    file_reader_builder_def = FileReaderBuilderDef()
+    execute_query = True # bool | Should the generated query be executed to build preview data or determine errors.> (optional) (default to True)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query, opts=opts)
 
-            # [EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
-            api_response = await api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_file_read_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
+        api_response = api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_file_read_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -419,33 +419,32 @@ Generates a SQL-inlined-properties-design object from SQL string, if possible.  
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -454,29 +453,30 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = @keysToCatalog = values('Portfolio/3897-78d4-e91c-26/location', 'PortfolioLocation', false, '');
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = @keysToCatalog = values('Portfolio/3897-78d4-e91c-26/location', 'PortfolioLocation', false, '');
  @config = select column1 as [Key], column2 as Name, column3 as IsMain, column4 as Description from @keysToCatalog; 
  select * from Sys.Admin.Lusid.Provider.Configure where Provider = 'Lusid.Portfolio' and Configuration = @config; # str | SQL query to attempt to generate the inlined properties design object from (optional)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_inlined_properties_design_sql_to_design(body=body, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_inlined_properties_design_sql_to_design(body=body, opts=opts)
 
-            # [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
-            api_response = await api_instance.put_inlined_properties_design_sql_to_design(body=body)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_inlined_properties_design_sql_to_design: %s\n" % e)
+        # [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
+        api_response = api_instance.put_inlined_properties_design_sql_to_design(body=body)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_inlined_properties_design_sql_to_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -513,33 +513,32 @@ Generates inlined properties SQL from a structured design  > This method is gene
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -548,32 +547,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # inlined_property_design = InlinedPropertyDesign.from_json("")
-        # inlined_property_design = InlinedPropertyDesign.from_dict({})
-        inlined_property_design = InlinedPropertyDesign()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # inlined_property_design = InlinedPropertyDesign.from_json("")
+    # inlined_property_design = InlinedPropertyDesign.from_dict({})
+    inlined_property_design = InlinedPropertyDesign()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_inlined_properties_design_to_sql(inlined_property_design, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_inlined_properties_design_to_sql(inlined_property_design, opts=opts)
 
-            # [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
-            api_response = await api_instance.put_inlined_properties_design_to_sql(inlined_property_design)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_inlined_properties_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
+        api_response = api_instance.put_inlined_properties_design_to_sql(inlined_property_design)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_inlined_properties_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -610,33 +610,32 @@ Generate a set of possible intellisense prompts given a SQL snip-it (in need not
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -645,32 +644,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # intellisense_request = IntellisenseRequest.from_json("")
-        # intellisense_request = IntellisenseRequest.from_dict({})
-        intellisense_request = IntellisenseRequest()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # intellisense_request = IntellisenseRequest.from_json("")
+    # intellisense_request = IntellisenseRequest.from_dict({})
+    intellisense_request = IntellisenseRequest()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_intellisense(intellisense_request, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_intellisense(intellisense_request, opts=opts)
 
-            # PutIntellisense: Make intellisense prompts given an SQL snip-it
-            api_response = await api_instance.put_intellisense(intellisense_request)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_intellisense: %s\n" % e)
+        # PutIntellisense: Make intellisense prompts given an SQL snip-it
+        api_response = api_instance.put_intellisense(intellisense_request)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_intellisense: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -707,33 +707,32 @@ Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  >
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -742,32 +741,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # error_highlight_request = ErrorHighlightRequest.from_json("")
-        # error_highlight_request = ErrorHighlightRequest.from_dict({})
-        error_highlight_request = ErrorHighlightRequest()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # error_highlight_request = ErrorHighlightRequest.from_json("")
+    # error_highlight_request = ErrorHighlightRequest.from_dict({})
+    error_highlight_request = ErrorHighlightRequest()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_intellisense_error(error_highlight_request, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_intellisense_error(error_highlight_request, opts=opts)
 
-            # PutIntellisenseError: Get error ranges from SQL
-            api_response = await api_instance.put_intellisense_error(error_highlight_request)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_intellisense_error: %s\n" % e)
+        # PutIntellisenseError: Get error ranges from SQL
+        api_response = api_instance.put_intellisense_error(error_highlight_request)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_intellisense_error: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -804,33 +804,32 @@ Generates SQL from a QueryDesign object  > This method is generally only intende
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -839,32 +838,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # query_design = QueryDesign.from_json("")
-        # query_design = QueryDesign.from_dict({})
-        query_design = QueryDesign()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # query_design = QueryDesign.from_json("")
+    # query_design = QueryDesign.from_dict({})
+    query_design = QueryDesign()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_query_design_to_sql(query_design, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_query_design_to_sql(query_design, opts=opts)
 
-            # [EXPERIMENTAL] PutQueryDesignToSql: Make SQL from a structured query design
-            api_response = await api_instance.put_query_design_to_sql(query_design)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_query_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutQueryDesignToSql: Make SQL from a structured query design
+        api_response = api_instance.put_query_design_to_sql(query_design)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_query_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -901,33 +901,32 @@ PutQueryToFormat: Format SQL into a more readable form
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -936,40 +935,41 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = select * from sys.field # str | LuminesceSql to Pretty-Print. Even if it doesn't parse an attempt will be made to format it
-        trailing_commas = True # bool | Should commas be after an expression (as opposed to before) (optional) (default to True)
-        uppercase_keywords = False # bool | Should key words be capitalized (optional) (default to False)
-        break_join_on_sections = True # bool | Should clauses on joins be given line breaks? (optional) (default to True)
-        space_after_expanded_comma = True # bool | Should comma-lists have spaces after the commas? (optional) (default to True)
-        keyword_standardization = True # bool | Should the \"nicest\" key words be used? (e.g. JOIN -> INNER JOIN) (optional) (default to True)
-        expand_comma_lists = False # bool | Should comma-lists (e.g. select a,b,c) have line breaks added? (optional) (default to False)
-        expand_in_lists = False # bool | Should IN-lists have line breaks added? (optional) (default to False)
-        expand_boolean_expressions = True # bool | Should boolean expressions have line breaks added? (optional) (default to True)
-        expand_between_conditions = True # bool | Should between conditions have line breaks added? (optional) (default to True)
-        expand_case_statements = True # bool | Should case-statements have line breaks added? (optional) (default to True)
-        max_line_width = 120 # int | Maximum number of characters to allow on one line (if possible) (optional) (default to 120)
-        space_before_trailing_single_line_comments = True # bool | Should the be a space before trailing single line comments? (optional) (default to True)
-        multiline_comment_extra_line_break = False # bool | Should an additional line break be added after multi-line comments? (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = select * from sys.field # str | LuminesceSql to Pretty-Print. Even if it doesn't parse an attempt will be made to format it
+    trailing_commas = True # bool | Should commas be after an expression (as opposed to before) (optional) (default to True)
+    uppercase_keywords = False # bool | Should key words be capitalized (optional) (default to False)
+    break_join_on_sections = True # bool | Should clauses on joins be given line breaks? (optional) (default to True)
+    space_after_expanded_comma = True # bool | Should comma-lists have spaces after the commas? (optional) (default to True)
+    keyword_standardization = True # bool | Should the \"nicest\" key words be used? (e.g. JOIN -> INNER JOIN) (optional) (default to True)
+    expand_comma_lists = False # bool | Should comma-lists (e.g. select a,b,c) have line breaks added? (optional) (default to False)
+    expand_in_lists = False # bool | Should IN-lists have line breaks added? (optional) (default to False)
+    expand_boolean_expressions = True # bool | Should boolean expressions have line breaks added? (optional) (default to True)
+    expand_between_conditions = True # bool | Should between conditions have line breaks added? (optional) (default to True)
+    expand_case_statements = True # bool | Should case-statements have line breaks added? (optional) (default to True)
+    max_line_width = 120 # int | Maximum number of characters to allow on one line (if possible) (optional) (default to 120)
+    space_before_trailing_single_line_comments = True # bool | Should the be a space before trailing single line comments? (optional) (default to True)
+    multiline_comment_extra_line_break = False # bool | Should an additional line break be added after multi-line comments? (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_query_to_format(body, trailing_commas=trailing_commas, uppercase_keywords=uppercase_keywords, break_join_on_sections=break_join_on_sections, space_after_expanded_comma=space_after_expanded_comma, keyword_standardization=keyword_standardization, expand_comma_lists=expand_comma_lists, expand_in_lists=expand_in_lists, expand_boolean_expressions=expand_boolean_expressions, expand_between_conditions=expand_between_conditions, expand_case_statements=expand_case_statements, max_line_width=max_line_width, space_before_trailing_single_line_comments=space_before_trailing_single_line_comments, multiline_comment_extra_line_break=multiline_comment_extra_line_break, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_query_to_format(body, trailing_commas=trailing_commas, uppercase_keywords=uppercase_keywords, break_join_on_sections=break_join_on_sections, space_after_expanded_comma=space_after_expanded_comma, keyword_standardization=keyword_standardization, expand_comma_lists=expand_comma_lists, expand_in_lists=expand_in_lists, expand_boolean_expressions=expand_boolean_expressions, expand_between_conditions=expand_between_conditions, expand_case_statements=expand_case_statements, max_line_width=max_line_width, space_before_trailing_single_line_comments=space_before_trailing_single_line_comments, multiline_comment_extra_line_break=multiline_comment_extra_line_break, opts=opts)
 
-            # PutQueryToFormat: Format SQL into a more readable form
-            api_response = await api_instance.put_query_to_format(body, trailing_commas=trailing_commas, uppercase_keywords=uppercase_keywords, break_join_on_sections=break_join_on_sections, space_after_expanded_comma=space_after_expanded_comma, keyword_standardization=keyword_standardization, expand_comma_lists=expand_comma_lists, expand_in_lists=expand_in_lists, expand_boolean_expressions=expand_boolean_expressions, expand_between_conditions=expand_between_conditions, expand_case_statements=expand_case_statements, max_line_width=max_line_width, space_before_trailing_single_line_comments=space_before_trailing_single_line_comments, multiline_comment_extra_line_break=multiline_comment_extra_line_break)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_query_to_format: %s\n" % e)
+        # PutQueryToFormat: Format SQL into a more readable form
+        api_response = api_instance.put_query_to_format(body, trailing_commas=trailing_commas, uppercase_keywords=uppercase_keywords, break_join_on_sections=break_join_on_sections, space_after_expanded_comma=space_after_expanded_comma, keyword_standardization=keyword_standardization, expand_comma_lists=expand_comma_lists, expand_in_lists=expand_in_lists, expand_boolean_expressions=expand_boolean_expressions, expand_between_conditions=expand_between_conditions, expand_case_statements=expand_case_statements, max_line_width=max_line_width, space_before_trailing_single_line_comments=space_before_trailing_single_line_comments, multiline_comment_extra_line_break=multiline_comment_extra_line_break)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_query_to_format: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1019,33 +1019,32 @@ Extracts information about all the scalar parameters defined in the given SQL st
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1054,27 +1053,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = select abc, :p1:'this' as c1 from xxx where abc = :abcP:123 or xyz in (:p2:, 'zzz') # str | SQL query to generate the design object from
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = select abc, :p1:'this' as c1 from xxx where abc = :abcP:123 or xyz in (:p2:, 'zzz') # str | SQL query to generate the design object from
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_sql_to_extract_scalar_parameters(body, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_sql_to_extract_scalar_parameters(body, opts=opts)
 
-            # [EXPERIMENTAL] PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
-            api_response = await api_instance.put_sql_to_extract_scalar_parameters(body)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_sql_to_extract_scalar_parameters: %s\n" % e)
+        # [EXPERIMENTAL] PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
+        api_response = api_instance.put_sql_to_extract_scalar_parameters(body)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_sql_to_extract_scalar_parameters: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1111,33 +1111,32 @@ Generates a SQL-file-read-design object from SQL string, if possible.  > This me
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1146,33 +1145,34 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        determine_available_sources = True # bool | Should the available sources be determined from `Sys.Registration` (optional) (default to True)
-        body = @x = 
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    determine_available_sources = True # bool | Should the available sources be determined from `Sys.Registration` (optional) (default to True)
+    body = @x = 
 use Drive.Csv
   --file=/some/folder/somefile.csv
 enduse;
 
 select * from @x; # str | SQL query to generate the file read design object from (optional)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body, opts=opts)
 
-            # [EXPERIMENTAL] PutSqlToFileReadDesign: Make a design object from file-read SQL
-            api_response = await api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_sql_to_file_read_design: %s\n" % e)
+        # [EXPERIMENTAL] PutSqlToFileReadDesign: Make a design object from file-read SQL
+        api_response = api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_sql_to_file_read_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1210,33 +1210,32 @@ Generates a QueryDesign object from simple SQL if possible  > This method is gen
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1245,15 +1244,15 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = SELECT
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = SELECT
     [TableName],
     Count(distinct [FieldName]) as [NumberOfFields]
 FROM
@@ -1265,19 +1264,20 @@ GROUP BY
 ORDER BY
     [DataType]
 LIMIT 42 # str | SQL query to generate the design object from
-        validate_with_metadata = True # bool | Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.? (optional) (default to True)
+    validate_with_metadata = True # bool | Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.? (optional) (default to True)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, opts=opts)
 
-            # [EXPERIMENTAL] PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
-            api_response = await api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_sql_to_query_design: %s\n" % e)
+        # [EXPERIMENTAL] PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
+        api_response = api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_sql_to_query_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1315,33 +1315,32 @@ Converts SQL which creates a view into a structured ConvertToViewData object  > 
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1350,15 +1349,15 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = @x = 
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = @x = 
 use Sys.Admin.SetupView
   --provider=YourView
 ----
@@ -1367,17 +1366,18 @@ enduse;
 
 select * from @x; # str | SQL Query to generate the ConvertToViewData object from
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_sql_to_view_design(body, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_sql_to_view_design(body, opts=opts)
 
-            # [EXPERIMENTAL] PutSqlToViewDesign: Make a view-design from view creation SQL
-            api_response = await api_instance.put_sql_to_view_design(body)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_sql_to_view_design: %s\n" % e)
+        # [EXPERIMENTAL] PutSqlToViewDesign: Make a view-design from view creation SQL
+        api_response = api_instance.put_sql_to_view_design(body)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_sql_to_view_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1414,33 +1414,32 @@ Generates a SQL-writer-design object (WriterDesign) from a SQL query, if possibl
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1449,28 +1448,29 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
-        body = Select abc from xyz # str | SQL query to generate the writer design object from
-        merge_additional_mapping_fields = False # bool | Should `Sys.Field` be used to find additional potential fields to map from? (not always possible) (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+    body = Select abc from xyz # str | SQL query to generate the writer design object from
+    merge_additional_mapping_fields = False # bool | Should `Sys.Field` be used to find additional potential fields to map from? (not always possible) (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields, opts=opts)
 
-            # [EXPERIMENTAL] PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
-            api_response = await api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_sql_to_writer_design: %s\n" % e)
+        # [EXPERIMENTAL] PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
+        api_response = api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_sql_to_writer_design: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1508,33 +1508,32 @@ Converts a ConvertToView specification into SQL that creates a view  > This meth
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1543,32 +1542,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # convert_to_view_data = ConvertToViewData.from_json("")
-        # convert_to_view_data = ConvertToViewData.from_dict({})
-        convert_to_view_data = ConvertToViewData()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # convert_to_view_data = ConvertToViewData.from_json("")
+    # convert_to_view_data = ConvertToViewData.from_dict({})
+    convert_to_view_data = ConvertToViewData()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_view_design_to_sql(convert_to_view_data, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_view_design_to_sql(convert_to_view_data, opts=opts)
 
-            # [EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
-            api_response = await api_instance.put_view_design_to_sql(convert_to_view_data)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_view_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
+        api_response = api_instance.put_view_design_to_sql(convert_to_view_data)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_view_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -1605,33 +1605,32 @@ Generates writer SQL from a valid WriterDesign structure  > This method is gener
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     SqlDesignApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -1640,32 +1639,33 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(SqlDesignApi)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
 
-        # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
-        # Change the lines below to switch approach
-        # writer_design = WriterDesign.from_json("")
-        # writer_design = WriterDesign.from_dict({})
-        writer_design = WriterDesign()
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # writer_design = WriterDesign.from_json("")
+    # writer_design = WriterDesign.from_dict({})
+    writer_design = WriterDesign()
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.put_writer_design_to_sql(writer_design, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_writer_design_to_sql(writer_design, opts=opts)
 
-            # [EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
-            api_response = await api_instance.put_writer_design_to_sql(writer_design)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling SqlDesignApi->put_writer_design_to_sql: %s\n" % e)
+        # [EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
+        api_response = api_instance.put_writer_design_to_sql(writer_design)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_writer_design_to_sql: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

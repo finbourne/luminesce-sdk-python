@@ -19,33 +19,32 @@ GetCatalog: Get a Flattened Table/Field Catalog
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CurrentTableFieldCatalogApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -54,29 +53,30 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
-        free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-        json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
-        use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+    free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
+    json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+    use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache, opts=opts)
 
-            # GetCatalog: Get a Flattened Table/Field Catalog
-            api_response = await api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CurrentTableFieldCatalogApi->get_catalog: %s\n" % e)
+        # GetCatalog: Get a Flattened Table/Field Catalog
+        api_response = api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CurrentTableFieldCatalogApi->get_catalog: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -113,33 +113,32 @@ GetFields: List field and parameters for providers
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CurrentTableFieldCatalogApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -148,27 +147,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
-        table_like = '%' # str |  (optional) (default to '%')
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+    table_like = '%' # str |  (optional) (default to '%')
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_fields(table_like=table_like, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_fields(table_like=table_like, opts=opts)
 
-            # GetFields: List field and parameters for providers
-            api_response = await api_instance.get_fields(table_like=table_like)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CurrentTableFieldCatalogApi->get_fields: %s\n" % e)
+        # GetFields: List field and parameters for providers
+        api_response = api_instance.get_fields(table_like=table_like)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CurrentTableFieldCatalogApi->get_fields: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -203,33 +203,32 @@ GetProviders: List available providers
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     CurrentTableFieldCatalogApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -238,28 +237,29 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
-        free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-        use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
+    free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
+    use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache, opts=opts)
 
-            # GetProviders: List available providers
-            api_response = await api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling CurrentTableFieldCatalogApi->get_providers: %s\n" % e)
+        # GetProviders: List available providers
+        api_response = api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling CurrentTableFieldCatalogApi->get_providers: %s\n" % e)
+
+main()
 ```
 
 ### Parameters

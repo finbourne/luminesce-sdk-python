@@ -21,33 +21,32 @@ Cancel the query (if still running) / clear the data (if already returned) The f
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     HistoricallyExecutedQueriesApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -56,27 +55,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.cancel_history(execution_id, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.cancel_history(execution_id, opts=opts)
 
-            # CancelHistory: Cancel / Clear data from a history search
-            api_response = await api_instance.cancel_history(execution_id)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling HistoricallyExecutedQueriesApi->cancel_history: %s\n" % e)
+        # CancelHistory: Cancel / Clear data from a history search
+        api_response = api_instance.cancel_history(execution_id)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling HistoricallyExecutedQueriesApi->cancel_history: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -111,33 +111,32 @@ Fetch the histogram in Json format (if available, or if not simply being informe
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     HistoricallyExecutedQueriesApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -146,30 +145,31 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-        bucket_size = 'bucket_size_example' # str | Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated. (optional)
-        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-        json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    bucket_size = 'bucket_size_example' # str | Optional histogram bucket width.  If not provided a set number of buckets between start/end range will be generated. (optional)
+    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+    json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper, opts=opts)
 
-            # FetchHistoryResultHistogram: Make a histogram of results of a history search
-            api_response = await api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling HistoricallyExecutedQueriesApi->fetch_history_result_histogram: %s\n" % e)
+        # FetchHistoryResultHistogram: Make a histogram of results of a history search
+        api_response = api_instance.fetch_history_result_histogram(execution_id, bucket_size=bucket_size, filter=filter, json_proper=json_proper)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling HistoricallyExecutedQueriesApi->fetch_history_result_histogram: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -209,33 +209,32 @@ Fetch the data in Json format (if available, or if not simply being informed it 
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     HistoricallyExecutedQueriesApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -244,34 +243,35 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-        sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
-        filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
-        select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
-        group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
-        limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
-        page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
-        json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    sort_by = 'sort_by_example' # str | Order the results by these fields.              Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.              Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.              Default is null, the sort order specified in the query itself. (optional)
+    filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
+    select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
+    group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+    limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
+    page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
+    json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper, opts=opts)
 
-            # FetchHistoryResultJson: Fetch JSON results from a query history search
-            api_response = await api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling HistoricallyExecutedQueriesApi->fetch_history_result_json: %s\n" % e)
+        # FetchHistoryResultJson: Fetch JSON results from a query history search
+        api_response = api_instance.fetch_history_result_json(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, json_proper=json_proper)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling HistoricallyExecutedQueriesApi->fetch_history_result_json: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -315,33 +315,32 @@ GetHistory: Start a background history search
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     HistoricallyExecutedQueriesApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -350,31 +349,32 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
-        start_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to start the search from.  Will default to Now - 1 Day (optional)
-        end_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to end the search at.  Defaults to now. (optional)
-        free_text_search = 'free_text_search_example' # str | Some test that must be in at least one field returned. (optional)
-        show_all = False # bool | For users with extra permissions, they may optionally see other users' queries. (optional) (default to False)
-        may_use_native_store = True # bool | Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? (optional) (default to True)
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
+    start_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to start the search from.  Will default to Now - 1 Day (optional)
+    end_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to end the search at.  Defaults to now. (optional)
+    free_text_search = 'free_text_search_example' # str | Some test that must be in at least one field returned. (optional)
+    show_all = False # bool | For users with extra permissions, they may optionally see other users' queries. (optional) (default to False)
+    may_use_native_store = True # bool | Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? (optional) (default to True)
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store, opts=opts)
 
-            # GetHistory: Start a background history search
-            api_response = await api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling HistoricallyExecutedQueriesApi->get_history: %s\n" % e)
+        # GetHistory: Start a background history search
+        api_response = api_instance.get_history(start_at=start_at, end_at=end_at, free_text_search=free_text_search, show_all=show_all, may_use_native_store=may_use_native_store)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling HistoricallyExecutedQueriesApi->get_history: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
@@ -413,33 +413,32 @@ View progress information (up until this point) of previously started History qu
 ### Example
 
 ```python
-import asyncio
 from luminesce.exceptions import ApiException
 from luminesce.extensions.configuration_options import ConfigurationOptions
 from luminesce.models import *
 from pprint import pprint
 from luminesce import (
-    ApiClientFactory,
+    SyncApiClientFactory,
     HistoricallyExecutedQueriesApi
 )
 
-async def main():
+def main():
 
     with open("secrets.json", "w") as file:
         file.write('''
-{
-    "api":
     {
-        "tokenUrl":"<your-token-url>",
-        "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
-        "username":"<your-username>",
-        "password":"<your-password>",
-        "clientId":"<your-client-id>",
-        "clientSecret":"<your-client-secret>"
-    }
-}''')
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
 
-    # Use the luminesce ApiClientFactory to build Api instances with a configured api client
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
     # By default this will read config from environment variables
     # Then from a secrets.json file found in the current working directory
 
@@ -448,27 +447,28 @@ async def main():
     # opts.total_timeout_ms = 30_000
 
     # uncomment the below to use an api client factory with overrides
-    # api_client_factory = ApiClientFactory(opts=opts)
+    # api_client_factory = SyncApiClientFactory(opts=opts)
 
-    api_client_factory = ApiClientFactory()
+    api_client_factory = SyncApiClientFactory()
 
-    # Enter a context with an instance of the ApiClientFactory to ensure the connection pool is closed after use
-    async with api_client_factory:
-        # Create an instance of the API class
-        api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
-        execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(HistoricallyExecutedQueriesApi)
+    execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
 
-        try:
-            # uncomment the below to set overrides at the request level
-            # api_response = await api_instance.get_progress_of_history(execution_id, opts=opts)
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.get_progress_of_history(execution_id, opts=opts)
 
-            # GetProgressOfHistory: View progress of a history search
-            api_response = await api_instance.get_progress_of_history(execution_id)
-            pprint(api_response)
-        except ApiException as e:
-            print("Exception when calling HistoricallyExecutedQueriesApi->get_progress_of_history: %s\n" % e)
+        # GetProgressOfHistory: View progress of a history search
+        api_response = api_instance.get_progress_of_history(execution_id)
+        pprint(api_response)
 
-asyncio.run(main())
+    except ApiException as e:
+        print("Exception when calling HistoricallyExecutedQueriesApi->get_progress_of_history: %s\n" % e)
+
+main()
 ```
 
 ### Parameters
