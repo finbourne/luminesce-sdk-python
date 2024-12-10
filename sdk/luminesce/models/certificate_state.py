@@ -39,10 +39,11 @@ class CertificateState(BaseModel):
     revoked_at: Optional[datetime] = Field(None, alias="revokedAt", description="The point at which this was revoked, if any")
     revoked_by: Optional[StrictStr] = Field(None, alias="revokedBy", description="The user which revoked this, if any")
     created_at: Optional[datetime] = Field(None, alias="createdAt", description="The point at which this was created")
+    permissions_set_at: Optional[datetime] = Field(None, alias="permissionsSetAt", description="The point at which permissions were adjusted by the system")
     created_by: Optional[StrictStr] = Field(None, alias="createdBy", description="The user which created this")
     serial_number: Optional[StrictStr] = Field(None, alias="serialNumber", description="The Vault-issued serial number of the certificate, if any - used for revocation")
     links: Optional[conlist(Link)] = Field(None, description="The location within Configuration Store that this is saved to")
-    __properties = ["key", "version", "commonName", "type", "creationStatus", "revocationStatus", "validityStart", "validityEnd", "revokedAt", "revokedBy", "createdAt", "createdBy", "serialNumber", "links"]
+    __properties = ["key", "version", "commonName", "type", "creationStatus", "revocationStatus", "validityStart", "validityEnd", "revokedAt", "revokedBy", "createdAt", "permissionsSetAt", "createdBy", "serialNumber", "links"]
 
     class Config:
         """Pydantic configuration"""
@@ -110,6 +111,11 @@ class CertificateState(BaseModel):
         if self.created_at is None and "created_at" in self.__fields_set__:
             _dict['createdAt'] = None
 
+        # set to None if permissions_set_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.permissions_set_at is None and "permissions_set_at" in self.__fields_set__:
+            _dict['permissionsSetAt'] = None
+
         # set to None if created_by (nullable) is None
         # and __fields_set__ contains the field
         if self.created_by is None and "created_by" in self.__fields_set__:
@@ -148,6 +154,7 @@ class CertificateState(BaseModel):
             "revoked_at": obj.get("revokedAt"),
             "revoked_by": obj.get("revokedBy"),
             "created_at": obj.get("createdAt"),
+            "permissions_set_at": obj.get("permissionsSetAt"),
             "created_by": obj.get("createdBy"),
             "serial_number": obj.get("serialNumber"),
             "links": [Link.from_dict(_item) for _item in obj.get("links")] if obj.get("links") is not None else None

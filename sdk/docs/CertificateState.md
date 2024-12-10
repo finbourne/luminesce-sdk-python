@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **revoked_at** | **datetime** | The point at which this was revoked, if any | [optional] 
 **revoked_by** | **str** | The user which revoked this, if any | [optional] 
 **created_at** | **datetime** | The point at which this was created | [optional] 
+**permissions_set_at** | **datetime** | The point at which permissions were adjusted by the system | [optional] 
 **created_by** | **str** | The user which created this | [optional] 
 **serial_number** | **str** | The Vault-issued serial number of the certificate, if any - used for revocation | [optional] 
 **links** | [**List[Link]**](Link.md) | The location within Configuration Store that this is saved to | [optional] 
