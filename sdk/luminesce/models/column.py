@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, conlist, Field
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.data_type import DataType
 
@@ -30,15 +30,15 @@ class Column(BaseModel):
     is_primary_key: Optional[StrictBool] = Field(None, alias="isPrimaryKey")
     is_main: Optional[StrictBool] = Field(None, alias="isMain")
     is_required_by_provider: Optional[StrictBool] = Field(None, alias="isRequiredByProvider")
-    mandatory_for_actions: Optional[StrictStr] = Field(None, alias="mandatoryForActions")
+    mandatory_for_actions: constr(strict=True) = Field(None,alias="mandatoryForActions") 
     client_ids: Optional[conlist(StrictStr)] = Field(None, alias="clientIds")
-    name: Optional[StrictStr] = None
+    name: constr(strict=True) = Field(None,alias="name") 
     type: Optional[DataType] = None
-    description: Optional[StrictStr] = None
-    display_name: Optional[StrictStr] = Field(None, alias="displayName")
+    description: constr(strict=True) = Field(None,alias="description") 
+    display_name: constr(strict=True) = Field(None,alias="displayName") 
     condition_usage: Optional[ConditionAttributes] = Field(None, alias="conditionUsage")
-    sample_values: Optional[StrictStr] = Field(None, alias="sampleValues")
-    allowed_values: Optional[StrictStr] = Field(None, alias="allowedValues")
+    sample_values: constr(strict=True) = Field(None,alias="sampleValues") 
+    allowed_values: constr(strict=True) = Field(None,alias="allowedValues") 
     __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "clientIds", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
 
     class Config:

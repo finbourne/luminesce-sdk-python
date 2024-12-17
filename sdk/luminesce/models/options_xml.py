@@ -19,18 +19,18 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, Field
 
 class OptionsXml(BaseModel):
     """
     Additional options applicable to the given SourceType  # noqa: E501
     """
-    column_types: Optional[StrictStr] = Field(None, alias="columnTypes", description="Column types (comma delimited list of: '{types}', some columns may be left blank while others are specified)")
+    column_types: constr(strict=True) = Field(None,alias="columnTypes", description="Column types (comma delimited list of: &#39;{types}&#39;, some columns may be left blank while others are specified)") 
     infer_type_row_count: Optional[StrictInt] = Field(None, alias="inferTypeRowCount", description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified")
-    values_to_make_null: Optional[StrictStr] = Field(None, alias="valuesToMakeNull", description="Regex of values to map to 'null' in the returned data.")
-    column_names: Optional[StrictStr] = Field(None, alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)")
-    node_path: Optional[StrictStr] = Field(None, alias="nodePath", description="XPath query that selects the nodes to map to rows")
-    namespaces: Optional[StrictStr] = Field(None, description="Selected prefix(es) and namespace(s):prefix1=namespace1-uri1,prefix2=namespace2-uri2,...prefixN=namespaceN-uriN")
+    values_to_make_null: constr(strict=True) = Field(None,alias="valuesToMakeNull", description="Regex of values to map to &#39;null&#39; in the returned data.") 
+    column_names: constr(strict=True) = Field(None,alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)") 
+    node_path: constr(strict=True) = Field(None,alias="nodePath", description="XPath query that selects the nodes to map to rows") 
+    namespaces: constr(strict=True) = Field(None,alias="namespaces", description="Selected prefix(es) and namespace(s):prefix1&#x3D;namespace1-uri1,prefix2&#x3D;namespace2-uri2,...prefixN&#x3D;namespaceN-uriN") 
     __properties = ["columnTypes", "inferTypeRowCount", "valuesToMakeNull", "columnNames", "nodePath", "namespaces"]
 
     class Config:

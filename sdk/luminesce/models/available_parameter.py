@@ -19,15 +19,15 @@ import json
 
 
 from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, conlist, constr
+from pydantic.v1 import BaseModel, Field, conlist, constr, Field
 from luminesce.models.mappable_field import MappableField
 
 class AvailableParameter(BaseModel):
     """
     Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
-    provider_name: constr(strict=True, min_length=1) = Field(..., alias="providerName", description="Name of the Provider with a TableParameter")
-    parameter_name: constr(strict=True, min_length=1) = Field(..., alias="parameterName", description="Name of the TableParameter on the Provider")
+    provider_name: constr(strict=True) = Field(...,alias="providerName", description="Name of the Provider with a TableParameter") 
+    parameter_name: constr(strict=True) = Field(...,alias="parameterName", description="Name of the TableParameter on the Provider") 
     fields: conlist(MappableField) = Field(..., description="Fields that can be mapped to")
     __properties = ["providerName", "parameterName", "fields"]
 

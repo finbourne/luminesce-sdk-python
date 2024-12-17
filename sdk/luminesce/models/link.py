@@ -19,16 +19,16 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr
+from pydantic.v1 import BaseModel, Field, StrictStr, Field
 
 class Link(BaseModel):
     """
     Link
     """
-    relation: StrictStr = Field(...)
-    href: StrictStr = Field(...)
-    description: Optional[StrictStr] = None
-    method: StrictStr = Field(...)
+    relation: constr(strict=True) = Field(...,alias="relation") 
+    href: constr(strict=True) = Field(...,alias="href") 
+    description: constr(strict=True) = Field(None,alias="description") 
+    method: constr(strict=True) = Field(...,alias="method") 
     __properties = ["relation", "href", "description", "method"]
 
     class Config:

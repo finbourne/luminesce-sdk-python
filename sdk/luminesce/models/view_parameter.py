@@ -19,18 +19,18 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, constr, Field
 from luminesce.models.data_type import DataType
 
 class ViewParameter(BaseModel):
     """
     Parameters of view  # noqa: E501
     """
-    name: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of the provider")
+    name: constr(strict=True) = Field(...,alias="name", description="Name of the provider") 
     data_type: DataType = Field(..., alias="dataType")
-    value: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Value of the provider")
+    value: constr(strict=True) = Field(...,alias="value", description="Value of the provider") 
     is_table_data_mandatory: Optional[StrictBool] = Field(None, alias="isTableDataMandatory", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
-    description: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Description of the parameter")
+    description: constr(strict=True) = Field(None,alias="description", description="Description of the parameter") 
     __properties = ["name", "dataType", "value", "isTableDataMandatory", "description"]
 
     class Config:

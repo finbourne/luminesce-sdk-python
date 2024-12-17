@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr
+from pydantic.v1 import BaseModel, Field, StrictStr, Field
 from luminesce.models.link import Link
 
 class BackgroundQueryResponse(BaseModel):
     """
     Response for Background Query Start requests  # noqa: E501
     """
-    execution_id: Optional[StrictStr] = Field(None, alias="executionId", description="ExecutionId of the started-query")
+    execution_id: constr(strict=True) = Field(None,alias="executionId", description="ExecutionId of the started-query") 
     progress: Optional[Link] = None
     cancel: Optional[Link] = None
     fetch_json: Optional[Link] = Field(None, alias="fetchJson")

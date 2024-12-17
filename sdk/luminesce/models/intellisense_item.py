@@ -19,18 +19,18 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, constr
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, constr, Field
 from luminesce.models.intellisense_type import IntellisenseType
 
 class IntellisenseItem(BaseModel):
     """
     Representation of an item in an Intellisense popup  # noqa: E501
     """
-    caption: constr(strict=True, min_length=1) = Field(..., description="The value to show the user in the popup")
-    value: constr(strict=True, min_length=1) = Field(..., description="The value to substitute in")
-    meta: Optional[StrictStr] = Field(None, description="The light-grey text shown to the right of the Caption in the popup")
+    caption: constr(strict=True) = Field(...,alias="caption", description="The value to show the user in the popup") 
+    value: constr(strict=True) = Field(...,alias="value", description="The value to substitute in") 
+    meta: constr(strict=True) = Field(None,alias="meta", description="The light-grey text shown to the right of the Caption in the popup") 
     score: Optional[StrictInt] = Field(None, description="How important is this.  Bigger is more important.")
-    doc_html: Optional[StrictStr] = Field(None, alias="docHTML", description="Popup further info (as in a whole documentation article!)")
+    doc_html: constr(strict=True) = Field(None,alias="docHTML", description="Popup further info (as in a whole documentation article!)") 
     type: Optional[IntellisenseType] = None
     __properties = ["caption", "value", "meta", "score", "docHTML", "type"]
 

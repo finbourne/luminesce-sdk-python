@@ -19,20 +19,20 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr, Field
 
 class OptionsExcel(BaseModel):
     """
     Additional options applicable to the given SourceType  # noqa: E501
     """
-    column_names: Optional[StrictStr] = Field(None, alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)")
-    column_types: Optional[StrictStr] = Field(None, alias="columnTypes", description="Column types (comma delimited list of: '{types}', some columns may be left blank while others are specified)")
+    column_names: constr(strict=True) = Field(None,alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)") 
+    column_types: constr(strict=True) = Field(None,alias="columnTypes", description="Column types (comma delimited list of: &#39;{types}&#39;, some columns may be left blank while others are specified)") 
     infer_type_row_count: Optional[StrictInt] = Field(None, alias="inferTypeRowCount", description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified")
     no_header: Optional[StrictBool] = Field(None, alias="noHeader", description="Set this if there is no header row")
     calculate: Optional[StrictBool] = Field(None, description="Whether to attempt a calculation of the imported cell range prior to import")
-    password: Optional[StrictStr] = Field(None, description="If specified will be used as the password used for password protected workbooks")
-    worksheet: Optional[StrictStr] = Field(None, description="The worksheet containing the cell range to import (name or index, will default to first)")
-    range_or_table: Optional[StrictStr] = Field(None, alias="rangeOrTable", description="The cell range to import as either a specified range or a table name")
+    password: constr(strict=True) = Field(None,alias="password", description="If specified will be used as the password used for password protected workbooks") 
+    worksheet: constr(strict=True) = Field(None,alias="worksheet", description="The worksheet containing the cell range to import (name or index, will default to first)") 
+    range_or_table: constr(strict=True) = Field(None,alias="rangeOrTable", description="The cell range to import as either a specified range or a table name") 
     ignore_invalid_cells: Optional[StrictBool] = Field(None, alias="ignoreInvalidCells", description="If specified cells which can not be successfully converted to the target type will be ignored")
     ignore_blank_rows: Optional[StrictBool] = Field(None, alias="ignoreBlankRows", description="If the entire rows has only blank cells it will be ignored will be ignored")
     __properties = ["columnNames", "columnTypes", "inferTypeRowCount", "noHeader", "calculate", "password", "worksheet", "rangeOrTable", "ignoreInvalidCells", "ignoreBlankRows"]

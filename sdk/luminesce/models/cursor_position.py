@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict
-from pydantic.v1 import BaseModel, Field, StrictInt
+from pydantic.v1 import BaseModel, Field, StrictInt, Field
 
 class CursorPosition(BaseModel):
     """

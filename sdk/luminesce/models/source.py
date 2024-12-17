@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, constr
+from pydantic.v1 import BaseModel, Field, constr, Field
 from luminesce.models.source_type import SourceType
 
 class Source(BaseModel):
     """
     Information leading to choosing the provider  # noqa: E501
     """
-    location: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="The source location.  Start of a provider name, `Drive`, `LocalFs`, `AwsS3` etc.")
+    location: constr(strict=True) = Field(None,alias="location", description="The source location.  Start of a provider name, &#x60;Drive&#x60;, &#x60;LocalFs&#x60;, &#x60;AwsS3&#x60; etc.") 
     type: Optional[SourceType] = None
     __properties = ["location", "type"]
 

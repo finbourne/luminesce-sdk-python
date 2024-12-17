@@ -19,20 +19,20 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist, constr, Field
 from luminesce.models.view_parameter import ViewParameter
 
 class ConvertToViewData(BaseModel):
     """
     Representation of view data where will template the data into a 'create view' sql  # noqa: E501
     """
-    query: constr(strict=True, min_length=1) = Field(..., description="view query")
-    name: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of view")
-    description: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Description of view")
-    documentation_link: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="documentationLink", description="Documentation link")
+    query: constr(strict=True) = Field(...,alias="query", description="view query") 
+    name: constr(strict=True) = Field(...,alias="name", description="Name of view") 
+    description: constr(strict=True) = Field(None,alias="description", description="Description of view") 
+    documentation_link: constr(strict=True) = Field(None,alias="documentationLink", description="Documentation link") 
     view_parameters: Optional[conlist(ViewParameter)] = Field(None, alias="viewParameters", description="View parameters")
     other_parameters: Optional[Dict[str, StrictStr]] = Field(None, alias="otherParameters", description="Other parameters not explicitly handled by the ConvertToView generation.  These will be populated by the \"From SQL\" and should simply be returned by  the web GUI should the user edit / update / regenerate")
-    starting_variable_name: Optional[StrictStr] = Field(None, alias="startingVariableName", description="Which variable the this start with, null if not started from a full Create View Sql Statement.")
+    starting_variable_name: constr(strict=True) = Field(None,alias="startingVariableName", description="Which variable the this start with, null if not started from a full Create View Sql Statement.") 
     __properties = ["query", "name", "description", "documentationLink", "viewParameters", "otherParameters", "startingVariableName"]
 
     class Config:

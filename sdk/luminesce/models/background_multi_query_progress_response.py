@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.task_status import TaskStatus
@@ -28,7 +28,7 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
     """
     BackgroundMultiQueryProgressResponse
     """
-    progress: Optional[StrictStr] = Field(None, description="The full progress log (up to this point at least)")
+    progress: constr(strict=True) = Field(None,alias="progress", description="The full progress log (up to this point at least)") 
     feedback: Optional[conlist(FeedbackEventArgs)] = Field(None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
     status: Optional[TaskStatus] = None
     queries: Optional[conlist(BackgroundQueryProgressResponse)] = None

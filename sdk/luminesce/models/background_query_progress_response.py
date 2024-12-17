@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, Field
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.column import Column
 from luminesce.models.feedback_event_args import FeedbackEventArgs
@@ -33,10 +33,10 @@ class BackgroundQueryProgressResponse(BaseModel):
     row_count: Optional[StrictInt] = Field(None, alias="rowCount", description="Number of rows of data held. -1 if none as yet.")
     status: Optional[TaskStatus] = None
     state: Optional[BackgroundQueryState] = None
-    progress: Optional[StrictStr] = Field(None, description="The full progress log (up to this point at least)")
+    progress: constr(strict=True) = Field(None,alias="progress", description="The full progress log (up to this point at least)") 
     feedback: Optional[conlist(FeedbackEventArgs)] = Field(None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
-    query: Optional[StrictStr] = Field(None, description="The LuminesceSql of the original request")
-    query_name: Optional[StrictStr] = Field(None, alias="queryName", description="The QueryName given in the original request")
+    query: constr(strict=True) = Field(None,alias="query", description="The LuminesceSql of the original request") 
+    query_name: constr(strict=True) = Field(None,alias="queryName", description="The QueryName given in the original request") 
     columns_available: Optional[conlist(Column)] = Field(None, alias="columnsAvailable", description="When HasData is true this is the schema of columns that will be returned if the data is requested")
     __properties = ["hasData", "rowCount", "status", "state", "progress", "feedback", "query", "queryName", "columnsAvailable"]
 

@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr, Field
 from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.intellisense_item import IntellisenseItem
 
@@ -29,7 +29,7 @@ class IntellisenseResponse(BaseModel):
     """
     auto_complete_list: conlist(IntellisenseItem) = Field(..., alias="autoCompleteList", description="The available items at this point")
     try_again_soon_for_more: StrictBool = Field(..., alias="tryAgainSoonForMore", description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)")
-    sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The SQL this is for with characters indicating the location the pop-up is for")
+    sql_with_marker: constr(strict=True) = Field(...,alias="sqlWithMarker", description="The SQL this is for with characters indicating the location the pop-up is for") 
     start_replacement_position: CursorPosition = Field(..., alias="startReplacementPosition")
     end_replacement_position: CursorPosition = Field(..., alias="endReplacementPosition")
     __properties = ["autoCompleteList", "tryAgainSoonForMore", "sqlWithMarker", "startReplacementPosition", "endReplacementPosition"]

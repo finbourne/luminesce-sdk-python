@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, conlist, constr
+from pydantic.v1 import BaseModel, Field, conlist, constr, Field
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 
 class ErrorHighlightResponse(BaseModel):
@@ -27,7 +27,7 @@ class ErrorHighlightResponse(BaseModel):
     Response for error highlighting  # noqa: E501
     """
     errors: conlist(ErrorHighlightItem) = Field(..., description="The errors within the Sql")
-    sql_with_marker: constr(strict=True, min_length=1) = Field(..., alias="sqlWithMarker", description="The SQL this is for, with characters indicating the error locations")
+    sql_with_marker: constr(strict=True) = Field(...,alias="sqlWithMarker", description="The SQL this is for, with characters indicating the error locations") 
     __properties = ["errors", "sqlWithMarker"]
 
     class Config:

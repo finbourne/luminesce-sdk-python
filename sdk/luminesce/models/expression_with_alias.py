@@ -19,15 +19,15 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, constr
+from pydantic.v1 import BaseModel, Field, StrictStr, constr, Field
 from luminesce.models.mapping_flags import MappingFlags
 
 class ExpressionWithAlias(BaseModel):
     """
     Contract for an expression of data we \"have\" that we may \"want to map to a table-parameter's column\"  # noqa: E501
     """
-    expression: constr(strict=True, min_length=1) = Field(..., description="Expression (column name, constant, complex expression, etc.)")
-    alias: Optional[StrictStr] = Field(None, description="Column Alias for the expression")
+    expression: constr(strict=True) = Field(...,alias="expression", description="Expression (column name, constant, complex expression, etc.)") 
+    alias: constr(strict=True) = Field(None,alias="alias", description="Column Alias for the expression") 
     flags: Optional[MappingFlags] = None
     __properties = ["expression", "alias", "flags"]
 

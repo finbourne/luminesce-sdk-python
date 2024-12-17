@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict
-from pydantic.v1 import BaseModel, Field, constr
+from pydantic.v1 import BaseModel, Field, constr, Field
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 
 class FilterTermDesign(BaseModel):
@@ -27,7 +27,7 @@ class FilterTermDesign(BaseModel):
     A single filter clause  # noqa: E501
     """
     operator: QueryDesignerBinaryOperator = Field(...)
-    value: constr(strict=True, max_length=2048, min_length=0) = Field(..., description="The value to compare against (always as a string, but will be formatted to the correct type)")
+    value: constr(strict=True) = Field(...,alias="value", description="The value to compare against (always as a string, but will be formatted to the correct type)") 
     __properties = ["operator", "value"]
 
     class Config:

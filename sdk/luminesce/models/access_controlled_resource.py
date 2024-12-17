@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
 from luminesce.models.access_controlled_action import AccessControlledAction
 from luminesce.models.access_controlled_resource_identifier_part_schema_attribute import AccessControlledResourceIdentifierPartSchemaAttribute
 
@@ -27,9 +27,9 @@ class AccessControlledResource(BaseModel):
     """
     AccessControlledResource
     """
-    application: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    description: Optional[StrictStr] = None
+    application: constr(strict=True) = Field(None,alias="application") 
+    name: constr(strict=True) = Field(None,alias="name") 
+    description: constr(strict=True) = Field(None,alias="description") 
     actions: Optional[conlist(AccessControlledAction)] = None
     identifier_parts: Optional[conlist(AccessControlledResourceIdentifierPartSchemaAttribute)] = Field(None, alias="identifierParts")
     __properties = ["application", "name", "description", "actions", "identifierParts"]
