@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, constr, Field
+from pydantic.v1 import BaseModel, Field, StrictInt, constr
 from luminesce.models.cursor_position import CursorPosition
 
 class ErrorHighlightItem(BaseModel):
@@ -30,7 +30,7 @@ class ErrorHighlightItem(BaseModel):
     stop: CursorPosition = Field(...)
     no_viable_alternative_start: Optional[CursorPosition] = Field(None, alias="noViableAlternativeStart")
     length: StrictInt = Field(..., description="The length of the error token counting line breaks if any")
-    message: constr(strict=True) = Field(...,alias="message", description="The error message") 
+    message: constr(strict=True, min_length=1) = Field(..., description="The error message")
     __properties = ["start", "stop", "noViableAlternativeStart", "length", "message"]
 
     class Config:

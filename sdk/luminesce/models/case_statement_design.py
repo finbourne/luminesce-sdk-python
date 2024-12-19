@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 from luminesce.models.case_statement_item import CaseStatementItem
 
 class CaseStatementDesign(BaseModel):
     """
     Representation of the selected field and a list of: filter, source, and target.  # noqa: E501
     """
-    selected_field: constr(strict=True) = Field(None,alias="selectedField", description="Selected field in the SQL query.") 
+    selected_field: Optional[StrictStr] = Field(None, alias="selectedField", description="Selected field in the SQL query.")
     case_statement_items: Optional[conlist(CaseStatementItem)] = Field(None, alias="caseStatementItems", description="A list containing the filter, source, and target.")
     __properties = ["selectedField", "caseStatementItems"]
 

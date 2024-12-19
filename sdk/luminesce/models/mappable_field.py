@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, Field
+from pydantic.v1 import BaseModel, Field, StrictStr
 from luminesce.models.data_type import DataType
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 
@@ -27,13 +27,13 @@ class MappableField(BaseModel):
     """
     Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
-    name: constr(strict=True) = Field(None,alias="name", description="Name of the field in need of mapping (The field name from within the Table Parameter itself)") 
+    name: Optional[StrictStr] = Field(None, description="Name of the field in need of mapping (The field name from within the Table Parameter itself)")
     type: Optional[DataType] = None
-    description: constr(strict=True) = Field(None,alias="description", description="Description of the field (just for rendering to the user)") 
-    display_name: constr(strict=True) = Field(None,alias="displayName", description="Display Name of the field (just for rendering to the user)") 
-    sample_values: constr(strict=True) = Field(None,alias="sampleValues", description="Example values for the field (just for rendering to the user)") 
-    allowed_values: constr(strict=True) = Field(None,alias="allowedValues", description="Any set of exactly allowed values for the field (perhaps just for rendering to the user, if nothing else)") 
-    mandatory_for_actions: constr(strict=True) = Field(None,alias="mandatoryForActions", description="Which &#x60;Actions&#x60; is this mandatory for? If any (and potentially when), perhaps just for rendering to the user, if nothing else") 
+    description: Optional[StrictStr] = Field(None, description="Description of the field (just for rendering to the user)")
+    display_name: Optional[StrictStr] = Field(None, alias="displayName", description="Display Name of the field (just for rendering to the user)")
+    sample_values: Optional[StrictStr] = Field(None, alias="sampleValues", description="Example values for the field (just for rendering to the user)")
+    allowed_values: Optional[StrictStr] = Field(None, alias="allowedValues", description="Any set of exactly allowed values for the field (perhaps just for rendering to the user, if nothing else)")
+    mandatory_for_actions: Optional[StrictStr] = Field(None, alias="mandatoryForActions", description="Which `Actions` is this mandatory for? If any (and potentially when), perhaps just for rendering to the user, if nothing else")
     mapping: Optional[ExpressionWithAlias] = None
     __properties = ["name", "type", "description", "displayName", "sampleValues", "allowedValues", "mandatoryForActions", "mapping"]
 

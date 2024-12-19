@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, Field
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.task_status import TaskStatus
 
@@ -30,7 +30,7 @@ class BackgroundQueryCancelResponse(BaseModel):
     had_data: Optional[StrictBool] = Field(None, alias="hadData")
     previous_status: Optional[TaskStatus] = Field(None, alias="previousStatus")
     previous_state: Optional[BackgroundQueryState] = Field(None, alias="previousState")
-    progress: constr(strict=True) = Field(None,alias="progress") 
+    progress: Optional[StrictStr] = None
     __properties = ["hadData", "previousStatus", "previousState", "progress"]
 
     class Config:

@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 from luminesce.models.action_id import ActionId
 from luminesce.models.id_selector_definition import IdSelectorDefinition
 
@@ -27,7 +27,7 @@ class AccessControlledAction(BaseModel):
     """
     AccessControlledAction
     """
-    description: constr(strict=True) = Field(None,alias="description") 
+    description: Optional[StrictStr] = None
     action: Optional[ActionId] = None
     limited_set: Optional[conlist(IdSelectorDefinition)] = Field(None, alias="limitedSet")
     __properties = ["description", "action", "limitedSet"]

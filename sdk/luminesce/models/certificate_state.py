@@ -19,7 +19,7 @@ import json
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, Field
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
 from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 from luminesce.models.link import Link
@@ -28,20 +28,20 @@ class CertificateState(BaseModel):
     """
     Information held about the minting / revoking of a certificate.  It does *not* contain the certificate itself  # noqa: E501
     """
-    key: constr(strict=True) = Field(None,alias="key", description="The \&quot;key\&quot; to which this belongs in the dictionary,  basically the CN without any version information") 
+    key: Optional[StrictStr] = Field(None, description="The \"key\" to which this belongs in the dictionary,  basically the CN without any version information")
     version: Optional[StrictInt] = Field(None, description="The version of this certificate")
-    common_name: constr(strict=True) = Field(None,alias="commonName", description="The common Name of the Certificate") 
+    common_name: Optional[StrictStr] = Field(None, alias="commonName", description="The common Name of the Certificate")
     type: Optional[CertificateType] = None
     creation_status: Optional[CertificateStatus] = Field(None, alias="creationStatus")
     revocation_status: Optional[CertificateStatus] = Field(None, alias="revocationStatus")
     validity_start: Optional[datetime] = Field(None, alias="validityStart", description="The earliest point at which a certificate can be used")
     validity_end: Optional[datetime] = Field(None, alias="validityEnd", description="The latest point at which a certificate can be used")
     revoked_at: Optional[datetime] = Field(None, alias="revokedAt", description="The point at which this was revoked, if any")
-    revoked_by: constr(strict=True) = Field(None,alias="revokedBy", description="The user which revoked this, if any") 
+    revoked_by: Optional[StrictStr] = Field(None, alias="revokedBy", description="The user which revoked this, if any")
     created_at: Optional[datetime] = Field(None, alias="createdAt", description="The point at which this was created")
     permissions_set_at: Optional[datetime] = Field(None, alias="permissionsSetAt", description="The point at which permissions were adjusted by the system")
-    created_by: constr(strict=True) = Field(None,alias="createdBy", description="The user which created this") 
-    serial_number: constr(strict=True) = Field(None,alias="serialNumber", description="The Vault-issued serial number of the certificate, if any - used for revocation") 
+    created_by: Optional[StrictStr] = Field(None, alias="createdBy", description="The user which created this")
+    serial_number: Optional[StrictStr] = Field(None, alias="serialNumber", description="The Vault-issued serial number of the certificate, if any - used for revocation")
     links: Optional[conlist(Link)] = Field(None, description="The location within Configuration Store that this is saved to")
     __properties = ["key", "version", "commonName", "type", "creationStatus", "revocationStatus", "validityStart", "validityEnd", "revokedAt", "revokedBy", "createdAt", "permissionsSetAt", "createdBy", "serialNumber", "links"]
 

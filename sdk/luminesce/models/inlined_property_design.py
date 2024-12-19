@@ -19,15 +19,15 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 from luminesce.models.inlined_property_item import InlinedPropertyItem
 
 class InlinedPropertyDesign(BaseModel):
     """
     Representation of a set of inlined properties for a given provider so that SQL can be generated to be able to inline properties into luminesce  # noqa: E501
     """
-    provider_name: constr(strict=True) = Field(None,alias="providerName", description="The provider name for which these properties are to be inlined") 
-    provider_name_extension: constr(strict=True) = Field(None,alias="providerNameExtension", description="The provider extension name for extended providers") 
+    provider_name: Optional[StrictStr] = Field(None, alias="providerName", description="The provider name for which these properties are to be inlined")
+    provider_name_extension: Optional[StrictStr] = Field(None, alias="providerNameExtension", description="The provider extension name for extended providers")
     inlined_property_items: Optional[conlist(InlinedPropertyItem)] = Field(None, alias="inlinedPropertyItems", description="Collection of Inlined properties")
     __properties = ["providerName", "providerNameExtension", "inlinedPropertyItems"]
 

@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, conlist, constr, Field
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, conlist, constr
 from luminesce.models.auto_detect_type import AutoDetectType
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.options_csv import OptionsCsv
@@ -38,10 +38,10 @@ class FileReaderBuilderDef(BaseModel):
     limit: Optional[StrictInt] = Field(None, description="What limit be added to the load query?  Less than or equal to zero means none")
     source: Optional[Source] = None
     available_sources: Optional[conlist(Source)] = Field(None, alias="availableSources", description="The source locations the user has access to.  The provider in essence.")
-    variable_name: constr(strict=True) = Field(None,alias="variableName", description="The name of the variable for the &#x60;use&#x60; statement") 
-    file_path: constr(strict=True) = Field(None,alias="filePath", description="The file (or folder) path") 
-    folder_filter: constr(strict=True) = Field(None,alias="folderFilter", description="The filter to apply to a folder (all matching files then being read) a RegExp") 
-    zip_filter: constr(strict=True) = Field(None,alias="zipFilter", description="The filter to apply to folder structures with zip archives (all matching files then being read) a RegExp") 
+    variable_name: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="variableName", description="The name of the variable for the `use` statement")
+    file_path: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="filePath", description="The file (or folder) path")
+    folder_filter: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="folderFilter", description="The filter to apply to a folder (all matching files then being read) a RegExp")
+    zip_filter: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="zipFilter", description="The filter to apply to folder structures with zip archives (all matching files then being read) a RegExp")
     add_file_name: Optional[StrictBool] = Field(None, alias="addFileName", description="Should a file name column be added to the output?")
     csv: Optional[OptionsCsv] = None
     excel: Optional[OptionsExcel] = None

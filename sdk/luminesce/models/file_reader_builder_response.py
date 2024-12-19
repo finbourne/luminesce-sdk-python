@@ -19,15 +19,15 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, Field
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 from luminesce.models.column_info import ColumnInfo
 
 class FileReaderBuilderResponse(BaseModel):
     """
     Information on how to construct a file-read sql query  # noqa: E501
     """
-    query: constr(strict=True) = Field(None,alias="query", description="The generated SQL") 
-    error: constr(strict=True) = Field(None,alias="error", description="The error from running generated SQL Query, if any") 
+    query: Optional[StrictStr] = Field(None, description="The generated SQL")
+    error: Optional[StrictStr] = Field(None, description="The error from running generated SQL Query, if any")
     columns: Optional[conlist(ColumnInfo)] = Field(None, description="Column information for the results")
     data: Optional[Any] = Field(None, description="The resulting data from running the Query")
     __properties = ["query", "error", "columns", "data"]

@@ -19,16 +19,16 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, constr, Field
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, constr
 
 class InlinedPropertyItem(BaseModel):
     """
     Information about a inlined property so that decorated properties can be inlined into luminesce  # noqa: E501
     """
-    key: constr(strict=True) = Field(...,alias="key", description="Key of the property") 
-    name: constr(strict=True) = Field(None,alias="name", description="Name of the property") 
+    key: constr(strict=True, min_length=1) = Field(..., description="Key of the property")
+    name: Optional[StrictStr] = Field(None, description="Name of the property")
     is_main: Optional[StrictBool] = Field(None, alias="isMain", description="Is Main indicator for the property")
-    description: constr(strict=True) = Field(None,alias="description", description="Description of the property") 
+    description: Optional[StrictStr] = Field(None, description="Description of the property")
     __properties = ["key", "name", "isMain", "description"]
 
     class Config:

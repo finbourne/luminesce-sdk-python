@@ -19,15 +19,15 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, constr, Field
+from pydantic.v1 import BaseModel, Field, StrictBool, constr
 
 class CaseStatementItem(BaseModel):
     """
     Information about a case statement.  A typical case statement would look like:  CASE WHEN Field {Filter} Source THEN Target  For example: CASE WHEN 'currency' = 'USD' THEN 'US'  Here the Field is 'currency', the Source is 'USD', the Filter is '=', and the Target is 'US'  # noqa: E501
     """
-    filter: constr(strict=True) = Field(...,alias="filter", description="The operator in the case statement SQL expression") 
-    source: constr(strict=True) = Field(...,alias="source", description="The expression that is on the LHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target") 
-    target: constr(strict=True) = Field(...,alias="target", description="The expression that is on the RHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target") 
+    filter: constr(strict=True, min_length=1) = Field(..., description="The operator in the case statement SQL expression")
+    source: constr(strict=True, min_length=1) = Field(..., description="The expression that is on the LHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target")
+    target: constr(strict=True, min_length=1) = Field(..., description="The expression that is on the RHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target")
     is_target_non_literal: Optional[StrictBool] = Field(None, alias="isTargetNonLiteral", description="The Target can be a literal value or a non literal (field) and  hence will be interpreted differently.  This can be determined from the UI and passed down as a true / false")
     __properties = ["filter", "source", "target", "isTargetNonLiteral"]
 

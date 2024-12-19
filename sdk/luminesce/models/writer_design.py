@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, conlist, constr, Field
+from pydantic.v1 import BaseModel, Field, conlist, constr
 from luminesce.models.available_parameter import AvailableParameter
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 
@@ -27,7 +27,7 @@ class WriterDesign(BaseModel):
     """
     Representation of a \"designable Query for a writer\" suitable for formatting to SQL or being built from compliant SQL.  # noqa: E501
     """
-    sql: constr(strict=True) = Field(...,alias="sql", description="Original SQL that started this off") 
+    sql: constr(strict=True, min_length=1) = Field(..., description="Original SQL that started this off")
     available_to_map_from: Optional[conlist(ExpressionWithAlias)] = Field(None, alias="availableToMapFrom", description="The data able to be mapped from as derived from the Sql")
     parameter: Optional[AvailableParameter] = None
     available_parameters: Optional[conlist(AvailableParameter)] = Field(None, alias="availableParameters", description="All the parameter the user may wish to design")

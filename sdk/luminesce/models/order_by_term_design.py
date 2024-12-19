@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, constr, Field
+from pydantic.v1 import BaseModel, Field, constr
 from luminesce.models.order_by_direction import OrderByDirection
 
 class OrderByTermDesign(BaseModel):
     """
     A single clause within an Order BY  # noqa: E501
     """
-    field: constr(strict=True) = Field(...,alias="field", description="Name of the field to order by") 
+    field: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of the field to order by")
     direction: Optional[OrderByDirection] = None
     __properties = ["field", "direction"]
 
