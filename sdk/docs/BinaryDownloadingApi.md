@@ -61,7 +61,7 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(BinaryDownloadingApi)
     type = luminesce.LuminesceBinaryType() # LuminesceBinaryType | Type of binary to download (each requires separate licenses and entitlements) (optional)
-    version = 'version_example' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
+    version = '1.17.274' # str | An explicit version of the binary.  Leave blank to get the latest version (recommended) (optional)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -188,7 +188,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 

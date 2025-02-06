@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -169,11 +169,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = CASE 
- WHEN [currency] = 'US' THEN 'USD' 
- WHEN [currency] = 'Gb' THEN 'GBP' 
- ELSE [currency] 
- END # str | SQL to attempt to create an case statement Design object from (optional)
+    body = CASE \n WHEN [currency] = 'US' THEN 'USD' \n WHEN [currency] = 'Gb' THEN 'GBP' \n ELSE [currency] \n END # str | SQL to attempt to create an case statement Design object from (optional)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -207,7 +203,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -304,7 +300,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -403,7 +399,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -461,9 +457,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = @keysToCatalog = values('Portfolio/3897-78d4-e91c-26/location', 'PortfolioLocation', false, '');
- @config = select column1 as [Key], column2 as Name, column3 as IsMain, column4 as Description from @keysToCatalog; 
- select * from Sys.Admin.Lusid.Provider.Configure where Provider = 'Lusid.Portfolio' and Configuration = @config; # str | SQL query to attempt to generate the inlined properties design object from (optional)
+    body = @keysToCatalog = values('Portfolio/3897-78d4-e91c-26/location', 'PortfolioLocation', false, '');\n @config = select column1 as [Key], column2 as Name, column3 as IsMain, column4 as Description from @keysToCatalog; \n select * from Sys.Admin.Lusid.Provider.Configure where Provider = 'Lusid.Portfolio' and Configuration = @config; # str | SQL query to attempt to generate the inlined properties design object from (optional)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -497,7 +491,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -594,7 +588,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -691,7 +685,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -788,7 +782,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -885,7 +879,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1003,7 +997,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1095,7 +1089,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1154,12 +1148,7 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
     determine_available_sources = True # bool | Should the available sources be determined from `Sys.Registration` (optional) (default to True)
-    body = @x = 
-use Drive.Csv
-  --file=/some/folder/somefile.csv
-enduse;
-
-select * from @x; # str | SQL query to generate the file read design object from (optional)
+    body = @x = \nuse Drive.Csv\n  --file=/some/folder/somefile.csv\nenduse;\n\nselect * from @x; # str | SQL query to generate the file read design object from (optional)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1194,7 +1183,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1252,18 +1241,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = SELECT
-    [TableName],
-    Count(distinct [FieldName]) as [NumberOfFields]
-FROM
-    [Sys.Field]
-WHERE
-    ([TableName] = 'Sys.Registration')
-GROUP BY
-    [TableName]
-ORDER BY
-    [DataType]
-LIMIT 42 # str | SQL query to generate the design object from
+    body = SELECT\n    [TableName],\n    Count(distinct [FieldName]) as [NumberOfFields]\nFROM\n    [Sys.Field]\nWHERE\n    ([TableName] = 'Sys.Registration')\nGROUP BY\n    [TableName]\nORDER BY\n    [DataType]\nLIMIT 42 # str | SQL query to generate the design object from
     validate_with_metadata = True # bool | Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.? (optional) (default to True)
 
     try:
@@ -1299,7 +1277,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1357,14 +1335,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = @x = 
-use Sys.Admin.SetupView
-  --provider=YourView
-----
-select * from Lusid.Instrument
-enduse;
-
-select * from @x; # str | SQL Query to generate the ConvertToViewData object from
+    body = @x = \nuse Sys.Admin.SetupView\n  --provider=YourView\n----\nselect * from Lusid.Instrument\nenduse;\n\nselect * from @x; # str | SQL Query to generate the ConvertToViewData object from
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1398,7 +1369,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1492,7 +1463,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1589,7 +1560,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 
@@ -1686,7 +1657,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | OK |  -  |
 **400** | Bad Request |  -  |
 **403** | Forbidden |  -  |
 

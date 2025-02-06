@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **is_required_by_provider** | **bool** |  | [optional] 
 **mandatory_for_actions** | **str** |  | [optional] 
 **client_ids** | **List[str]** |  | [optional] 
-**name** | **str** |  | [optional] [readonly] 
+**name** | **str** |  | [optional] 
 **type** | [**DataType**](DataType.md) |  | [optional] 
 **description** | **str** |  | [optional] 
 **display_name** | **str** |  | [optional] 
