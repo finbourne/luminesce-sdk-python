@@ -4,15 +4,15 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
-[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | [EXPERIMENTAL] ListCertificates: List previously minted certificates
-[**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
+[**download_certificate**](CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | DownloadCertificate: Download domain or your personal certificates
+[**list_certificates**](CertificateManagementApi.md#list_certificates) | **GET** /api/Certificate/certificates | ListCertificates: List previously minted certificates
+[**manage_certificate**](CertificateManagementApi.md#manage_certificate) | **PUT** /api/Certificate/manage | ManageCertificate: Create / Renew / Revoke a certificate
 
 
 # **download_certificate**
 > bytearray download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
 
-[EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
+DownloadCertificate: Download domain or your personal certificates
 
  Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden 
 
@@ -69,7 +69,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create, opts=opts)
 
-        # [EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates
+        # DownloadCertificate: Download domain or your personal certificates
         api_response = api_instance.download_certificate(type=type, file_type=file_type, may_auto_create=may_auto_create)
         pprint(api_response)
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 # **list_certificates**
 > List[CertificateState] list_certificates()
 
-[EXPERIMENTAL] ListCertificates: List previously minted certificates
+ListCertificates: List previously minted certificates
 
  Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
@@ -162,7 +162,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.list_certificates(opts=opts)
 
-        # [EXPERIMENTAL] ListCertificates: List previously minted certificates
+        # ListCertificates: List previously minted certificates
         api_response = api_instance.list_certificates()
         pprint(api_response)
 
@@ -196,7 +196,7 @@ This endpoint does not need any parameter.
 # **manage_certificate**
 > CertificateState manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
 
-[EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
+ManageCertificate: Create / Renew / Revoke a certificate
 
  Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden 
 
@@ -256,7 +256,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run, opts=opts)
 
-        # [EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate
+        # ManageCertificate: Create / Renew / Revoke a certificate
         api_response = api_instance.manage_certificate(action=action, type=type, version=version, validity_start=validity_start, validity_end=validity_end, dry_run=dry_run)
         pprint(api_response)
 

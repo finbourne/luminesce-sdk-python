@@ -62,7 +62,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
-        """[EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates  # noqa: E501
+        """DownloadCertificate: Download domain or your personal certificates  # noqa: E501
 
          Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -97,7 +97,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def download_certificate_with_http_info(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] DownloadCertificate: Download domain or your personal certificates  # noqa: E501
+        """DownloadCertificate: Download domain or your personal certificates  # noqa: E501
 
          Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -230,7 +230,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def list_certificates(self, async_req: Optional[bool]=None, **kwargs) -> Union[List[CertificateState], Awaitable[List[CertificateState]]]:  # noqa: E501
-        """[EXPERIMENTAL] ListCertificates: List previously minted certificates  # noqa: E501
+        """ListCertificates: List previously minted certificates  # noqa: E501
 
          Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -259,7 +259,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def list_certificates_with_http_info(self, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] ListCertificates: List previously minted certificates  # noqa: E501
+        """ListCertificates: List previously minted certificates  # noqa: E501
 
          Lists all the certificates previously minted to which you have access.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -374,7 +374,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CertificateState, Awaitable[CertificateState]]:  # noqa: E501
-        """[EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
+        """ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -415,7 +415,7 @@ class CertificateManagementApi:
 
     @validate_arguments
     def manage_certificate_with_http_info(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
+        """ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an

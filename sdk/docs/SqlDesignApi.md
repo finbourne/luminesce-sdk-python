@@ -5,22 +5,22 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_provider_template_for_export**](SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
-[**put_case_statement_design_sql_to_design**](SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
-[**put_case_statement_design_to_sql**](SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | [EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
-[**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | [EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
-[**put_inlined_properties_design_sql_to_design**](SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
-[**put_inlined_properties_design_to_sql**](SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
+[**put_case_statement_design_sql_to_design**](SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
+[**put_case_statement_design_to_sql**](SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | PutCaseStatementDesignToSql: Convert a case statement design object to SQL
+[**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | PutFileReadDesignToSql: Make file read SQL from a design object
+[**put_inlined_properties_design_sql_to_design**](SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
+[**put_inlined_properties_design_to_sql**](SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
 [**put_intellisense**](SqlDesignApi.md#put_intellisense) | **PUT** /api/Sql/intellisense | PutIntellisense: Make intellisense prompts given an SQL snip-it
 [**put_intellisense_error**](SqlDesignApi.md#put_intellisense_error) | **PUT** /api/Sql/intellisenseError | PutIntellisenseError: Get error ranges from SQL
-[**put_query_design_to_sql**](SqlDesignApi.md#put_query_design_to_sql) | **PUT** /api/Sql/fromdesign | [EXPERIMENTAL] PutQueryDesignToSql: Make SQL from a structured query design
+[**put_query_design_to_sql**](SqlDesignApi.md#put_query_design_to_sql) | **PUT** /api/Sql/fromdesign | PutQueryDesignToSql: Make SQL from a structured query design
 [**put_query_to_format**](SqlDesignApi.md#put_query_to_format) | **PUT** /api/Sql/pretty | PutQueryToFormat: Format SQL into a more readable form
-[**put_sql_to_extract_scalar_parameters**](SqlDesignApi.md#put_sql_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters | [EXPERIMENTAL] PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
-[**put_sql_to_file_read_design**](SqlDesignApi.md#put_sql_to_file_read_design) | **PUT** /api/Sql/tofilereaddesign | [EXPERIMENTAL] PutSqlToFileReadDesign: Make a design object from file-read SQL
-[**put_sql_to_query_design**](SqlDesignApi.md#put_sql_to_query_design) | **PUT** /api/Sql/todesign | [EXPERIMENTAL] PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
-[**put_sql_to_view_design**](SqlDesignApi.md#put_sql_to_view_design) | **PUT** /api/Sql/toviewdesign | [EXPERIMENTAL] PutSqlToViewDesign: Make a view-design from view creation SQL
-[**put_sql_to_writer_design**](SqlDesignApi.md#put_sql_to_writer_design) | **PUT** /api/Sql/towriterdesign | [EXPERIMENTAL] PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
-[**put_view_design_to_sql**](SqlDesignApi.md#put_view_design_to_sql) | **PUT** /api/Sql/fromviewdesign | [EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
-[**put_writer_design_to_sql**](SqlDesignApi.md#put_writer_design_to_sql) | **PUT** /api/Sql/fromwriterdesign | [EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
+[**put_sql_to_extract_scalar_parameters**](SqlDesignApi.md#put_sql_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters | PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
+[**put_sql_to_file_read_design**](SqlDesignApi.md#put_sql_to_file_read_design) | **PUT** /api/Sql/tofilereaddesign | PutSqlToFileReadDesign: Make a design object from file-read SQL
+[**put_sql_to_query_design**](SqlDesignApi.md#put_sql_to_query_design) | **PUT** /api/Sql/todesign | PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
+[**put_sql_to_view_design**](SqlDesignApi.md#put_sql_to_view_design) | **PUT** /api/Sql/toviewdesign | PutSqlToViewDesign: Make a view-design from view creation SQL
+[**put_sql_to_writer_design**](SqlDesignApi.md#put_sql_to_writer_design) | **PUT** /api/Sql/towriterdesign | PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
+[**put_view_design_to_sql**](SqlDesignApi.md#put_view_design_to_sql) | **PUT** /api/Sql/fromviewdesign | PutViewDesignToSql: Make view creation sql from a view-design
+[**put_writer_design_to_sql**](SqlDesignApi.md#put_writer_design_to_sql) | **PUT** /api/Sql/fromwriterdesign | PutWriterDesignToSql: Make writer SQL from a writer-design object
 
 
 # **get_provider_template_for_export**
@@ -120,7 +120,7 @@ Name | Type | Description  | Notes
 # **put_case_statement_design_sql_to_design**
 > CaseStatementDesign put_case_statement_design_sql_to_design(body=body)
 
-[EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
+PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
 
 Converts a SQL query to a CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -175,7 +175,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_case_statement_design_sql_to_design(body=body, opts=opts)
 
-        # [EXPERIMENTAL] PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
+        # PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
         api_response = api_instance.put_case_statement_design_sql_to_design(body=body)
         pprint(api_response)
 
@@ -212,7 +212,7 @@ Name | Type | Description  | Notes
 # **put_case_statement_design_to_sql**
 > str put_case_statement_design_to_sql(case_statement_design)
 
-[EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
+PutCaseStatementDesignToSql: Convert a case statement design object to SQL
 
 Generates a SQL case statement query from a structured CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -272,7 +272,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_case_statement_design_to_sql(case_statement_design, opts=opts)
 
-        # [EXPERIMENTAL] PutCaseStatementDesignToSql: Convert a case statement design object to SQL
+        # PutCaseStatementDesignToSql: Convert a case statement design object to SQL
         api_response = api_instance.put_case_statement_design_to_sql(case_statement_design)
         pprint(api_response)
 
@@ -309,7 +309,7 @@ Name | Type | Description  | Notes
 # **put_file_read_design_to_sql**
 > FileReaderBuilderResponse put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query)
 
-[EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
+PutFileReadDesignToSql: Make file read SQL from a design object
 
 Generates SQL from a FileReaderBuilderDef object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -370,7 +370,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query, opts=opts)
 
-        # [EXPERIMENTAL] PutFileReadDesignToSql: Make file read SQL from a design object
+        # PutFileReadDesignToSql: Make file read SQL from a design object
         api_response = api_instance.put_file_read_design_to_sql(file_reader_builder_def, execute_query=execute_query)
         pprint(api_response)
 
@@ -408,7 +408,7 @@ Name | Type | Description  | Notes
 # **put_inlined_properties_design_sql_to_design**
 > InlinedPropertyDesign put_inlined_properties_design_sql_to_design(body=body)
 
-[EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
+PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
 
 Generates a SQL-inlined-properties-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -463,7 +463,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_inlined_properties_design_sql_to_design(body=body, opts=opts)
 
-        # [EXPERIMENTAL] PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
+        # PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
         api_response = api_instance.put_inlined_properties_design_sql_to_design(body=body)
         pprint(api_response)
 
@@ -500,7 +500,7 @@ Name | Type | Description  | Notes
 # **put_inlined_properties_design_to_sql**
 > str put_inlined_properties_design_to_sql(inlined_property_design)
 
-[EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
+PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
 
 Generates inlined properties SQL from a structured design  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -560,7 +560,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_inlined_properties_design_to_sql(inlined_property_design, opts=opts)
 
-        # [EXPERIMENTAL] PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
+        # PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
         api_response = api_instance.put_inlined_properties_design_to_sql(inlined_property_design)
         pprint(api_response)
 
@@ -791,7 +791,7 @@ Name | Type | Description  | Notes
 # **put_query_design_to_sql**
 > str put_query_design_to_sql(query_design)
 
-[EXPERIMENTAL] PutQueryDesignToSql: Make SQL from a structured query design
+PutQueryDesignToSql: Make SQL from a structured query design
 
 Generates SQL from a QueryDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -851,7 +851,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_query_design_to_sql(query_design, opts=opts)
 
-        # [EXPERIMENTAL] PutQueryDesignToSql: Make SQL from a structured query design
+        # PutQueryDesignToSql: Make SQL from a structured query design
         api_response = api_instance.put_query_design_to_sql(query_design)
         pprint(api_response)
 
@@ -1006,7 +1006,7 @@ Name | Type | Description  | Notes
 # **put_sql_to_extract_scalar_parameters**
 > List[ScalarParameter] put_sql_to_extract_scalar_parameters(body)
 
-[EXPERIMENTAL] PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
+PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
 
 Extracts information about all the scalar parameters defined in the given SQL statement  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1061,7 +1061,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_sql_to_extract_scalar_parameters(body, opts=opts)
 
-        # [EXPERIMENTAL] PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
+        # PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
         api_response = api_instance.put_sql_to_extract_scalar_parameters(body)
         pprint(api_response)
 
@@ -1098,7 +1098,7 @@ Name | Type | Description  | Notes
 # **put_sql_to_file_read_design**
 > FileReaderBuilderDef put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body)
 
-[EXPERIMENTAL] PutSqlToFileReadDesign: Make a design object from file-read SQL
+PutSqlToFileReadDesign: Make a design object from file-read SQL
 
 Generates a SQL-file-read-design object from SQL string, if possible.  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1154,7 +1154,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body, opts=opts)
 
-        # [EXPERIMENTAL] PutSqlToFileReadDesign: Make a design object from file-read SQL
+        # PutSqlToFileReadDesign: Make a design object from file-read SQL
         api_response = api_instance.put_sql_to_file_read_design(determine_available_sources=determine_available_sources, body=body)
         pprint(api_response)
 
@@ -1192,7 +1192,7 @@ Name | Type | Description  | Notes
 # **put_sql_to_query_design**
 > QueryDesign put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
 
-[EXPERIMENTAL] PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
+PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
 
 Generates a QueryDesign object from simple SQL if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1248,7 +1248,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, opts=opts)
 
-        # [EXPERIMENTAL] PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
+        # PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
         api_response = api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
         pprint(api_response)
 
@@ -1286,7 +1286,7 @@ Name | Type | Description  | Notes
 # **put_sql_to_view_design**
 > ConvertToViewData put_sql_to_view_design(body)
 
-[EXPERIMENTAL] PutSqlToViewDesign: Make a view-design from view creation SQL
+PutSqlToViewDesign: Make a view-design from view creation SQL
 
 Converts SQL which creates a view into a structured ConvertToViewData object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1341,7 +1341,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_sql_to_view_design(body, opts=opts)
 
-        # [EXPERIMENTAL] PutSqlToViewDesign: Make a view-design from view creation SQL
+        # PutSqlToViewDesign: Make a view-design from view creation SQL
         api_response = api_instance.put_sql_to_view_design(body)
         pprint(api_response)
 
@@ -1378,7 +1378,7 @@ Name | Type | Description  | Notes
 # **put_sql_to_writer_design**
 > WriterDesign put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields)
 
-[EXPERIMENTAL] PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
+PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
 
 Generates a SQL-writer-design object (WriterDesign) from a SQL query, if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1434,7 +1434,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields, opts=opts)
 
-        # [EXPERIMENTAL] PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
+        # PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
         api_response = api_instance.put_sql_to_writer_design(body, merge_additional_mapping_fields=merge_additional_mapping_fields)
         pprint(api_response)
 
@@ -1472,7 +1472,7 @@ Name | Type | Description  | Notes
 # **put_view_design_to_sql**
 > str put_view_design_to_sql(convert_to_view_data)
 
-[EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
+PutViewDesignToSql: Make view creation sql from a view-design
 
 Converts a ConvertToView specification into SQL that creates a view  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1532,7 +1532,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_view_design_to_sql(convert_to_view_data, opts=opts)
 
-        # [EXPERIMENTAL] PutViewDesignToSql: Make view creation sql from a view-design
+        # PutViewDesignToSql: Make view creation sql from a view-design
         api_response = api_instance.put_view_design_to_sql(convert_to_view_data)
         pprint(api_response)
 
@@ -1569,7 +1569,7 @@ Name | Type | Description  | Notes
 # **put_writer_design_to_sql**
 > str put_writer_design_to_sql(writer_design)
 
-[EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
+PutWriterDesignToSql: Make writer SQL from a writer-design object
 
 Generates writer SQL from a valid WriterDesign structure  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
 
@@ -1629,7 +1629,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.put_writer_design_to_sql(writer_design, opts=opts)
 
-        # [EXPERIMENTAL] PutWriterDesignToSql: Make writer SQL from a writer-design object
+        # PutWriterDesignToSql: Make writer SQL from a writer-design object
         api_response = api_instance.put_writer_design_to_sql(writer_design)
         pprint(api_response)
 

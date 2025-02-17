@@ -32,8 +32,18 @@ class CertificateStatus(str, Enum):
     NONE = 'None'
     WEBAPIPERSISTENCE = 'WebApiPersistence'
     VAULT = 'Vault'
+    WEBAPIPERSISTENCEVAULT = 'WebApiPersistenceVault'
     RABBIT = 'Rabbit'
+    WEBAPIPERSISTENCERABBIT = 'WebApiPersistenceRabbit'
+    VAULTRABBIT = 'VaultRabbit'
+    WEBAPIPERSISTENCEVAULTRABBIT = 'WebApiPersistenceVaultRabbit'
     CONFIGSTORE = 'ConfigStore'
+    WEBAPIPERSISTENCECONFIGSTORE = 'WebApiPersistenceConfigStore'
+    VAULTCONFIGSTORE = 'VaultConfigStore'
+    WEBAPIPERSISTENCEVAULTCONFIGSTORE = 'WebApiPersistenceVaultConfigStore'
+    RABBITCONFIGSTORE = 'RabbitConfigStore'
+    WEBAPIPERSISTENCERABBITCONFIGSTORE = 'WebApiPersistenceRabbitConfigStore'
+    VAULTRABBITCONFIGSTORE = 'VaultRabbitConfigStore'
     ALLSYSTEMS = 'AllSystems'
 
     @classmethod
