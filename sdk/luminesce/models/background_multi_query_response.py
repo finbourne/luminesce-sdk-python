@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
 from luminesce.models.link import Link
 
 class BackgroundMultiQueryResponse(BaseModel):
     """
     BackgroundMultiQueryResponse
     """
-    execution_id: Optional[StrictStr] = Field(None, alias="executionId")
+    execution_id:  Optional[StrictStr] = Field(None,alias="executionId") 
     progress: Optional[Link] = None
     cancel: Optional[Link] = None
     fetch_json: Optional[conlist(Link)] = Field(None, alias="fetchJson", description="Json (as a string) data request links for all of the child queries")

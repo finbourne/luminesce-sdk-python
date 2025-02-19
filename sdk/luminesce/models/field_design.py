@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, conlist, constr 
 from luminesce.models.aggregation import Aggregation
 from luminesce.models.data_type import DataType
 from luminesce.models.filter_term_design import FilterTermDesign
@@ -28,8 +28,8 @@ class FieldDesign(BaseModel):
     """
     Treatment of a single field within a QueryDesign  # noqa: E501
     """
-    name: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of the Field")
-    alias: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Alias if any (if none the Name is used)")
+    name:  StrictStr = Field(...,alias="name", description="Name of the Field") 
+    alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias if any (if none the Name is used)") 
     data_type: Optional[DataType] = Field(None, alias="dataType")
     should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
     filters: Optional[conlist(FilterTermDesign)] = Field(None, description="Filter clauses to apply to this field (And'ed together)")

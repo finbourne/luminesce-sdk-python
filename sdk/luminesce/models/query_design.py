@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist, constr 
 from luminesce.models.available_field import AvailableField
 from luminesce.models.field_design import FieldDesign
 from luminesce.models.order_by_term_design import OrderByTermDesign
@@ -28,8 +28,8 @@ class QueryDesign(BaseModel):
     """
     Representation of a \"designable Query\" suitable for formatting to SQL or being built from compliant SQL.  # noqa: E501
     """
-    table_name: constr(strict=True, max_length=256, min_length=0) = Field(..., alias="tableName", description="Name of the table being designed")
-    alias: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Alias for the table in the generated SQL, if any")
+    table_name:  StrictStr = Field(...,alias="tableName", description="Name of the table being designed") 
+    alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias for the table in the generated SQL, if any") 
     fields: conlist(FieldDesign) = Field(..., description="Fields to be selected, aggregated over and/or filtered on")
     order_by: Optional[conlist(OrderByTermDesign)] = Field(None, alias="orderBy", description="Order By clauses to apply")
     limit: Optional[StrictInt] = Field(None, description="Row limit to apply, if any")

@@ -19,13 +19,13 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr 
 
 class OptionsSqLite(BaseModel):
     """
     Additional options applicable to the given SourceType  # noqa: E501
     """
-    table: Optional[StrictStr] = Field(None, description="Table name to read.  If missing then an error will be raised if there is any number of tables other than one.")
+    table:  Optional[StrictStr] = Field(None,alias="table", description="Table name to read.  If missing then an error will be raised if there is any number of tables other than one.") 
     __properties = ["table"]
 
     class Config:

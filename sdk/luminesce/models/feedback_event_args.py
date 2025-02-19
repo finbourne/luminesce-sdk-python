@@ -19,7 +19,7 @@ import json
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist 
 from luminesce.models.feedback_level import FeedbackLevel
 
 class FeedbackEventArgs(BaseModel):
@@ -27,14 +27,14 @@ class FeedbackEventArgs(BaseModel):
     FeedbackEventArgs
     """
     when: Optional[datetime] = None
-    session_id: Optional[StrictStr] = Field(None, alias="sessionId")
-    execution_id: Optional[StrictStr] = Field(None, alias="executionId")
+    session_id:  Optional[StrictStr] = Field(None,alias="sessionId") 
+    execution_id:  Optional[StrictStr] = Field(None,alias="executionId") 
     level: Optional[FeedbackLevel] = None
-    sender: Optional[StrictStr] = None
+    sender:  Optional[StrictStr] = Field(None,alias="sender") 
     state_id: Optional[StrictInt] = Field(None, alias="stateId")
-    message_template: Optional[StrictStr] = Field(None, alias="messageTemplate")
+    message_template:  Optional[StrictStr] = Field(None,alias="messageTemplate") 
     property_values: Optional[conlist(Any)] = Field(None, alias="propertyValues")
-    message: Optional[StrictStr] = None
+    message:  Optional[StrictStr] = Field(None,alias="message") 
     __properties = ["when", "sessionId", "executionId", "level", "sender", "stateId", "messageTemplate", "propertyValues", "message"]
 
     class Config:

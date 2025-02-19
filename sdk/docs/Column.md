@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **is_main** | **bool** |  | [optional] 
 **is_required_by_provider** | **bool** |  | [optional] 
 **mandatory_for_actions** | **str** |  | [optional] 
-**client_ids** | **List[str]** |  | [optional] 
 **name** | **str** |  | [optional] 
 **type** | [**DataType**](DataType.md) |  | [optional] 
 **description** | **str** |  | [optional] 

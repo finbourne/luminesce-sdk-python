@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr 
 from luminesce.models.data_type import DataType
 from luminesce.models.field_type import FieldType
 
@@ -27,7 +27,7 @@ class AvailableField(BaseModel):
     """
     Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
-    name: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of the Field")
+    name:  StrictStr = Field(...,alias="name", description="Name of the Field") 
     data_type: Optional[DataType] = Field(None, alias="dataType")
     field_type: FieldType = Field(..., alias="fieldType")
     is_main: Optional[StrictBool] = Field(None, alias="isMain", description="Is this a Main Field within the Provider")

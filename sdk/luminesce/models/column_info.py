@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr 
 from luminesce.models.data_type import DataType
 
 class ColumnInfo(BaseModel):
@@ -28,8 +28,8 @@ class ColumnInfo(BaseModel):
     """
     select: Optional[StrictBool] = Field(None, description="Should the column be used/selected?")
     type: Optional[DataType] = None
-    name: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="The name of the column")
-    x_path: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, alias="xPath", description="Xpath for the column (only applicable to XML defined columns)")
+    name:  Optional[StrictStr] = Field(None,alias="name", description="The name of the column") 
+    x_path:  Optional[StrictStr] = Field(None,alias="xPath", description="Xpath for the column (only applicable to XML defined columns)") 
     __properties = ["select", "type", "name", "xPath"]
 
     class Config:

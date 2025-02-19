@@ -19,18 +19,18 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr 
 
 class AccessControlledResourceIdentifierPartSchemaAttribute(BaseModel):
     """
     AccessControlledResourceIdentifierPartSchemaAttribute
     """
     index: Optional[StrictInt] = None
-    name: Optional[StrictStr] = None
-    display_name: Optional[StrictStr] = Field(None, alias="displayName")
-    description: Optional[StrictStr] = None
+    name:  Optional[StrictStr] = Field(None,alias="name") 
+    display_name:  Optional[StrictStr] = Field(None,alias="displayName") 
+    description:  Optional[StrictStr] = Field(None,alias="description") 
     required: Optional[StrictBool] = None
-    values_path: Optional[StrictStr] = Field(None, alias="valuesPath")
+    values_path:  Optional[StrictStr] = Field(None,alias="valuesPath") 
     type_id: Optional[Any] = Field(None, alias="typeId")
     __properties = ["index", "name", "displayName", "description", "required", "valuesPath", "typeId"]
 

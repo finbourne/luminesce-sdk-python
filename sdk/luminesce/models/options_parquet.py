@@ -19,13 +19,13 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr 
 
 class OptionsParquet(BaseModel):
     """
     Additional options applicable to the given SourceType  # noqa: E501
     """
-    column_names_wanted: Optional[StrictStr] = Field(None, alias="columnNamesWanted", description="Column (by Name) that should be returned (comma delimited list)")
+    column_names_wanted:  Optional[StrictStr] = Field(None,alias="columnNamesWanted", description="Column (by Name) that should be returned (comma delimited list)") 
     __properties = ["columnNamesWanted"]
 
     class Config:

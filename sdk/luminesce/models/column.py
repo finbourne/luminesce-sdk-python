@@ -18,8 +18,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, conlist
+from typing import Any, Dict, Optional
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictStr 
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.data_type import DataType
 
@@ -30,16 +30,15 @@ class Column(BaseModel):
     is_primary_key: Optional[StrictBool] = Field(None, alias="isPrimaryKey")
     is_main: Optional[StrictBool] = Field(None, alias="isMain")
     is_required_by_provider: Optional[StrictBool] = Field(None, alias="isRequiredByProvider")
-    mandatory_for_actions: Optional[StrictStr] = Field(None, alias="mandatoryForActions")
-    client_ids: Optional[conlist(StrictStr)] = Field(None, alias="clientIds")
-    name: Optional[StrictStr] = None
+    mandatory_for_actions:  Optional[StrictStr] = Field(None,alias="mandatoryForActions") 
+    name:  Optional[StrictStr] = Field(None,alias="name") 
     type: Optional[DataType] = None
-    description: Optional[StrictStr] = None
-    display_name: Optional[StrictStr] = Field(None, alias="displayName")
+    description:  Optional[StrictStr] = Field(None,alias="description") 
+    display_name:  Optional[StrictStr] = Field(None,alias="displayName") 
     condition_usage: Optional[ConditionAttributes] = Field(None, alias="conditionUsage")
-    sample_values: Optional[StrictStr] = Field(None, alias="sampleValues")
-    allowed_values: Optional[StrictStr] = Field(None, alias="allowedValues")
-    __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "clientIds", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
+    sample_values:  Optional[StrictStr] = Field(None,alias="sampleValues") 
+    allowed_values:  Optional[StrictStr] = Field(None,alias="allowedValues") 
+    __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
 
     class Config:
         """Pydantic configuration"""
@@ -77,11 +76,6 @@ class Column(BaseModel):
         # and __fields_set__ contains the field
         if self.mandatory_for_actions is None and "mandatory_for_actions" in self.__fields_set__:
             _dict['mandatoryForActions'] = None
-
-        # set to None if client_ids (nullable) is None
-        # and __fields_set__ contains the field
-        if self.client_ids is None and "client_ids" in self.__fields_set__:
-            _dict['clientIds'] = None
 
         # set to None if name (nullable) is None
         # and __fields_set__ contains the field
@@ -124,7 +118,6 @@ class Column(BaseModel):
             "is_main": obj.get("isMain"),
             "is_required_by_provider": obj.get("isRequiredByProvider"),
             "mandatory_for_actions": obj.get("mandatoryForActions"),
-            "client_ids": obj.get("clientIds"),
             "name": obj.get("name"),
             "type": obj.get("type"),
             "description": obj.get("description"),

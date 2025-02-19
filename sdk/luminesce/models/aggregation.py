@@ -19,7 +19,7 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
 from luminesce.models.aggregate_function import AggregateFunction
 
 class Aggregation(BaseModel):
@@ -27,7 +27,7 @@ class Aggregation(BaseModel):
     How to aggregate over a field  # noqa: E501
     """
     type: AggregateFunction = Field(...)
-    alias: Optional[constr(strict=True, max_length=256, min_length=0)] = Field(None, description="Alias, if any, for the Aggregate expression when selected")
+    alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias, if any, for the Aggregate expression when selected") 
     __properties = ["type", "alias"]
 
     class Config:

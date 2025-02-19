@@ -19,14 +19,14 @@ import json
 
 
 from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, constr
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
 from luminesce.models.data_type import DataType
 
 class ScalarParameter(BaseModel):
     """
     Describes a scalar parameter as defined in the SQL  # noqa: E501
     """
-    name: constr(strict=True, max_length=256, min_length=0) = Field(..., description="Name of the scalar parameter")
+    name:  StrictStr = Field(...,alias="name", description="Name of the scalar parameter") 
     type: DataType = Field(...)
     value: Optional[Any] = Field(None, description="the default value of the parameter")
     __properties = ["name", "type", "value"]
