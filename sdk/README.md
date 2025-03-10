@@ -43,6 +43,7 @@ Class | Method | HTTP request | Description
 *SqlDesignApi* | [**put_inlined_properties_design_to_sql**](docs/SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
 *SqlDesignApi* | [**put_intellisense**](docs/SqlDesignApi.md#put_intellisense) | **PUT** /api/Sql/intellisense | PutIntellisense: Make intellisense prompts given an SQL snip-it
 *SqlDesignApi* | [**put_intellisense_error**](docs/SqlDesignApi.md#put_intellisense_error) | **PUT** /api/Sql/intellisenseError | PutIntellisenseError: Get error ranges from SQL
+*SqlDesignApi* | [**put_lusid_grid_to_query**](docs/SqlDesignApi.md#put_lusid_grid_to_query) | **PUT** /api/Sql/fromlusidgrid | [EXPERIMENTAL] PutLusidGridToQuery: Generates SQL from a dashboard view
 *SqlDesignApi* | [**put_query_design_to_sql**](docs/SqlDesignApi.md#put_query_design_to_sql) | **PUT** /api/Sql/fromdesign | PutQueryDesignToSql: Make SQL from a structured query design
 *SqlDesignApi* | [**put_query_to_format**](docs/SqlDesignApi.md#put_query_to_format) | **PUT** /api/Sql/pretty | PutQueryToFormat: Format SQL into a more readable form
 *SqlDesignApi* | [**put_sql_to_extract_scalar_parameters**](docs/SqlDesignApi.md#put_sql_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters | PutSqlToExtractScalarParameters: Extract scalar parameter information from SQL
@@ -95,10 +96,13 @@ Class | Method | HTTP request | Description
  - [CertificateType](docs/CertificateType.md)
  - [Column](docs/Column.md)
  - [ColumnInfo](docs/ColumnInfo.md)
+ - [ColumnStateType](docs/ColumnStateType.md)
  - [ConditionAttributes](docs/ConditionAttributes.md)
  - [ConvertToViewData](docs/ConvertToViewData.md)
  - [CursorPosition](docs/CursorPosition.md)
+ - [DashboardType](docs/DashboardType.md)
  - [DataType](docs/DataType.md)
+ - [DateParameters](docs/DateParameters.md)
  - [ErrorHighlightItem](docs/ErrorHighlightItem.md)
  - [ErrorHighlightRequest](docs/ErrorHighlightRequest.md)
  - [ErrorHighlightResponse](docs/ErrorHighlightResponse.md)
@@ -109,7 +113,9 @@ Class | Method | HTTP request | Description
  - [FieldType](docs/FieldType.md)
  - [FileReaderBuilderDef](docs/FileReaderBuilderDef.md)
  - [FileReaderBuilderResponse](docs/FileReaderBuilderResponse.md)
+ - [FilterModel](docs/FilterModel.md)
  - [FilterTermDesign](docs/FilterTermDesign.md)
+ - [FilterType](docs/FilterType.md)
  - [IdSelectorDefinition](docs/IdSelectorDefinition.md)
  - [InlinedPropertyDesign](docs/InlinedPropertyDesign.md)
  - [InlinedPropertyItem](docs/InlinedPropertyItem.md)
@@ -119,6 +125,7 @@ Class | Method | HTTP request | Description
  - [IntellisenseType](docs/IntellisenseType.md)
  - [Link](docs/Link.md)
  - [LuminesceBinaryType](docs/LuminesceBinaryType.md)
+ - [LusidGridData](docs/LusidGridData.md)
  - [LusidProblemDetails](docs/LusidProblemDetails.md)
  - [MappableField](docs/MappableField.md)
  - [MappingFlags](docs/MappingFlags.md)
@@ -132,11 +139,15 @@ Class | Method | HTTP request | Description
  - [OrderByTermDesign](docs/OrderByTermDesign.md)
  - [QueryDesign](docs/QueryDesign.md)
  - [QueryDesignerBinaryOperator](docs/QueryDesignerBinaryOperator.md)
+ - [ResourceId](docs/ResourceId.md)
  - [ResourceListOfAccessControlledResource](docs/ResourceListOfAccessControlledResource.md)
  - [ScalarParameter](docs/ScalarParameter.md)
  - [Source](docs/Source.md)
  - [SourceType](docs/SourceType.md)
+ - [TableMeta](docs/TableMeta.md)
+ - [TableView](docs/TableView.md)
  - [TaskStatus](docs/TaskStatus.md)
+ - [Type](docs/Type.md)
  - [ViewParameter](docs/ViewParameter.md)
  - [WriterDesign](docs/WriterDesign.md)
 

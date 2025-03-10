@@ -61,10 +61,13 @@ from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 from luminesce.models.column import Column
 from luminesce.models.column_info import ColumnInfo
+from luminesce.models.column_state_type import ColumnStateType
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.cursor_position import CursorPosition
+from luminesce.models.dashboard_type import DashboardType
 from luminesce.models.data_type import DataType
+from luminesce.models.date_parameters import DateParameters
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
@@ -75,7 +78,9 @@ from luminesce.models.field_design import FieldDesign
 from luminesce.models.field_type import FieldType
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
 from luminesce.models.file_reader_builder_response import FileReaderBuilderResponse
+from luminesce.models.filter_model import FilterModel
 from luminesce.models.filter_term_design import FilterTermDesign
+from luminesce.models.filter_type import FilterType
 from luminesce.models.id_selector_definition import IdSelectorDefinition
 from luminesce.models.inlined_property_design import InlinedPropertyDesign
 from luminesce.models.inlined_property_item import InlinedPropertyItem
@@ -85,6 +90,7 @@ from luminesce.models.intellisense_response import IntellisenseResponse
 from luminesce.models.intellisense_type import IntellisenseType
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
+from luminesce.models.lusid_grid_data import LusidGridData
 from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.mappable_field import MappableField
 from luminesce.models.mapping_flags import MappingFlags
@@ -98,11 +104,15 @@ from luminesce.models.order_by_direction import OrderByDirection
 from luminesce.models.order_by_term_design import OrderByTermDesign
 from luminesce.models.query_design import QueryDesign
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
+from luminesce.models.resource_id import ResourceId
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
 from luminesce.models.scalar_parameter import ScalarParameter
 from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
+from luminesce.models.table_meta import TableMeta
+from luminesce.models.table_view import TableView
 from luminesce.models.task_status import TaskStatus
+from luminesce.models.type import Type
 from luminesce.models.view_parameter import ViewParameter
 from luminesce.models.writer_design import WriterDesign
 
@@ -154,10 +164,13 @@ __all__ = [
     "CertificateType",
     "Column",
     "ColumnInfo",
+    "ColumnStateType",
     "ConditionAttributes",
     "ConvertToViewData",
     "CursorPosition",
+    "DashboardType",
     "DataType",
+    "DateParameters",
     "ErrorHighlightItem",
     "ErrorHighlightRequest",
     "ErrorHighlightResponse",
@@ -168,7 +181,9 @@ __all__ = [
     "FieldType",
     "FileReaderBuilderDef",
     "FileReaderBuilderResponse",
+    "FilterModel",
     "FilterTermDesign",
+    "FilterType",
     "IdSelectorDefinition",
     "InlinedPropertyDesign",
     "InlinedPropertyItem",
@@ -178,6 +193,7 @@ __all__ = [
     "IntellisenseType",
     "Link",
     "LuminesceBinaryType",
+    "LusidGridData",
     "LusidProblemDetails",
     "MappableField",
     "MappingFlags",
@@ -191,11 +207,15 @@ __all__ = [
     "OrderByTermDesign",
     "QueryDesign",
     "QueryDesignerBinaryOperator",
+    "ResourceId",
     "ResourceListOfAccessControlledResource",
     "ScalarParameter",
     "Source",
     "SourceType",
+    "TableMeta",
+    "TableView",
     "TaskStatus",
+    "Type",
     "ViewParameter",
     "WriterDesign",
     "ApiClient",
