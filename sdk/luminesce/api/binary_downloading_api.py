@@ -53,15 +53,15 @@ class BinaryDownloadingApi:
 
 
     @overload
-    async def download_binary(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def download_binary(self, type : Annotated[Optional[str], Field( description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def download_binary(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def download_binary(self, type : Annotated[Optional[str], Field( description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def download_binary(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def download_binary(self, type : Annotated[Optional[str], Field( description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """DownloadBinary: Download a Luminesce Binary you may run on-site  # noqa: E501
 
          Downloads the latest version (or specific if needs be) of the specified Luminesce Binary, given the required entitlements.  > This endpoint is an alternative to time-consuming manual distribution via Drive or Email. > it relies on an underlying datastore that is not quite as \"Highly Available\" to the degree  > that FINBOURNE services generally are.   > Thus it is not subject to the same SLAs as other API endpoints are. > *If you perceive an outage, please try again later.*  Once a file has been downloaded the following steps can be used to install it (for the dotnet tools at least):  (1) Open a terminal and cd to the directory you downloaded it to  (2) Install / extract files from that package via:  ``` dotnet tool install NameOfFileWithoutVersionNumberOrExtension -g --add-source \".\" ``` e.g. ``` dotnet tool install Finbourne.Luminesce.DbProviders.Oracle_Snowflake -g --add-source \".\" ``` More information on the installations can be found [here](https://support.lusid.com/docs/how-do-i-use-the-luminesce-cli).  (3) Execute them (see documentation for specific binary, e.g. [Sql.Db.Mine](https://support.lusid.com/docs/readwrite-to-sql-databases-sqldbmine) or [CLI](https://support.lusid.com/docs/how-do-i-use-the-luminesce-cli)).  The installed binaries can then be found in - Windows - `%USERPROFILE%\\.dotnet\\tools\\.store\\` - Linux/macOS - `$HOME/.dotnet/tools/.store/`  Note that the binaries all require the dotnet runtime to be installed. - `dotnet8` is required for all versions `1.18.X+` - `dotnet6` is required for all versions `1.17.X-` *Please upgrade if still running these*  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - binary file is not available for some reason (e.g. permissions or invalid version) - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -94,7 +94,7 @@ class BinaryDownloadingApi:
         return self.download_binary_with_http_info(type, version, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def download_binary_with_http_info(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def download_binary_with_http_info(self, type : Annotated[Optional[str], Field( description="Type of binary to download (each requires separate licenses and entitlements)")] = None, version : Annotated[Optional[StrictStr], Field( description="An explicit version of the binary.  Leave blank to get the latest version (recommended)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """DownloadBinary: Download a Luminesce Binary you may run on-site  # noqa: E501
 
          Downloads the latest version (or specific if needs be) of the specified Luminesce Binary, given the required entitlements.  > This endpoint is an alternative to time-consuming manual distribution via Drive or Email. > it relies on an underlying datastore that is not quite as \"Highly Available\" to the degree  > that FINBOURNE services generally are.   > Thus it is not subject to the same SLAs as other API endpoints are. > *If you perceive an outage, please try again later.*  Once a file has been downloaded the following steps can be used to install it (for the dotnet tools at least):  (1) Open a terminal and cd to the directory you downloaded it to  (2) Install / extract files from that package via:  ``` dotnet tool install NameOfFileWithoutVersionNumberOrExtension -g --add-source \".\" ``` e.g. ``` dotnet tool install Finbourne.Luminesce.DbProviders.Oracle_Snowflake -g --add-source \".\" ``` More information on the installations can be found [here](https://support.lusid.com/docs/how-do-i-use-the-luminesce-cli).  (3) Execute them (see documentation for specific binary, e.g. [Sql.Db.Mine](https://support.lusid.com/docs/readwrite-to-sql-databases-sqldbmine) or [CLI](https://support.lusid.com/docs/how-do-i-use-the-luminesce-cli)).  The installed binaries can then be found in - Windows - `%USERPROFILE%\\.dotnet\\tools\\.store\\` - Linux/macOS - `$HOME/.dotnet/tools/.store/`  Note that the binaries all require the dotnet runtime to be installed. - `dotnet8` is required for all versions `1.18.X+` - `dotnet6` is required for all versions `1.17.X-` *Please upgrade if still running these*  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - binary file is not available for some reason (e.g. permissions or invalid version) - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -169,7 +169,7 @@ class BinaryDownloadingApi:
         # process the query parameters
         _query_params = []
         if _params.get('type') is not None:  # noqa: E501
-            _query_params.append(('type', _params['type'].value))
+            _query_params.append(('type', _params['type']))
 
         if _params.get('version') is not None:  # noqa: E501
             _query_params.append(('version', _params['version']))
@@ -214,15 +214,15 @@ class BinaryDownloadingApi:
 
 
     @overload
-    async def get_binary_versions(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to fetch available versions of")] = None, **kwargs) -> List[str]:  # noqa: E501
+    async def get_binary_versions(self, type : Annotated[Optional[str], Field( description="Type of binary to fetch available versions of")] = None, **kwargs) -> List[str]:  # noqa: E501
         ...
 
     @overload
-    def get_binary_versions(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to fetch available versions of")] = None, async_req: Optional[bool]=True, **kwargs) -> List[str]:  # noqa: E501
+    def get_binary_versions(self, type : Annotated[Optional[str], Field( description="Type of binary to fetch available versions of")] = None, async_req: Optional[bool]=True, **kwargs) -> List[str]:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_binary_versions(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to fetch available versions of")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[str], Awaitable[List[str]]]:  # noqa: E501
+    def get_binary_versions(self, type : Annotated[Optional[str], Field( description="Type of binary to fetch available versions of")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[str], Awaitable[List[str]]]:  # noqa: E501
         """GetBinaryVersions: List available versions of binaries  # noqa: E501
 
          Gets all available versions of a given binary type (from newest to oldest) This does not mean you are entitled to download them.  # noqa: E501
@@ -253,7 +253,7 @@ class BinaryDownloadingApi:
         return self.get_binary_versions_with_http_info(type, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_binary_versions_with_http_info(self, type : Annotated[Optional[LuminesceBinaryType], Field(description="Type of binary to fetch available versions of")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_binary_versions_with_http_info(self, type : Annotated[Optional[str], Field( description="Type of binary to fetch available versions of")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetBinaryVersions: List available versions of binaries  # noqa: E501
 
          Gets all available versions of a given binary type (from newest to oldest) This does not mean you are entitled to download them.  # noqa: E501
@@ -325,7 +325,7 @@ class BinaryDownloadingApi:
         # process the query parameters
         _query_params = []
         if _params.get('type') is not None:  # noqa: E501
-            _query_params.append(('type', _params['type'].value))
+            _query_params.append(('type', _params['type']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

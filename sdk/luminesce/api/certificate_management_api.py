@@ -58,15 +58,15 @@ class CertificateManagementApi:
 
 
     @overload
-    async def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> bytearray:  # noqa: E501
+    async def download_certificate(self, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[str], Field( description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @overload
-    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+    def download_certificate(self, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[str], Field( description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
         ...
 
     @validate_arguments
-    def download_certificate(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+    def download_certificate(self, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[str], Field( description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
         """DownloadCertificate: Download domain or your personal certificates  # noqa: E501
 
          Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -101,7 +101,7 @@ class CertificateManagementApi:
         return self.download_certificate_with_http_info(type, file_type, may_auto_create, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def download_certificate_with_http_info(self, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[CertificateFileType], Field(description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def download_certificate_with_http_info(self, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, file_type : Annotated[Optional[str], Field( description="Should the public key or private key be downloaded? (both must be in place to run providers)")] = None, may_auto_create : Annotated[Optional[StrictBool], Field(description="If no matching cert is available, should an attempt be made to Create/Renew it with default options?")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """DownloadCertificate: Download domain or your personal certificates  # noqa: E501
 
          Downloads your latest Domain or your User certificate's public or private key - if any.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - certificate is not available for some reason - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -179,10 +179,10 @@ class CertificateManagementApi:
         # process the query parameters
         _query_params = []
         if _params.get('type') is not None:  # noqa: E501
-            _query_params.append(('type', _params['type'].value))
+            _query_params.append(('type', _params['type']))
 
         if _params.get('file_type') is not None:  # noqa: E501
-            _query_params.append(('fileType', _params['file_type'].value))
+            _query_params.append(('fileType', _params['file_type']))
 
         if _params.get('may_auto_create') is not None:  # noqa: E501
             _query_params.append(('mayAutoCreate', _params['may_auto_create']))
@@ -372,15 +372,15 @@ class CertificateManagementApi:
 
 
     @overload
-    async def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> CertificateState:  # noqa: E501
+    async def manage_certificate(self, action : Annotated[Optional[str], Field( description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> CertificateState:  # noqa: E501
         ...
 
     @overload
-    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=True, **kwargs) -> CertificateState:  # noqa: E501
+    def manage_certificate(self, action : Annotated[Optional[str], Field( description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=True, **kwargs) -> CertificateState:  # noqa: E501
         ...
 
     @validate_arguments
-    def manage_certificate(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CertificateState, Awaitable[CertificateState]]:  # noqa: E501
+    def manage_certificate(self, action : Annotated[Optional[str], Field( description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[CertificateState, Awaitable[CertificateState]]:  # noqa: E501
         """ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -421,7 +421,7 @@ class CertificateManagementApi:
         return self.manage_certificate_with_http_info(action, type, version, validity_start, validity_end, dry_run, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def manage_certificate_with_http_info(self, action : Annotated[Optional[CertificateAction], Field(description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[CertificateType], Field(description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def manage_certificate_with_http_info(self, action : Annotated[Optional[str], Field( description="The Action to perform, e.g. Create / Renew / Revoke")] = None, type : Annotated[Optional[str], Field( description="User or Domain level cert (Domain level requires additional entitlements)")] = None, version : Annotated[Optional[StrictInt], Field(description="Version number of the cert, the request will fail to validate if incorrect")] = None, validity_start : Annotated[Optional[datetime], Field(description="When should the cert first be valid (defaults to the current time in UTC)")] = None, validity_end : Annotated[Optional[datetime], Field(description="When should the cert no longer be valid (defaults to 13 months from now)")] = None, dry_run : Annotated[Optional[StrictBool], Field(description="True will just validate the request, but perform no changes to any system")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """ManageCertificate: Create / Renew / Revoke a certificate  # noqa: E501
 
          Manages a certificate.  This could be creating a new one, renewing an old one or revoking one explicitly.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something about the request cannot be processed - 401 Unauthorized - 403 Forbidden   # noqa: E501
@@ -508,10 +508,10 @@ class CertificateManagementApi:
         # process the query parameters
         _query_params = []
         if _params.get('action') is not None:  # noqa: E501
-            _query_params.append(('action', _params['action'].value))
+            _query_params.append(('action', _params['action']))
 
         if _params.get('type') is not None:  # noqa: E501
-            _query_params.append(('type', _params['type'].value))
+            _query_params.append(('type', _params['type']))
 
         if _params.get('version') is not None:  # noqa: E501
             _query_params.append(('version', _params['version']))
