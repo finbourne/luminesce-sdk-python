@@ -1339,7 +1339,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = SELECT\n    [TableName],\n    Count(distinct [FieldName]) as [NumberOfFields]\nFROM\n    [Sys.Field]\nWHERE\n    ([TableName] = 'Sys.Registration')\nGROUP BY\n    [TableName]\nORDER BY\n    [DataType]\nLIMIT 42 # str | SQL query to generate the design object from
+    body = SELECT [TableName], Count(distinct [FieldName]) as [NumberOfFields], case [FieldType] when 'Column' then 'col' else [FieldType] end as FieldType2  FROM [Sys.Field] WHERE ([TableName] = 'Sys.Registration') GROUP BY [TableName], [FieldType2] ORDER BY [DataType] LIMIT 42 # str | SQL query to generate the design object from
     validate_with_metadata = True # bool | Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.? (optional) (default to True)
 
     try:

@@ -28,13 +28,14 @@ class FieldDesign(BaseModel):
     """
     Treatment of a single field within a QueryDesign  # noqa: E501
     """
-    name:  StrictStr = Field(...,alias="name", description="Name of the Field") 
+    name:  StrictStr = Field(...,alias="name", description="Name of the Field (column name, constant, complex expression, etc.)") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias if any (if none the Name is used)") 
     data_type: Optional[DataType] = Field(None, alias="dataType")
     should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
     filters: Optional[conlist(FilterTermDesign)] = Field(None, description="Filter clauses to apply to this field (And'ed together)")
     aggregations: Optional[conlist(Aggregation)] = Field(None, description="Aggregations to apply (as opposed to simply selecting)")
-    __properties = ["name", "alias", "dataType", "shouldSelect", "filters", "aggregations"]
+    is_expression: Optional[StrictBool] = Field(None, alias="isExpression", description="Is this field an expression")
+    __properties = ["name", "alias", "dataType", "shouldSelect", "filters", "aggregations", "isExpression"]
 
     class Config:
         """Pydantic configuration"""
@@ -114,6 +115,7 @@ class FieldDesign(BaseModel):
             "data_type": obj.get("dataType"),
             "should_select": obj.get("shouldSelect"),
             "filters": [FilterTermDesign.from_dict(_item) for _item in obj.get("filters")] if obj.get("filters") is not None else None,
-            "aggregations": [Aggregation.from_dict(_item) for _item in obj.get("aggregations")] if obj.get("aggregations") is not None else None
+            "aggregations": [Aggregation.from_dict(_item) for _item in obj.get("aggregations")] if obj.get("aggregations") is not None else None,
+            "is_expression": obj.get("isExpression")
         })
         return _obj
