@@ -18,8 +18,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, conlist, constr 
 from luminesce.models.data_type import DataType
 
 class ScalarParameter(BaseModel):
@@ -29,7 +29,9 @@ class ScalarParameter(BaseModel):
     name:  StrictStr = Field(...,alias="name", description="Name of the scalar parameter") 
     type: DataType = Field(...)
     value: Optional[Any] = Field(None, description="the default value of the parameter")
-    __properties = ["name", "type", "value"]
+    value_options: Optional[conlist(Any)] = Field(None, alias="valueOptions", description="Values of the parameter listed as being available for choosing from.")
+    value_must_be_from_options: Optional[StrictBool] = Field(None, alias="valueMustBeFromOptions", description="Must Value be one of ValueOptions (if any)?")
+    __properties = ["name", "type", "value", "valueOptions", "valueMustBeFromOptions"]
 
     class Config:
         """Pydantic configuration"""
@@ -68,6 +70,11 @@ class ScalarParameter(BaseModel):
         if self.value is None and "value" in self.__fields_set__:
             _dict['value'] = None
 
+        # set to None if value_options (nullable) is None
+        # and __fields_set__ contains the field
+        if self.value_options is None and "value_options" in self.__fields_set__:
+            _dict['valueOptions'] = None
+
         return _dict
 
     @classmethod
@@ -82,6 +89,8 @@ class ScalarParameter(BaseModel):
         _obj = ScalarParameter.parse_obj({
             "name": obj.get("name"),
             "type": obj.get("type"),
-            "value": obj.get("value")
+            "value": obj.get("value"),
+            "value_options": obj.get("valueOptions"),
+            "value_must_be_from_options": obj.get("valueMustBeFromOptions")
         })
         return _obj

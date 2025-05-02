@@ -1153,7 +1153,7 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
-    body = select abc, :p1:'this' as c1 from xxx where abc = :abcP:123 or xyz in (:p2:, 'zzz') # str | SQL query to generate the design object from
+    body = select abc, :p1:'this' as c1 from xxx where abc = :abcP:{1,2,3} or xyz in (:p2:, 'zzz') # str | SQL query to generate the design object from
 
     try:
         # uncomment the below to set overrides at the request level

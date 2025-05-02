@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **name** | **str** | Name of the scalar parameter | 
 **type** | [**DataType**](DataType.md) |  | 
 **value** | **object** | the default value of the parameter | [optional] 
+**value_options** | **List[object]** | Values of the parameter listed as being available for choosing from. | [optional] 
+**value_must_be_from_options** | **bool** | Must Value be one of ValueOptions (if any)? | [optional] 
 
 ## Example
 
