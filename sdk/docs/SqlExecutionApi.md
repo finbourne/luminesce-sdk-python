@@ -76,7 +76,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
     escape = 'escape_example' # str | Escape character to override the default (optional)
 
@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **delimiter** | **str**| Delimiter string to override the default | [optional] 
  **escape** | **str**| Escape character to override the default | [optional] 
 
@@ -179,7 +179,7 @@ def main():
     query = 'select ^ from Sys.Field order by 1, 2' # str | LuminesceSql to Execute (must be one line only)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -202,7 +202,7 @@ Name | Type | Description  | Notes
  **query** | **str**| LuminesceSql to Execute (must be one line only) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -277,7 +277,7 @@ def main():
     query = 'select ^ from Sys.Field order by 1, 2' # str | LuminesceSql to Execute (must be one line only)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
 
     try:
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
  **query** | **str**| LuminesceSql to Execute (must be one line only) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **json_proper** | **bool**| Should this be text/json (not json-encoded-as-a-string) | [optional] [default to False]
 
 ### Return type
@@ -377,7 +377,7 @@ def main():
     query = 'select ^ from Sys.Field order by 1, 2' # str | LuminesceSql to Execute (must be one line only)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
  **query** | **str**| LuminesceSql to Execute (must be one line only) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -476,7 +476,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -500,7 +500,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -575,7 +575,7 @@ def main():
     query = 'select ^ from Sys.Field order by 1, 2' # str | LuminesceSql to Execute (must be one line only)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -598,7 +598,7 @@ Name | Type | Description  | Notes
  **query** | **str**| LuminesceSql to Execute (must be one line only) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -674,7 +674,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -698,7 +698,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -774,7 +774,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
     escape = 'escape_example' # str | Escape character to override the default (optional)
 
@@ -800,7 +800,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **delimiter** | **str**| Delimiter string to override the default | [optional] 
  **escape** | **str**| Escape character to override the default | [optional] 
 
@@ -877,7 +877,7 @@ def main():
     body = select * from sys.field # str | LuminesceSql to Execute (may be multi-line)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -900,7 +900,7 @@ Name | Type | Description  | Notes
  **body** | **str**| LuminesceSql to Execute (may be multi-line) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -975,7 +975,7 @@ def main():
     body = select * from sys.field # str | LuminesceSql to Execute (may be multi-line)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
 
     try:
@@ -999,7 +999,7 @@ Name | Type | Description  | Notes
  **body** | **str**| LuminesceSql to Execute (may be multi-line) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **json_proper** | **bool**| Should this be text/json (not json-encoded-as-a-string) | [optional] [default to False]
 
 ### Return type
@@ -1075,7 +1075,7 @@ def main():
     body = select * from sys.field # str | LuminesceSql to Execute (may be multi-line)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1098,7 +1098,7 @@ Name | Type | Description  | Notes
  **body** | **str**| LuminesceSql to Execute (may be multi-line) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -1174,7 +1174,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1198,7 +1198,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -1273,7 +1273,7 @@ def main():
     body = select * from sys.field # str | LuminesceSql to Execute (may be multi-line)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1296,7 +1296,7 @@ Name | Type | Description  | Notes
  **body** | **str**| LuminesceSql to Execute (may be multi-line) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
@@ -1372,7 +1372,7 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
-    timeout_seconds = 0 # int | In seconds: <0 → ∞, 0 → 120s (optional) (default to 0)
+    timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1396,7 +1396,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
- **timeout_seconds** | **int**| In seconds: &lt;0 → ∞, 0 → 120s | [optional] [default to 0]
+ **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
 
