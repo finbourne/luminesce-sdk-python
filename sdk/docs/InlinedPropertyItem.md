@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** | Name of the property | [optional] 
 **is_main** | **bool** | Is Main indicator for the property | [optional] 
 **description** | **str** | Description of the property | [optional] 
+**data_type** | **str** | Data type of the property | [optional] 
 
 ## Example
 

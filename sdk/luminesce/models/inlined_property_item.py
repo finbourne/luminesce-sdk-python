@@ -29,7 +29,8 @@ class InlinedPropertyItem(BaseModel):
     name:  Optional[StrictStr] = Field(None,alias="name", description="Name of the property") 
     is_main: Optional[StrictBool] = Field(None, alias="isMain", description="Is Main indicator for the property")
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of the property") 
-    __properties = ["key", "name", "isMain", "description"]
+    data_type:  Optional[StrictStr] = Field(None,alias="dataType", description="Data type of the property") 
+    __properties = ["key", "name", "isMain", "description", "dataType"]
 
     class Config:
         """Pydantic configuration"""
@@ -73,6 +74,11 @@ class InlinedPropertyItem(BaseModel):
         if self.description is None and "description" in self.__fields_set__:
             _dict['description'] = None
 
+        # set to None if data_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_type is None and "data_type" in self.__fields_set__:
+            _dict['dataType'] = None
+
         return _dict
 
     @classmethod
@@ -88,6 +94,7 @@ class InlinedPropertyItem(BaseModel):
             "key": obj.get("key"),
             "name": obj.get("name"),
             "is_main": obj.get("isMain"),
-            "description": obj.get("description")
+            "description": obj.get("description"),
+            "data_type": obj.get("dataType")
         })
         return _obj
