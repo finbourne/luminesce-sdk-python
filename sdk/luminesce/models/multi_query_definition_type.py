@@ -39,6 +39,7 @@ class MultiQueryDefinitionType(str, Enum):
     INSIGHTSMETRICSENTITLEMENT = 'InsightsMetricsEntitlement'
     INSTRUMENTDISCOVERY = 'InstrumentDiscovery'
     INSTRUMENTUPSERT = 'InstrumentUpsert'
+    INSIGHTSAPPLICATIONREQUESTLOGS = 'InsightsApplicationRequestLogs'
 
     @classmethod
     def from_json(cls, json_str: str) -> MultiQueryDefinitionType:
