@@ -361,7 +361,7 @@ def main():
     end_at = '2013-10-20T19:20:30+01:00' # datetime | Date time to end the search at.  Defaults to now. (optional)
     free_text_search = 'free_text_search_example' # str | Some test that must be in at least one field returned. (optional)
     show_all = False # bool | For users with extra permissions, they may optionally see other users' queries. (optional) (default to False)
-    may_use_native_store = True # bool | Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? (optional) (default to True)
+    may_use_native_store = True # bool | Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?  This is no longer supported and effectively always true. (optional) (default to True)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -385,7 +385,7 @@ Name | Type | Description  | Notes
  **end_at** | **datetime**| Date time to end the search at.  Defaults to now. | [optional] 
  **free_text_search** | **str**| Some test that must be in at least one field returned. | [optional] 
  **show_all** | **bool**| For users with extra permissions, they may optionally see other users&#39; queries. | [optional] [default to False]
- **may_use_native_store** | **bool**| Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available? | [optional] [default to True]
+ **may_use_native_store** | **bool**| Should a native data store (e.g. Athena or Fabric) be used over Elastic Search if available?  This is no longer supported and effectively always true. | [optional] [default to True]
 
 ### Return type
 
