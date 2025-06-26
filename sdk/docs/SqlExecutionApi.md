@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 
 # **get_by_query_csv**
-> str get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape)
+> str get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape, date_time_format=date_time_format)
 
 GetByQueryCsv: Execute Sql from the url returning CSV
 
@@ -79,13 +79,14 @@ def main():
     timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
     escape = 'escape_example' # str | Escape character to override the default (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape, opts=opts)
+        # api_response =  api_instance.get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape, date_time_format=date_time_format, opts=opts)
 
         # GetByQueryCsv: Execute Sql from the url returning CSV
-        api_response = api_instance.get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape)
+        api_response = api_instance.get_by_query_csv(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, delimiter=delimiter, escape=escape, date_time_format=date_time_format)
         pprint(api_response)
 
     except ApiException as e:
@@ -105,6 +106,7 @@ Name | Type | Description  | Notes
  **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **delimiter** | **str**| Delimiter string to override the default | [optional] 
  **escape** | **str**| Escape character to override the default | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
 
 ### Return type
 
@@ -125,7 +127,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_by_query_excel**
-> bytearray get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout)
+> bytearray get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout=timeout)
 
 GetByQueryExcel: Execute Sql from the url returning an Excel file
 
@@ -179,14 +181,15 @@ def main():
     query = 'select ^ from Sys.Field order by 1, 2' # str | LuminesceSql to Execute (must be one line only)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.000` (Excel support for this is limited) (optional)
     timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, opts=opts)
+        # api_response =  api_instance.get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout=timeout, opts=opts)
 
         # GetByQueryExcel: Execute Sql from the url returning an Excel file
-        api_response = api_instance.get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout)
+        api_response = api_instance.get_by_query_excel(query, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout=timeout)
         pprint(api_response)
 
     except ApiException as e:
@@ -202,6 +205,7 @@ Name | Type | Description  | Notes
  **query** | **str**| LuminesceSql to Execute (must be one line only) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.000&#x60; (Excel support for this is limited) | [optional] 
  **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
@@ -421,7 +425,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_by_query_pipe**
-> str get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout)
+> str get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout=timeout)
 
 GetByQueryPipe: Execute Sql from the url returning pipe-delimited
 
@@ -476,14 +480,15 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
     timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout, opts=opts)
+        # api_response =  api_instance.get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout=timeout, opts=opts)
 
         # GetByQueryPipe: Execute Sql from the url returning pipe-delimited
-        api_response = api_instance.get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout=timeout)
+        api_response = api_instance.get_by_query_pipe(query, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout=timeout)
         pprint(api_response)
 
     except ApiException as e:
@@ -500,6 +505,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
  **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
@@ -719,7 +725,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_by_query_csv**
-> str put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape)
+> str put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape, date_time_format=date_time_format)
 
 PutByQueryCsv: Execute Sql from the body returning CSV
 
@@ -777,13 +783,14 @@ def main():
     timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
     escape = 'escape_example' # str | Escape character to override the default (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape, opts=opts)
+        # api_response =  api_instance.put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape, date_time_format=date_time_format, opts=opts)
 
         # PutByQueryCsv: Execute Sql from the body returning CSV
-        api_response = api_instance.put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape)
+        api_response = api_instance.put_by_query_csv(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, delimiter=delimiter, escape=escape, date_time_format=date_time_format)
         pprint(api_response)
 
     except ApiException as e:
@@ -803,6 +810,7 @@ Name | Type | Description  | Notes
  **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **delimiter** | **str**| Delimiter string to override the default | [optional] 
  **escape** | **str**| Escape character to override the default | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
 
 ### Return type
 
@@ -823,7 +831,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_by_query_excel**
-> bytearray put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds)
+> bytearray put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout_seconds=timeout_seconds)
 
 PutByQueryExcel: Execute Sql from the body making an Excel file
 
@@ -877,14 +885,15 @@ def main():
     body = select * from sys.field # str | LuminesceSql to Execute (may be multi-line)
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.000` (Excel support for this is limited) (optional)
     timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, opts=opts)
+        # api_response =  api_instance.put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout_seconds=timeout_seconds, opts=opts)
 
         # PutByQueryExcel: Execute Sql from the body making an Excel file
-        api_response = api_instance.put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds)
+        api_response = api_instance.put_by_query_excel(body, scalar_parameters=scalar_parameters, query_name=query_name, date_time_format=date_time_format, timeout_seconds=timeout_seconds)
         pprint(api_response)
 
     except ApiException as e:
@@ -900,6 +909,7 @@ Name | Type | Description  | Notes
  **body** | **str**| LuminesceSql to Execute (may be multi-line) | 
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.000&#x60; (Excel support for this is limited) | [optional] 
  **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type
@@ -1119,7 +1129,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_by_query_pipe**
-> str put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds)
+> str put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout_seconds=timeout_seconds)
 
 PutByQueryPipe: Execute Sql from the body making pipe-delimited
 
@@ -1174,14 +1184,15 @@ def main():
     scalar_parameters = {'key': '{\"someParameter\":12,\"someOtherParameter\":\"someValue\"}'} # Dict[str, str] | Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. (optional)
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     download = False # bool | Makes this a file-download request (as opposed to returning the data in the response-body) (optional) (default to False)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
     timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds, opts=opts)
+        # api_response =  api_instance.put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout_seconds=timeout_seconds, opts=opts)
 
         # PutByQueryPipe: Execute Sql from the body making pipe-delimited
-        api_response = api_instance.put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, timeout_seconds=timeout_seconds)
+        api_response = api_instance.put_by_query_pipe(body, scalar_parameters=scalar_parameters, query_name=query_name, download=download, date_time_format=date_time_format, timeout_seconds=timeout_seconds)
         pprint(api_response)
 
     except ApiException as e:
@@ -1198,6 +1209,7 @@ Name | Type | Description  | Notes
  **scalar_parameters** | [**Dict[str, str]**](str.md)| Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution. | [optional] 
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **download** | **bool**| Makes this a file-download request (as opposed to returning the data in the response-body) | [optional] [default to False]
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
  **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
 
 ### Return type

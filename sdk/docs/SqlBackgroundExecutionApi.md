@@ -109,7 +109,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_csv**
-> str fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, load_wait_milliseconds=load_wait_milliseconds)
+> str fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
 
 FetchQueryResultCsv: Fetch the result of a query as CSV
 
@@ -170,14 +170,15 @@ def main():
     page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
     delimiter = 'delimiter_example' # str | Delimiter string to override the default (optional)
     escape = 'escape_example' # str | Escape character to override the default (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
     load_wait_milliseconds = 0 # int | Optional maximum additional wait period for post execution platform processing. (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
+        # api_response =  api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
 
         # FetchQueryResultCsv: Fetch the result of a query as CSV
-        api_response = api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, load_wait_milliseconds=load_wait_milliseconds)
+        api_response = api_instance.fetch_query_result_csv(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, delimiter=delimiter, escape=escape, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
         pprint(api_response)
 
     except ApiException as e:
@@ -200,6 +201,7 @@ Name | Type | Description  | Notes
  **page** | **int**| 0-N based on chunk sized determined by the limit, ignored if limit &lt; 1. | [optional] [default to 0]
  **delimiter** | **str**| Delimiter string to override the default | [optional] 
  **escape** | **str**| Escape character to override the default | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
  **load_wait_milliseconds** | **int**| Optional maximum additional wait period for post execution platform processing. | [optional] [default to 0]
 
 ### Return type
@@ -221,7 +223,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_excel**
-> bytearray fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, load_wait_milliseconds=load_wait_milliseconds)
+> bytearray fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
 
 FetchQueryResultExcel: Fetch the result of a query as an Excel file
 
@@ -277,14 +279,15 @@ def main():
     filter = 'filter_example' # str | An ODATA filter per Finbourne.Filtering syntax. (optional)
     select = 'select_example' # str | Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - `MyField`  - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name)  - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - `count(distinct x) as numOfXs`  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`    where you would likely want to pass `1` as the `groupBy` also. (optional)
     group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
     load_wait_milliseconds = 0 # int | Optional maximum additional wait period for post execution platform processing. (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
+        # api_response =  api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
 
         # FetchQueryResultExcel: Fetch the result of a query as an Excel file
-        api_response = api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, load_wait_milliseconds=load_wait_milliseconds)
+        api_response = api_instance.fetch_query_result_excel(execution_id, sort_by=sort_by, filter=filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
         pprint(api_response)
 
     except ApiException as e:
@@ -302,6 +305,7 @@ Name | Type | Description  | Notes
  **filter** | **str**| An ODATA filter per Finbourne.Filtering syntax. | [optional] 
  **select** | **str**| Default is null (meaning return all columns in the original query itself).  The values are in terms of the result column name from the original data set and are comma delimited.  The power of this comes in that you may aggregate the data if you wish  (that is the main reason for allowing this, in fact).  e.g.:  - &#x60;MyField&#x60;  - &#x60;Max(x) FILTER (WHERE y &gt; 12) as ABC&#x60; (max of a field, if another field lets it qualify, with a nice column name)  - &#x60;count(*)&#x60; (count the rows for the given group, that would produce a rather ugly column name, but  it works)  - &#x60;count(distinct x) as numOfXs&#x60;  If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].   e.g.  - &#x60;some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name&#x60;    where you would likely want to pass &#x60;1&#x60; as the &#x60;groupBy&#x60; also. | [optional] 
  **group_by** | **str**| Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. &#x60;2,3&#x60;, &#x60;myColumn&#x60;.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \&quot;select\&quot; parameter fields.              Only specify this if you are selecting aggregations in the \&quot;select\&quot; parameter. | [optional] 
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
  **load_wait_milliseconds** | **int**| Optional maximum additional wait period for post execution platform processing. | [optional] [default to 0]
 
 ### Return type
@@ -743,7 +747,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **fetch_query_result_pipe**
-> str fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, load_wait_milliseconds=load_wait_milliseconds)
+> str fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
 
 FetchQueryResultPipe: Fetch the result of a query as pipe-delimited
 
@@ -802,14 +806,15 @@ def main():
     group_by = 'group_by_example' # str | Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. `2,3`, `myColumn`.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.              Only specify this if you are selecting aggregations in the \"select\" parameter. (optional)
     limit = 0 # int | When paginating, only return this number of records, page should also be specified. (optional) (default to 0)
     page = 0 # int | 0-N based on chunk sized determined by the limit, ignored if limit < 1. (optional) (default to 0)
+    date_time_format = 'date_time_format_example' # str | Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff` (optional)
     load_wait_milliseconds = 0 # int | Optional maximum additional wait period for post execution platform processing. (optional) (default to 0)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
+        # api_response =  api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
 
         # FetchQueryResultPipe: Fetch the result of a query as pipe-delimited
-        api_response = api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, load_wait_milliseconds=load_wait_milliseconds)
+        api_response = api_instance.fetch_query_result_pipe(execution_id, download=download, sort_by=sort_by, filter=filter, select=select, group_by=group_by, limit=limit, page=page, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
         pprint(api_response)
 
     except ApiException as e:
@@ -830,6 +835,7 @@ Name | Type | Description  | Notes
  **group_by** | **str**| Groups by the specified fields.              A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).              e.g. &#x60;2,3&#x60;, &#x60;myColumn&#x60;.              Default is null (meaning no grouping will be performed on the selected columns).              This applies only over the result set being requested here, meaning indexes into the \&quot;select\&quot; parameter fields.              Only specify this if you are selecting aggregations in the \&quot;select\&quot; parameter. | [optional] 
  **limit** | **int**| When paginating, only return this number of records, page should also be specified. | [optional] [default to 0]
  **page** | **int**| 0-N based on chunk sized determined by the limit, ignored if limit &lt; 1. | [optional] [default to 0]
+ **date_time_format** | **str**| Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently &#x60;yyyy-MM-dd HH:mm:ss.fff&#x60; | [optional] 
  **load_wait_milliseconds** | **int**| Optional maximum additional wait period for post execution platform processing. | [optional] [default to 0]
 
 ### Return type
