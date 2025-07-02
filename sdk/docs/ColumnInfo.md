@@ -1,7 +1,6 @@
 # ColumnInfo
 
 Information on how to construct a file-read sql query
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -9,24 +8,21 @@ Name | Type | Description | Notes
 **type** | [**DataType**](DataType.md) |  | [optional] 
 **name** | **str** | The name of the column | [optional] 
 **x_path** | **str** | Xpath for the column (only applicable to XML defined columns) | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.column_info import ColumnInfo
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of ColumnInfo from a JSON string
-column_info_instance = ColumnInfo.from_json(json)
-# print the JSON string representation of the object
-print ColumnInfo.to_json()
+select: Optional[StrictBool] = # Replace with your value
+select:Optional[StrictBool] = None
+type: Optional[DataType] = None
+name: Optional[StrictStr] = "example_name"
+x_path: Optional[StrictStr] = "example_x_path"
+column_info_instance = ColumnInfo(select=select, type=type, name=name, x_path=x_path)
 
-# convert the object into a dict
-column_info_dict = column_info_instance.to_dict()
-# create an instance of ColumnInfo from a dict
-column_info_form_dict = column_info.from_dict(column_info_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

@@ -1,7 +1,6 @@
 # FileReaderBuilderDef
 
 Information on how to construct a file-read sql query
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -20,24 +19,33 @@ Name | Type | Description | Notes
 **sq_lite** | [**OptionsSqLite**](OptionsSqLite.md) |  | [optional] 
 **xml** | [**OptionsXml**](OptionsXml.md) |  | [optional] 
 **parquet** | [**OptionsParquet**](OptionsParquet.md) |  | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, conlist, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of FileReaderBuilderDef from a JSON string
-file_reader_builder_def_instance = FileReaderBuilderDef.from_json(json)
-# print the JSON string representation of the object
-print FileReaderBuilderDef.to_json()
+auto_detect: Optional[AutoDetectType] = # Replace with your value
+columns: Optional[conlist(ColumnInfo)] = # Replace with your value
+limit: Optional[StrictInt] = # Replace with your value
+limit: Optional[StrictInt] = None
+source: Optional[Source] = None
+available_sources: Optional[conlist(Source)] = # Replace with your value
+variable_name: Optional[StrictStr] = "example_variable_name"
+file_path: Optional[StrictStr] = "example_file_path"
+folder_filter: Optional[StrictStr] = "example_folder_filter"
+zip_filter: Optional[StrictStr] = "example_zip_filter"
+add_file_name: Optional[StrictBool] = # Replace with your value
+add_file_name:Optional[StrictBool] = None
+csv: Optional[OptionsCsv] = None
+excel: Optional[OptionsExcel] = None
+sq_lite: Optional[OptionsSqLite] = # Replace with your value
+xml: Optional[OptionsXml] = None
+parquet: Optional[OptionsParquet] = None
+file_reader_builder_def_instance = FileReaderBuilderDef(auto_detect=auto_detect, columns=columns, limit=limit, source=source, available_sources=available_sources, variable_name=variable_name, file_path=file_path, folder_filter=folder_filter, zip_filter=zip_filter, add_file_name=add_file_name, csv=csv, excel=excel, sq_lite=sq_lite, xml=xml, parquet=parquet)
 
-# convert the object into a dict
-file_reader_builder_def_dict = file_reader_builder_def_instance.to_dict()
-# create an instance of FileReaderBuilderDef from a dict
-file_reader_builder_def_form_dict = file_reader_builder_def.from_dict(file_reader_builder_def_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

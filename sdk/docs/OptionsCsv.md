@@ -1,7 +1,6 @@
 # OptionsCsv
 
 Additional options applicable to the given SourceType
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -17,24 +16,33 @@ Name | Type | Description | Notes
 **skip_pre_header** | **int** | Number of rows to ignore before the header row | [optional] 
 **skip_post_header** | **int** | Number of rows to ignore after the header row | [optional] 
 **skip_invalid_rows** | **bool** | Skip invalid data rows (totally invalid ones),   This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows).  In either case a warning will show in the progress feedback. | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.options_csv import OptionsCsv
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of OptionsCsv from a JSON string
-options_csv_instance = OptionsCsv.from_json(json)
-# print the JSON string representation of the object
-print OptionsCsv.to_json()
+column_names: Optional[StrictStr] = "example_column_names"
+column_names_wanted: Optional[StrictStr] = "example_column_names_wanted"
+column_types: Optional[StrictStr] = "example_column_types"
+infer_type_row_count: Optional[StrictInt] = # Replace with your value
+infer_type_row_count: Optional[StrictInt] = None
+no_header: Optional[StrictBool] = # Replace with your value
+no_header:Optional[StrictBool] = None
+delimiter: Optional[StrictStr] = "example_delimiter"
+escape: Optional[StrictStr] = "example_escape"
+quote: Optional[StrictStr] = "example_quote"
+values_to_make_null: Optional[StrictStr] = "example_values_to_make_null"
+skip_pre_header: Optional[StrictInt] = # Replace with your value
+skip_pre_header: Optional[StrictInt] = None
+skip_post_header: Optional[StrictInt] = # Replace with your value
+skip_post_header: Optional[StrictInt] = None
+skip_invalid_rows: Optional[StrictBool] = # Replace with your value
+skip_invalid_rows:Optional[StrictBool] = None
+options_csv_instance = OptionsCsv(column_names=column_names, column_names_wanted=column_names_wanted, column_types=column_types, infer_type_row_count=infer_type_row_count, no_header=no_header, delimiter=delimiter, escape=escape, quote=quote, values_to_make_null=values_to_make_null, skip_pre_header=skip_pre_header, skip_post_header=skip_post_header, skip_invalid_rows=skip_invalid_rows)
 
-# convert the object into a dict
-options_csv_dict = options_csv_instance.to_dict()
-# create an instance of OptionsCsv from a dict
-options_csv_form_dict = options_csv.from_dict(options_csv_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

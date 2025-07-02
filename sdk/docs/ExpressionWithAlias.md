@@ -1,31 +1,25 @@
 # ExpressionWithAlias
 
 Contract for an expression of data we \"have\" that we may \"want to map to a table-parameter's column\"
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **expression** | **str** | Expression (column name, constant, complex expression, etc.) | 
 **alias** | **str** | Column Alias for the expression | [optional] 
 **flags** | [**MappingFlags**](MappingFlags.md) |  | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.expression_with_alias import ExpressionWithAlias
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictStr, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of ExpressionWithAlias from a JSON string
-expression_with_alias_instance = ExpressionWithAlias.from_json(json)
-# print the JSON string representation of the object
-print ExpressionWithAlias.to_json()
+expression: StrictStr = "example_expression"
+alias: Optional[StrictStr] = "example_alias"
+flags: Optional[MappingFlags] = None
+expression_with_alias_instance = ExpressionWithAlias(expression=expression, alias=alias, flags=flags)
 
-# convert the object into a dict
-expression_with_alias_dict = expression_with_alias_instance.to_dict()
-# create an instance of ExpressionWithAlias from a dict
-expression_with_alias_form_dict = expression_with_alias.from_dict(expression_with_alias_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

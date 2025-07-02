@@ -1,7 +1,6 @@
 # QueryDesign
 
 Representation of a \"designable Query\" suitable for formatting to SQL or being built from compliant SQL.
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -12,24 +11,24 @@ Name | Type | Description | Notes
 **limit** | **int** | Row limit to apply, if any | [optional] 
 **warnings** | **List[str]** | Any warnings to show the user when converting from SQL to this representation | [optional] 
 **available_fields** | [**List[AvailableField]**](AvailableField.md) | Fields that are known to be available for design when parsing SQL | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.query_design import QueryDesign
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of QueryDesign from a JSON string
-query_design_instance = QueryDesign.from_json(json)
-# print the JSON string representation of the object
-print QueryDesign.to_json()
+table_name: StrictStr = "example_table_name"
+alias: Optional[StrictStr] = "example_alias"
+fields: conlist(FieldDesign) = # Replace with your value
+order_by: Optional[conlist(OrderByTermDesign)] = # Replace with your value
+limit: Optional[StrictInt] = # Replace with your value
+limit: Optional[StrictInt] = None
+warnings: Optional[conlist(StrictStr)] = # Replace with your value
+available_fields: Optional[conlist(AvailableField)] = # Replace with your value
+query_design_instance = QueryDesign(table_name=table_name, alias=alias, fields=fields, order_by=order_by, limit=limit, warnings=warnings, available_fields=available_fields)
 
-# convert the object into a dict
-query_design_dict = query_design_instance.to_dict()
-# create an instance of QueryDesign from a dict
-query_design_form_dict = query_design.from_dict(query_design_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

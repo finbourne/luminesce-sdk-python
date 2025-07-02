@@ -1,7 +1,6 @@
 # FilterModel
 
 Representation of the data used in a filter for the where clause
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -12,24 +11,23 @@ Name | Type | Description | Notes
 **values** | **List[str]** | An array of possible values for the set filter type | [optional] 
 **date_from** | **str** | A lower bound date for the date filter type | [optional] 
 **date_to** | **str** | An upper bound date for the date filter type | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.filter_model import FilterModel
+from typing import Any, Dict, List, Optional, Union
+from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of FilterModel from a JSON string
-filter_model_instance = FilterModel.from_json(json)
-# print the JSON string representation of the object
-print FilterModel.to_json()
+filter_type: FilterType = # Replace with your value
+type: Optional[Type] = None
+filter: Optional[StrictStr] = "example_filter"
+filter_to: Optional[Union[StrictFloat, StrictInt]] = # Replace with your value
+values: Optional[conlist(StrictStr)] = # Replace with your value
+date_from: Optional[StrictStr] = "example_date_from"
+date_to: Optional[StrictStr] = "example_date_to"
+filter_model_instance = FilterModel(filter_type=filter_type, type=type, filter=filter, filter_to=filter_to, values=values, date_from=date_from, date_to=date_to)
 
-# convert the object into a dict
-filter_model_dict = filter_model_instance.to_dict()
-# create an instance of FilterModel from a dict
-filter_model_form_dict = filter_model.from_dict(filter_model_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

@@ -1,7 +1,6 @@
 # BackgroundQueryResponse
 
 Response for Background Query Start requests
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -17,24 +16,28 @@ Name | Type | Description | Notes
 **fetch_excel** | [**Link**](Link.md) |  | [optional] 
 **fetch_sqlite** | [**Link**](Link.md) |  | [optional] 
 **histogram** | [**Link**](Link.md) |  | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.background_query_response import BackgroundQueryResponse
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictStr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of BackgroundQueryResponse from a JSON string
-background_query_response_instance = BackgroundQueryResponse.from_json(json)
-# print the JSON string representation of the object
-print BackgroundQueryResponse.to_json()
+execution_id: Optional[StrictStr] = "example_execution_id"
+progress: Optional[Link] = None
+cancel: Optional[Link] = None
+fetch_json: Optional[Link] = # Replace with your value
+fetch_json_proper: Optional[Link] = # Replace with your value
+fetch_xml: Optional[Link] = # Replace with your value
+fetch_parquet: Optional[Link] = # Replace with your value
+fetch_csv: Optional[Link] = # Replace with your value
+fetch_pipe: Optional[Link] = # Replace with your value
+fetch_excel: Optional[Link] = # Replace with your value
+fetch_sqlite: Optional[Link] = # Replace with your value
+histogram: Optional[Link] = None
+background_query_response_instance = BackgroundQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
-# convert the object into a dict
-background_query_response_dict = background_query_response_instance.to_dict()
-# create an instance of BackgroundQueryResponse from a dict
-background_query_response_form_dict = background_query_response.from_dict(background_query_response_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

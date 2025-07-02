@@ -1,30 +1,23 @@
 # ErrorHighlightResponse
 
 Response for error highlighting
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **errors** | [**List[ErrorHighlightItem]**](ErrorHighlightItem.md) | The errors within the Sql | 
 **sql_with_marker** | **str** | The SQL this is for, with characters indicating the error locations | 
-
 ## Example
 
 ```python
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
+from typing import Any, Dict, List
+from pydantic.v1 import BaseModel, Field, conlist, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of ErrorHighlightResponse from a JSON string
-error_highlight_response_instance = ErrorHighlightResponse.from_json(json)
-# print the JSON string representation of the object
-print ErrorHighlightResponse.to_json()
+errors: conlist(ErrorHighlightItem) = # Replace with your value
+sql_with_marker: StrictStr = "example_sql_with_marker"
+error_highlight_response_instance = ErrorHighlightResponse(errors=errors, sql_with_marker=sql_with_marker)
 
-# convert the object into a dict
-error_highlight_response_dict = error_highlight_response_instance.to_dict()
-# create an instance of ErrorHighlightResponse from a dict
-error_highlight_response_form_dict = error_highlight_response.from_dict(error_highlight_response_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

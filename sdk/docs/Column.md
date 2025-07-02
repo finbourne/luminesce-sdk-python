@@ -1,6 +1,5 @@
 # Column
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -15,24 +14,30 @@ Name | Type | Description | Notes
 **condition_usage** | [**ConditionAttributes**](ConditionAttributes.md) |  | [optional] 
 **sample_values** | **str** |  | [optional] 
 **allowed_values** | **str** |  | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.column import Column
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Column from a JSON string
-column_instance = Column.from_json(json)
-# print the JSON string representation of the object
-print Column.to_json()
+is_primary_key: Optional[StrictBool] = # Replace with your value
+is_primary_key:Optional[StrictBool] = None
+is_main: Optional[StrictBool] = # Replace with your value
+is_main:Optional[StrictBool] = None
+is_required_by_provider: Optional[StrictBool] = # Replace with your value
+is_required_by_provider:Optional[StrictBool] = None
+mandatory_for_actions: Optional[StrictStr] = "example_mandatory_for_actions"
+name: Optional[StrictStr] = "example_name"
+type: Optional[DataType] = None
+description: Optional[StrictStr] = "example_description"
+display_name: Optional[StrictStr] = "example_display_name"
+condition_usage: Optional[ConditionAttributes] = # Replace with your value
+sample_values: Optional[StrictStr] = "example_sample_values"
+allowed_values: Optional[StrictStr] = "example_allowed_values"
+column_instance = Column(is_primary_key=is_primary_key, is_main=is_main, is_required_by_provider=is_required_by_provider, mandatory_for_actions=mandatory_for_actions, name=name, type=type, description=description, display_name=display_name, condition_usage=condition_usage, sample_values=sample_values, allowed_values=allowed_values)
 
-# convert the object into a dict
-column_dict = column_instance.to_dict()
-# create an instance of Column from a dict
-column_form_dict = column.from_dict(column_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

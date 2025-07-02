@@ -1,7 +1,6 @@
 # CertificateState
 
 Information held about the minting / revoking of a certificate.  It does *not* contain the certificate itself
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -20,24 +19,32 @@ Name | Type | Description | Notes
 **created_by** | **str** | The user which created this | [optional] 
 **serial_number** | **str** | The Vault-issued serial number of the certificate, if any - used for revocation | [optional] 
 **links** | [**List[Link]**](Link.md) | The location within Configuration Store that this is saved to | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.certificate_state import CertificateState
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
+from datetime import datetime
+key: Optional[StrictStr] = "example_key"
+version: Optional[StrictInt] = # Replace with your value
+version: Optional[StrictInt] = None
+common_name: Optional[StrictStr] = "example_common_name"
+type: Optional[CertificateType] = None
+creation_status: Optional[CertificateStatus] = # Replace with your value
+revocation_status: Optional[CertificateStatus] = # Replace with your value
+validity_start: Optional[datetime] = # Replace with your value
+validity_end: Optional[datetime] = # Replace with your value
+revoked_at: Optional[datetime] = # Replace with your value
+revoked_by: Optional[StrictStr] = "example_revoked_by"
+created_at: Optional[datetime] = # Replace with your value
+permissions_set_at: Optional[datetime] = # Replace with your value
+created_by: Optional[StrictStr] = "example_created_by"
+serial_number: Optional[StrictStr] = "example_serial_number"
+links: Optional[conlist(Link)] = # Replace with your value
+certificate_state_instance = CertificateState(key=key, version=version, common_name=common_name, type=type, creation_status=creation_status, revocation_status=revocation_status, validity_start=validity_start, validity_end=validity_end, revoked_at=revoked_at, revoked_by=revoked_by, created_at=created_at, permissions_set_at=permissions_set_at, created_by=created_by, serial_number=serial_number, links=links)
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of CertificateState from a JSON string
-certificate_state_instance = CertificateState.from_json(json)
-# print the JSON string representation of the object
-print CertificateState.to_json()
-
-# convert the object into a dict
-certificate_state_dict = certificate_state_instance.to_dict()
-# create an instance of CertificateState from a dict
-certificate_state_form_dict = certificate_state.from_dict(certificate_state_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

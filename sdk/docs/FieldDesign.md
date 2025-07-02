@@ -1,7 +1,6 @@
 # FieldDesign
 
 Treatment of a single field within a QueryDesign
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -12,24 +11,25 @@ Name | Type | Description | Notes
 **filters** | [**List[FilterTermDesign]**](FilterTermDesign.md) | Filter clauses to apply to this field (And&#39;ed together) | [optional] 
 **aggregations** | [**List[Aggregation]**](Aggregation.md) | Aggregations to apply (as opposed to simply selecting) | [optional] 
 **is_expression** | **bool** | Is this field an expression | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.field_design import FieldDesign
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of FieldDesign from a JSON string
-field_design_instance = FieldDesign.from_json(json)
-# print the JSON string representation of the object
-print FieldDesign.to_json()
+name: StrictStr = "example_name"
+alias: Optional[StrictStr] = "example_alias"
+data_type: Optional[DataType] = # Replace with your value
+should_select: Optional[StrictBool] = # Replace with your value
+should_select:Optional[StrictBool] = None
+filters: Optional[conlist(FilterTermDesign)] = # Replace with your value
+aggregations: Optional[conlist(Aggregation)] = # Replace with your value
+is_expression: Optional[StrictBool] = # Replace with your value
+is_expression:Optional[StrictBool] = None
+field_design_instance = FieldDesign(name=name, alias=alias, data_type=data_type, should_select=should_select, filters=filters, aggregations=aggregations, is_expression=is_expression)
 
-# convert the object into a dict
-field_design_dict = field_design_instance.to_dict()
-# create an instance of FieldDesign from a dict
-field_design_form_dict = field_design.from_dict(field_design_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

@@ -1,7 +1,6 @@
 # OptionsXml
 
 Additional options applicable to the given SourceType
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -11,24 +10,23 @@ Name | Type | Description | Notes
 **column_names** | **str** | Column Names either overrides the header row or steps in when there is no header row (comma delimited list) | [optional] 
 **node_path** | **str** | XPath query that selects the nodes to map to rows | [optional] 
 **namespaces** | **str** | Selected prefix(es) and namespace(s):prefix1&#x3D;namespace1-uri1,prefix2&#x3D;namespace2-uri2,...prefixN&#x3D;namespaceN-uriN | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.options_xml import OptionsXml
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of OptionsXml from a JSON string
-options_xml_instance = OptionsXml.from_json(json)
-# print the JSON string representation of the object
-print OptionsXml.to_json()
+column_types: Optional[StrictStr] = "example_column_types"
+infer_type_row_count: Optional[StrictInt] = # Replace with your value
+infer_type_row_count: Optional[StrictInt] = None
+values_to_make_null: Optional[StrictStr] = "example_values_to_make_null"
+column_names: Optional[StrictStr] = "example_column_names"
+node_path: Optional[StrictStr] = "example_node_path"
+namespaces: Optional[StrictStr] = "example_namespaces"
+options_xml_instance = OptionsXml(column_types=column_types, infer_type_row_count=infer_type_row_count, values_to_make_null=values_to_make_null, column_names=column_names, node_path=node_path, namespaces=namespaces)
 
-# convert the object into a dict
-options_xml_dict = options_xml_instance.to_dict()
-# create an instance of OptionsXml from a dict
-options_xml_form_dict = options_xml.from_dict(options_xml_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

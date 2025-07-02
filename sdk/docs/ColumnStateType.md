@@ -1,7 +1,6 @@
 # ColumnStateType
 
 Representation of a column within the grid
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -9,24 +8,22 @@ Name | Type | Description | Notes
 **hide** | **bool** | Flag to determine whether the column is visible in the grid | 
 **sort** | **str** | The sort order (asc or desc) | [optional] 
 **sort_index** | **int** | The index of the sort to determine the order in which the sorts are applied | [optional] 
-
 ## Example
 
 ```python
 from luminesce.models.column_state_type import ColumnStateType
+from typing import Any, Dict, Optional
+from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of ColumnStateType from a JSON string
-column_state_type_instance = ColumnStateType.from_json(json)
-# print the JSON string representation of the object
-print ColumnStateType.to_json()
+col_id: StrictStr = "example_col_id"
+hide: StrictBool = # Replace with your value
+hide:StrictBool = True
+sort: Optional[StrictStr] = "example_sort"
+sort_index: Optional[StrictInt] = # Replace with your value
+sort_index: Optional[StrictInt] = None
+column_state_type_instance = ColumnStateType(col_id=col_id, hide=hide, sort=sort, sort_index=sort_index)
 
-# convert the object into a dict
-column_state_type_dict = column_state_type_instance.to_dict()
-# create an instance of ColumnStateType from a dict
-column_state_type_form_dict = column_state_type.from_dict(column_state_type_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

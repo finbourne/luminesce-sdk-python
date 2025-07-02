@@ -1,6 +1,5 @@
 # FeedbackEventArgs
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -13,24 +12,26 @@ Name | Type | Description | Notes
 **message_template** | **str** |  | [optional] 
 **property_values** | **List[object]** |  | [optional] 
 **message** | **str** |  | [optional] [readonly] 
-
 ## Example
 
 ```python
 from luminesce.models.feedback_event_args import FeedbackEventArgs
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
+from datetime import datetime
+when: Optional[datetime] = None
+session_id: Optional[StrictStr] = "example_session_id"
+execution_id: Optional[StrictStr] = "example_execution_id"
+level: Optional[FeedbackLevel] = None
+sender: Optional[StrictStr] = "example_sender"
+state_id: Optional[StrictInt] = # Replace with your value
+state_id: Optional[StrictInt] = None
+message_template: Optional[StrictStr] = "example_message_template"
+property_values: Optional[conlist(Any)] = # Replace with your value
+message: Optional[StrictStr] = "example_message"
+feedback_event_args_instance = FeedbackEventArgs(when=when, session_id=session_id, execution_id=execution_id, level=level, sender=sender, state_id=state_id, message_template=message_template, property_values=property_values, message=message)
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of FeedbackEventArgs from a JSON string
-feedback_event_args_instance = FeedbackEventArgs.from_json(json)
-# print the JSON string representation of the object
-print FeedbackEventArgs.to_json()
-
-# convert the object into a dict
-feedback_event_args_dict = feedback_event_args_instance.to_dict()
-# create an instance of FeedbackEventArgs from a dict
-feedback_event_args_form_dict = feedback_event_args.from_dict(feedback_event_args_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

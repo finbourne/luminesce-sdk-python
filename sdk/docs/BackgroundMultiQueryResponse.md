@@ -1,6 +1,5 @@
 # BackgroundMultiQueryResponse
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -16,24 +15,28 @@ Name | Type | Description | Notes
 **fetch_excel** | [**List[Link]**](Link.md) | Excel workbook data request links for all of the child queries | [optional] [readonly] 
 **fetch_sqlite** | [**List[Link]**](Link.md) | SqLite DB data request links for all of the child queries | [optional] [readonly] 
 **histogram** | [**List[Link]**](Link.md) | Histogram links for all of the child queries | [optional] [readonly] 
-
 ## Example
 
 ```python
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
+from typing import Any, Dict, List, Optional
+from pydantic.v1 import BaseModel, Field, StrictStr, conlist
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of BackgroundMultiQueryResponse from a JSON string
-background_multi_query_response_instance = BackgroundMultiQueryResponse.from_json(json)
-# print the JSON string representation of the object
-print BackgroundMultiQueryResponse.to_json()
+execution_id: Optional[StrictStr] = "example_execution_id"
+progress: Optional[Link] = None
+cancel: Optional[Link] = None
+fetch_json: Optional[conlist(Link)] = # Replace with your value
+fetch_json_proper: Optional[conlist(Link)] = # Replace with your value
+fetch_xml: Optional[conlist(Link)] = # Replace with your value
+fetch_parquet: Optional[conlist(Link)] = # Replace with your value
+fetch_csv: Optional[conlist(Link)] = # Replace with your value
+fetch_pipe: Optional[conlist(Link)] = # Replace with your value
+fetch_excel: Optional[conlist(Link)] = # Replace with your value
+fetch_sqlite: Optional[conlist(Link)] = # Replace with your value
+histogram: Optional[conlist(Link)] = # Replace with your value
+background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
-# convert the object into a dict
-background_multi_query_response_dict = background_multi_query_response_instance.to_dict()
-# create an instance of BackgroundMultiQueryResponse from a dict
-background_multi_query_response_form_dict = background_multi_query_response.from_dict(background_multi_query_response_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 

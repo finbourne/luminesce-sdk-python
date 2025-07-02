@@ -1,30 +1,23 @@
 # FilterTermDesign
 
 A single filter clause
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **operator** | [**QueryDesignerBinaryOperator**](QueryDesignerBinaryOperator.md) |  | 
 **value** | **str** | The value to compare against (always as a string, but will be formatted to the correct type) | 
-
 ## Example
 
 ```python
 from luminesce.models.filter_term_design import FilterTermDesign
+from typing import Any, Dict
+from pydantic.v1 import BaseModel, Field, constr
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of FilterTermDesign from a JSON string
-filter_term_design_instance = FilterTermDesign.from_json(json)
-# print the JSON string representation of the object
-print FilterTermDesign.to_json()
+operator: QueryDesignerBinaryOperator = # Replace with your value
+value: StrictStr = "example_value"
+filter_term_design_instance = FilterTermDesign(operator=operator, value=value)
 
-# convert the object into a dict
-filter_term_design_dict = filter_term_design_instance.to_dict()
-# create an instance of FilterTermDesign from a dict
-filter_term_design_form_dict = filter_term_design.from_dict(filter_term_design_dict)
 ```
-[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
 
