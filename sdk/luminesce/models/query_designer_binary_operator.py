@@ -23,7 +23,7 @@ from aenum import Enum, no_arg
 
 class QueryDesignerBinaryOperator(str, Enum):
     """
-    QueryDesignerBinaryOperator
+    Binary operators
     """
 
     """
@@ -39,6 +39,8 @@ class QueryDesignerBinaryOperator(str, Enum):
     CONTAINS = 'Contains'
     STARTSWITH = 'StartsWith'
     ENDSWITH = 'EndsWith'
+    ISNULL = 'IsNull'
+    ISNOTNULL = 'IsNotNull'
 
     @classmethod
     def from_json(cls, json_str: str) -> QueryDesignerBinaryOperator:

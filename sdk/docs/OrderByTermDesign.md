@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **field** | **str** | Name of the field to order by | 
 **direction** | [**OrderByDirection**](OrderByDirection.md) |  | [optional] 
+**table_alias** | **str** | Table Alias of the field to order by | [optional] 
 ## Example
 
 ```python
@@ -15,7 +16,8 @@ from pydantic.v1 import BaseModel, Field, constr
 
 field: StrictStr = "example_field"
 direction: Optional[OrderByDirection] = None
-order_by_term_design_instance = OrderByTermDesign(field=field, direction=direction)
+table_alias: Optional[StrictStr] = "example_table_alias"
+order_by_term_design_instance = OrderByTermDesign(field=field, direction=direction, table_alias=table_alias)
 
 ```
 

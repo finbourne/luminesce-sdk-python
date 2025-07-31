@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Optional
 from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist, constr 
 from luminesce.models.available_field import AvailableField
 from luminesce.models.field_design import FieldDesign
+from luminesce.models.joined_table_design import JoinedTableDesign
 from luminesce.models.order_by_term_design import OrderByTermDesign
 
 class QueryDesign(BaseModel):
@@ -31,11 +32,13 @@ class QueryDesign(BaseModel):
     table_name:  StrictStr = Field(...,alias="tableName", description="Name of the table being designed") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias for the table in the generated SQL, if any") 
     fields: conlist(FieldDesign) = Field(..., description="Fields to be selected, aggregated over and/or filtered on")
+    joined_tables: Optional[conlist(JoinedTableDesign)] = Field(None, alias="joinedTables", description="Joined in table to the main TableName / Alias")
     order_by: Optional[conlist(OrderByTermDesign)] = Field(None, alias="orderBy", description="Order By clauses to apply")
     limit: Optional[StrictInt] = Field(None, description="Row limit to apply, if any")
+    offset: Optional[StrictInt] = Field(None, description="Row offset to apply, if any")
     warnings: Optional[conlist(StrictStr)] = Field(None, description="Any warnings to show the user when converting from SQL to this representation")
     available_fields: Optional[conlist(AvailableField)] = Field(None, alias="availableFields", description="Fields that are known to be available for design when parsing SQL")
-    __properties = ["tableName", "alias", "fields", "orderBy", "limit", "warnings", "availableFields"]
+    __properties = ["tableName", "alias", "fields", "joinedTables", "orderBy", "limit", "offset", "warnings", "availableFields"]
 
     class Config:
         """Pydantic configuration"""
@@ -76,6 +79,13 @@ class QueryDesign(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['fields'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in joined_tables (list)
+        _items = []
+        if self.joined_tables:
+            for _item in self.joined_tables:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['joinedTables'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in order_by (list)
         _items = []
         if self.order_by:
@@ -95,6 +105,11 @@ class QueryDesign(BaseModel):
         if self.alias is None and "alias" in self.__fields_set__:
             _dict['alias'] = None
 
+        # set to None if joined_tables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.joined_tables is None and "joined_tables" in self.__fields_set__:
+            _dict['joinedTables'] = None
+
         # set to None if order_by (nullable) is None
         # and __fields_set__ contains the field
         if self.order_by is None and "order_by" in self.__fields_set__:
@@ -104,6 +119,11 @@ class QueryDesign(BaseModel):
         # and __fields_set__ contains the field
         if self.limit is None and "limit" in self.__fields_set__:
             _dict['limit'] = None
+
+        # set to None if offset (nullable) is None
+        # and __fields_set__ contains the field
+        if self.offset is None and "offset" in self.__fields_set__:
+            _dict['offset'] = None
 
         # set to None if warnings (nullable) is None
         # and __fields_set__ contains the field
@@ -130,8 +150,10 @@ class QueryDesign(BaseModel):
             "table_name": obj.get("tableName"),
             "alias": obj.get("alias"),
             "fields": [FieldDesign.from_dict(_item) for _item in obj.get("fields")] if obj.get("fields") is not None else None,
+            "joined_tables": [JoinedTableDesign.from_dict(_item) for _item in obj.get("joinedTables")] if obj.get("joinedTables") is not None else None,
             "order_by": [OrderByTermDesign.from_dict(_item) for _item in obj.get("orderBy")] if obj.get("orderBy") is not None else None,
             "limit": obj.get("limit"),
+            "offset": obj.get("offset"),
             "warnings": obj.get("warnings"),
             "available_fields": [AvailableField.from_dict(_item) for _item in obj.get("availableFields")] if obj.get("availableFields") is not None else None
         })

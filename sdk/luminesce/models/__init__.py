@@ -45,6 +45,7 @@ from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.dashboard_type import DashboardType
 from luminesce.models.data_type import DataType
 from luminesce.models.date_parameters import DateParameters
+from luminesce.models.design_join_type import DesignJoinType
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
@@ -65,6 +66,7 @@ from luminesce.models.intellisense_item import IntellisenseItem
 from luminesce.models.intellisense_request import IntellisenseRequest
 from luminesce.models.intellisense_response import IntellisenseResponse
 from luminesce.models.intellisense_type import IntellisenseType
+from luminesce.models.joined_table_design import JoinedTableDesign
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_grid_data import LusidGridData
@@ -72,6 +74,7 @@ from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.mappable_field import MappableField
 from luminesce.models.mapping_flags import MappingFlags
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
+from luminesce.models.on_clause_term_design import OnClauseTermDesign
 from luminesce.models.options_csv import OptionsCsv
 from luminesce.models.options_excel import OptionsExcel
 from luminesce.models.options_parquet import OptionsParquet
@@ -81,6 +84,7 @@ from luminesce.models.order_by_direction import OrderByDirection
 from luminesce.models.order_by_term_design import OrderByTermDesign
 from luminesce.models.query_design import QueryDesign
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
+from luminesce.models.query_designer_version import QueryDesignerVersion
 from luminesce.models.resource_id import ResourceId
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
 from luminesce.models.scalar_parameter import ScalarParameter
@@ -126,6 +130,7 @@ __all__ = [
     "DashboardType",
     "DataType",
     "DateParameters",
+    "DesignJoinType",
     "ErrorHighlightItem",
     "ErrorHighlightRequest",
     "ErrorHighlightResponse",
@@ -146,6 +151,7 @@ __all__ = [
     "IntellisenseRequest",
     "IntellisenseResponse",
     "IntellisenseType",
+    "JoinedTableDesign",
     "Link",
     "LuminesceBinaryType",
     "LusidGridData",
@@ -153,6 +159,7 @@ __all__ = [
     "MappableField",
     "MappingFlags",
     "MultiQueryDefinitionType",
+    "OnClauseTermDesign",
     "OptionsCsv",
     "OptionsExcel",
     "OptionsParquet",
@@ -162,6 +169,7 @@ __all__ = [
     "OrderByTermDesign",
     "QueryDesign",
     "QueryDesignerBinaryOperator",
+    "QueryDesignerVersion",
     "ResourceId",
     "ResourceListOfAccessControlledResource",
     "ScalarParameter",

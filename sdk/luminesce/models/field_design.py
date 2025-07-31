@@ -29,13 +29,14 @@ class FieldDesign(BaseModel):
     Treatment of a single field within a QueryDesign  # noqa: E501
     """
     name:  StrictStr = Field(...,alias="name", description="Name of the Field (column name, constant, complex expression, etc.)") 
+    table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Alias of the Table the field belongs to") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias if any (if none the Name is used)") 
     data_type: Optional[DataType] = Field(None, alias="dataType")
     should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
     filters: Optional[conlist(FilterTermDesign)] = Field(None, description="Filter clauses to apply to this field (And'ed together)")
     aggregations: Optional[conlist(Aggregation)] = Field(None, description="Aggregations to apply (as opposed to simply selecting)")
     is_expression: Optional[StrictBool] = Field(None, alias="isExpression", description="Is this field an expression")
-    __properties = ["name", "alias", "dataType", "shouldSelect", "filters", "aggregations", "isExpression"]
+    __properties = ["name", "tableAlias", "alias", "dataType", "shouldSelect", "filters", "aggregations", "isExpression"]
 
     class Config:
         """Pydantic configuration"""
@@ -83,6 +84,11 @@ class FieldDesign(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['aggregations'] = _items
+        # set to None if table_alias (nullable) is None
+        # and __fields_set__ contains the field
+        if self.table_alias is None and "table_alias" in self.__fields_set__:
+            _dict['tableAlias'] = None
+
         # set to None if alias (nullable) is None
         # and __fields_set__ contains the field
         if self.alias is None and "alias" in self.__fields_set__:
@@ -111,6 +117,7 @@ class FieldDesign(BaseModel):
 
         _obj = FieldDesign.parse_obj({
             "name": obj.get("name"),
+            "table_alias": obj.get("tableAlias"),
             "alias": obj.get("alias"),
             "data_type": obj.get("dataType"),
             "should_select": obj.get("shouldSelect"),

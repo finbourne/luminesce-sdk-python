@@ -1,6 +1,6 @@
-# QueryDesignerBinaryOperator
+# DesignJoinType
 
-Binary operators
+Type of join between two tables
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

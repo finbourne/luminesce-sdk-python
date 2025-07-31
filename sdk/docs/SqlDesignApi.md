@@ -1288,7 +1288,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_sql_to_query_design**
-> QueryDesign put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
+> QueryDesign put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, version=version)
 
 PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
 
@@ -1341,13 +1341,14 @@ def main():
     api_instance = api_client_factory.build(SqlDesignApi)
     body = SELECT [TableName], Count(distinct [FieldName]) as [NumberOfFields], case [FieldType] when 'Column' then 'col' else [FieldType] end as FieldType2  FROM [Sys.Field] WHERE ([TableName] = 'Sys.Registration') GROUP BY [TableName], [FieldType2] ORDER BY [DataType] LIMIT 42 # str | SQL query to generate the design object from
     validate_with_metadata = True # bool | Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.? (optional) (default to True)
+    version = luminesce.QueryDesignerVersion() # QueryDesignerVersion | Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time). (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, opts=opts)
+        # api_response =  api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, version=version, opts=opts)
 
         # PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
-        api_response = api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata)
+        api_response = api_instance.put_sql_to_query_design(body, validate_with_metadata=validate_with_metadata, version=version)
         pprint(api_response)
 
     except ApiException as e:
@@ -1362,6 +1363,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | **str**| SQL query to generate the design object from | 
  **validate_with_metadata** | **bool**| Should the table be validated against the users&#39; view of Sys.Field to fill in DataTypes, etc.? | [optional] [default to True]
+ **version** | [**QueryDesignerVersion**](.md)| Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time). | [optional] 
 
 ### Return type
 

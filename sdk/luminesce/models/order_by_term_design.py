@@ -28,7 +28,8 @@ class OrderByTermDesign(BaseModel):
     """
     field:  StrictStr = Field(...,alias="field", description="Name of the field to order by") 
     direction: Optional[OrderByDirection] = None
-    __properties = ["field", "direction"]
+    table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Table Alias of the field to order by") 
+    __properties = ["field", "direction", "tableAlias"]
 
     class Config:
         """Pydantic configuration"""
@@ -62,6 +63,11 @@ class OrderByTermDesign(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if table_alias (nullable) is None
+        # and __fields_set__ contains the field
+        if self.table_alias is None and "table_alias" in self.__fields_set__:
+            _dict['tableAlias'] = None
+
         return _dict
 
     @classmethod
@@ -75,6 +81,7 @@ class OrderByTermDesign(BaseModel):
 
         _obj = OrderByTermDesign.parse_obj({
             "field": obj.get("field"),
-            "direction": obj.get("direction")
+            "direction": obj.get("direction"),
+            "table_alias": obj.get("tableAlias")
         })
         return _obj

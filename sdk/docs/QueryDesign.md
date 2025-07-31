@@ -7,8 +7,10 @@ Name | Type | Description | Notes
 **table_name** | **str** | Name of the table being designed | 
 **alias** | **str** | Alias for the table in the generated SQL, if any | [optional] 
 **fields** | [**List[FieldDesign]**](FieldDesign.md) | Fields to be selected, aggregated over and/or filtered on | 
+**joined_tables** | [**List[JoinedTableDesign]**](JoinedTableDesign.md) | Joined in table to the main TableName / Alias | [optional] 
 **order_by** | [**List[OrderByTermDesign]**](OrderByTermDesign.md) | Order By clauses to apply | [optional] 
 **limit** | **int** | Row limit to apply, if any | [optional] 
+**offset** | **int** | Row offset to apply, if any | [optional] 
 **warnings** | **List[str]** | Any warnings to show the user when converting from SQL to this representation | [optional] 
 **available_fields** | [**List[AvailableField]**](AvailableField.md) | Fields that are known to be available for design when parsing SQL | [optional] 
 ## Example
@@ -21,12 +23,15 @@ from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, constr
 table_name: StrictStr = "example_table_name"
 alias: Optional[StrictStr] = "example_alias"
 fields: conlist(FieldDesign) = # Replace with your value
+joined_tables: Optional[conlist(JoinedTableDesign)] = # Replace with your value
 order_by: Optional[conlist(OrderByTermDesign)] = # Replace with your value
 limit: Optional[StrictInt] = # Replace with your value
 limit: Optional[StrictInt] = None
+offset: Optional[StrictInt] = # Replace with your value
+offset: Optional[StrictInt] = None
 warnings: Optional[conlist(StrictStr)] = # Replace with your value
 available_fields: Optional[conlist(AvailableField)] = # Replace with your value
-query_design_instance = QueryDesign(table_name=table_name, alias=alias, fields=fields, order_by=order_by, limit=limit, warnings=warnings, available_fields=available_fields)
+query_design_instance = QueryDesign(table_name=table_name, alias=alias, fields=fields, joined_tables=joined_tables, order_by=order_by, limit=limit, offset=offset, warnings=warnings, available_fields=available_fields)
 
 ```
 
