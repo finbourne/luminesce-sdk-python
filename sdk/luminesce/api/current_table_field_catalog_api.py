@@ -52,30 +52,28 @@ class CurrentTableFieldCatalogApi:
 
 
     @overload
-    async def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_catalog(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetCatalog: Get a Flattened Table/Field Catalog  # noqa: E501
 
          Returns the User's full version of the catalog (Providers, their fields and associated information) that are currently running that you have access to (in Json format).  This is the entire catalog flattened, which is often quite large and always a bit repetitive.   The internal results are cached for several minutes.  Consider using `api/Catalog/providers` and `api/Catalog/fields` for a more granular and incremental loading flow.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_catalog(free_text_search, json_proper, use_cache, async_req=True)
+        >>> thread = api.get_catalog(free_text_search, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
-        :param use_cache: Should the available cache be used? false is effectively to pick up a change in the catalog
-        :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -92,25 +90,23 @@ class CurrentTableFieldCatalogApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_catalog_with_http_info(free_text_search, json_proper, use_cache, **kwargs)  # noqa: E501
+        return self.get_catalog_with_http_info(free_text_search, json_proper, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_catalog_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_catalog_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetCatalog: Get a Flattened Table/Field Catalog  # noqa: E501
 
          Returns the User's full version of the catalog (Providers, their fields and associated information) that are currently running that you have access to (in Json format).  This is the entire catalog flattened, which is often quite large and always a bit repetitive.   The internal results are cached for several minutes.  Consider using `api/Catalog/providers` and `api/Catalog/fields` for a more granular and incremental loading flow.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_catalog_with_http_info(free_text_search, json_proper, use_cache, async_req=True)
+        >>> thread = api.get_catalog_with_http_info(free_text_search, json_proper, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
-        :param use_cache: Should the available cache be used? false is effectively to pick up a change in the catalog
-        :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -139,8 +135,7 @@ class CurrentTableFieldCatalogApi:
 
         _all_params = [
             'free_text_search',
-            'json_proper',
-            'use_cache'
+            'json_proper'
         ]
         _all_params.extend(
             [
@@ -177,9 +172,6 @@ class CurrentTableFieldCatalogApi:
 
         if _params.get('json_proper') is not None:  # noqa: E501
             _query_params.append(('jsonProper', _params['json_proper']))
-
-        if _params.get('use_cache') is not None:  # noqa: E501
-            _query_params.append(('useCache', _params['use_cache']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -370,28 +362,26 @@ class CurrentTableFieldCatalogApi:
 
 
     @overload
-    async def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetProviders: List available providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_providers(free_text_search, use_cache, async_req=True)
+        >>> thread = api.get_providers(free_text_search, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
-        :param use_cache: Should the available cache be used? false is effectively to pick up a change in the catalog
-        :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -408,23 +398,21 @@ class CurrentTableFieldCatalogApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_providers_with_http_info(free_text_search, use_cache, **kwargs)  # noqa: E501
+        return self.get_providers_with_http_info(free_text_search, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_providers_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, use_cache : Annotated[Optional[StrictBool], Field(description="Should the available cache be used? false is effectively to pick up a change in the catalog")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_providers_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetProviders: List available providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_providers_with_http_info(free_text_search, use_cache, async_req=True)
+        >>> thread = api.get_providers_with_http_info(free_text_search, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
-        :param use_cache: Should the available cache be used? false is effectively to pick up a change in the catalog
-        :type use_cache: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -452,8 +440,7 @@ class CurrentTableFieldCatalogApi:
         _params = locals()
 
         _all_params = [
-            'free_text_search',
-            'use_cache'
+            'free_text_search'
         ]
         _all_params.extend(
             [
@@ -487,9 +474,6 @@ class CurrentTableFieldCatalogApi:
         _query_params = []
         if _params.get('free_text_search') is not None:  # noqa: E501
             _query_params.append(('freeTextSearch', _params['free_text_search']))
-
-        if _params.get('use_cache') is not None:  # noqa: E501
-            _query_params.append(('useCache', _params['use_cache']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

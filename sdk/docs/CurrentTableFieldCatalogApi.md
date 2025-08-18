@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **get_catalog**
-> str get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
+> str get_catalog(free_text_search=free_text_search, json_proper=json_proper)
 
 GetCatalog: Get a Flattened Table/Field Catalog
 
@@ -63,14 +63,13 @@ def main():
     api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
     free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
     json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
-    use_cache = False # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache, opts=opts)
+        # api_response =  api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, opts=opts)
 
         # GetCatalog: Get a Flattened Table/Field Catalog
-        api_response = api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper, use_cache=use_cache)
+        api_response = api_instance.get_catalog(free_text_search=free_text_search, json_proper=json_proper)
         pprint(api_response)
 
     except ApiException as e:
@@ -85,7 +84,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **free_text_search** | **str**| Limit the catalog to only things in some way dealing with the passed in text string | [optional] 
  **json_proper** | **bool**| Should this be text/json (not json-encoded-as-a-string) | [optional] [default to False]
- **use_cache** | **bool**| Should the available cache be used? false is effectively to pick up a change in the catalog | [optional] [default to False]
 
 ### Return type
 
@@ -194,7 +192,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_providers**
-> str get_providers(free_text_search=free_text_search, use_cache=use_cache)
+> str get_providers(free_text_search=free_text_search)
 
 GetProviders: List available providers
 
@@ -246,14 +244,13 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
     free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-    use_cache = True # bool | Should the available cache be used? false is effectively to pick up a change in the catalog (optional) (default to True)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache, opts=opts)
+        # api_response =  api_instance.get_providers(free_text_search=free_text_search, opts=opts)
 
         # GetProviders: List available providers
-        api_response = api_instance.get_providers(free_text_search=free_text_search, use_cache=use_cache)
+        api_response = api_instance.get_providers(free_text_search=free_text_search)
         pprint(api_response)
 
     except ApiException as e:
@@ -267,7 +264,6 @@ main()
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **free_text_search** | **str**| Limit the catalog to only things in some way dealing with the passed in text string | [optional] 
- **use_cache** | **bool**| Should the available cache be used? false is effectively to pick up a change in the catalog | [optional] [default to True]
 
 ### Return type
 
