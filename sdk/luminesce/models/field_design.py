@@ -32,7 +32,7 @@ class FieldDesign(BaseModel):
     table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Alias of the Table the field belongs to") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias if any (if none the Name is used)") 
     data_type: Optional[DataType] = Field(None, alias="dataType")
-    should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
+    should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present")
     filters: Optional[conlist(FilterTermDesign)] = Field(None, description="Filter clauses to apply to this field (And'ed together)")
     aggregations: Optional[conlist(Aggregation)] = Field(None, description="Aggregations to apply (as opposed to simply selecting)")
     is_expression: Optional[StrictBool] = Field(None, alias="isExpression", description="Is this field an expression")

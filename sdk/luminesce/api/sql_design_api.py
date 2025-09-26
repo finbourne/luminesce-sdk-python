@@ -2267,15 +2267,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, **kwargs) -> QueryDesign:  # noqa: E501
+    async def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, **kwargs) -> QueryDesign:  # noqa: E501
         ...
 
     @overload
-    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, async_req: Optional[bool]=True, **kwargs) -> QueryDesign:  # noqa: E501
+    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, async_req: Optional[bool]=True, **kwargs) -> QueryDesign:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[QueryDesign, Awaitable[QueryDesign]]:  # noqa: E501
+    def put_sql_to_query_design(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[QueryDesign, Awaitable[QueryDesign]]:  # noqa: E501
         """PutSqlToQueryDesign: Make a SQL-design object from SQL if possible  # noqa: E501
 
         Generates a QueryDesign object from simple SQL if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2289,7 +2289,7 @@ class SqlDesignApi:
         :type body: str
         :param validate_with_metadata: Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?
         :type validate_with_metadata: bool
-        :param version: Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).
+        :param version: Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).
         :type version: QueryDesignerVersion
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2310,7 +2310,7 @@ class SqlDesignApi:
         return self.put_sql_to_query_design_with_http_info(body, validate_with_metadata, version, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_sql_to_query_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_sql_to_query_design_with_http_info(self, body : Annotated[StrictStr, Field(..., description="SQL query to generate the design object from")], validate_with_metadata : Annotated[Optional[StrictBool], Field(description="Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?")] = None, version : Annotated[Optional[str], Field( description="Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutSqlToQueryDesign: Make a SQL-design object from SQL if possible  # noqa: E501
 
         Generates a QueryDesign object from simple SQL if possible  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2324,7 +2324,7 @@ class SqlDesignApi:
         :type body: str
         :param validate_with_metadata: Should the table be validated against the users' view of Sys.Field to fill in DataTypes, etc.?
         :type validate_with_metadata: bool
-        :param version: Designer version number used to support multiple web user interface versions.  Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).
+        :param version: Designer version number used to support multiple web user interface versions. Only some values will be allowed and this will change over time (as mentioned this whole method is largely internal to the Finbourne web user interfaces and evolves over time).
         :type version: QueryDesignerVersion
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

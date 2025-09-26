@@ -1,10 +1,10 @@
 # CertificateState
 
-Information held about the minting / revoking of a certificate.  It does *not* contain the certificate itself
+Information held about the minting / revoking of a certificate. It does *not* contain the certificate itself
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**key** | **str** | The \&quot;key\&quot; to which this belongs in the dictionary,  basically the CN without any version information | [optional] 
+**key** | **str** | The \&quot;key\&quot; to which this belongs in the dictionary, basically the CN without any version information | [optional] 
 **version** | **int** | The version of this certificate | [optional] 
 **common_name** | **str** | The common Name of the Certificate | [optional] 
 **type** | [**CertificateType**](CertificateType.md) |  | [optional] 

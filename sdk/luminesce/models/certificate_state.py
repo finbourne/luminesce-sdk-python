@@ -26,9 +26,9 @@ from luminesce.models.link import Link
 
 class CertificateState(BaseModel):
     """
-    Information held about the minting / revoking of a certificate.  It does *not* contain the certificate itself  # noqa: E501
+    Information held about the minting / revoking of a certificate. It does *not* contain the certificate itself  # noqa: E501
     """
-    key:  Optional[StrictStr] = Field(None,alias="key", description="The \"key\" to which this belongs in the dictionary,  basically the CN without any version information") 
+    key:  Optional[StrictStr] = Field(None,alias="key", description="The \"key\" to which this belongs in the dictionary, basically the CN without any version information") 
     version: Optional[StrictInt] = Field(None, description="The version of this certificate")
     common_name:  Optional[StrictStr] = Field(None,alias="commonName", description="The common Name of the Certificate") 
     type: Optional[CertificateType] = None

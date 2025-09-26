@@ -25,7 +25,7 @@ from luminesce.models.field_type import FieldType
 
 class AvailableField(BaseModel):
     """
-    Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
+    Information about a field that can be designed on (regardless if it currently is) Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
     name:  StrictStr = Field(...,alias="name", description="Name of the Field") 
     data_type: Optional[DataType] = Field(None, alias="dataType")

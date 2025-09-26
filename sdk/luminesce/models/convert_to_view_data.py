@@ -31,7 +31,7 @@ class ConvertToViewData(BaseModel):
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of view") 
     documentation_link:  Optional[StrictStr] = Field(None,alias="documentationLink", description="Documentation link") 
     view_parameters: Optional[conlist(ViewParameter)] = Field(None, alias="viewParameters", description="View parameters")
-    other_parameters: Optional[Dict[str, StrictStr]] = Field(None, alias="otherParameters", description="Other parameters not explicitly handled by the ConvertToView generation.  These will be populated by the \"From SQL\" and should simply be returned by  the web GUI should the user edit / update / regenerate")
+    other_parameters: Optional[Dict[str, StrictStr]] = Field(None, alias="otherParameters", description="Other parameters not explicitly handled by the ConvertToView generation. These will be populated by the \"From SQL\" and should simply be returned by the web GUI should the user edit / update / regenerate")
     starting_variable_name:  Optional[StrictStr] = Field(None,alias="startingVariableName", description="Which variable the this start with, null if not started from a full Create View Sql Statement.") 
     __properties = ["query", "name", "description", "documentationLink", "viewParameters", "otherParameters", "startingVariableName"]
 

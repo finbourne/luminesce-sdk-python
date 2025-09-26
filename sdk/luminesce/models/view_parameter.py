@@ -29,7 +29,7 @@ class ViewParameter(BaseModel):
     name:  StrictStr = Field(...,alias="name", description="Name of the provider") 
     data_type: DataType = Field(..., alias="dataType")
     value:  StrictStr = Field(...,alias="value", description="Value of the provider") 
-    is_table_data_mandatory: Optional[StrictBool] = Field(None, alias="isTableDataMandatory", description="Should this be selected? False would imply it is only being filtered on.  Ignored when Aggregations are present")
+    is_table_data_mandatory: Optional[StrictBool] = Field(None, alias="isTableDataMandatory", description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present")
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of the parameter") 
     __properties = ["name", "dataType", "value", "isTableDataMandatory", "description"]
 

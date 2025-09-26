@@ -24,7 +24,7 @@ from luminesce.models.mappable_field import MappableField
 
 class AvailableParameter(BaseModel):
     """
-    Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
+    Information about a field that can be designed on (regardless if it currently is) Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
     provider_name:  StrictStr = Field(...,alias="providerName", description="Name of the Provider with a TableParameter") 
     parameter_name:  StrictStr = Field(...,alias="parameterName", description="Name of the TableParameter on the Provider") 

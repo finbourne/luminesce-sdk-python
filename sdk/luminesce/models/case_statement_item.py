@@ -23,12 +23,12 @@ from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr
 
 class CaseStatementItem(BaseModel):
     """
-    Information about a case statement.  A typical case statement would look like:  CASE WHEN Field {Filter} Source THEN Target  For example: CASE WHEN 'currency' = 'USD' THEN 'US'  Here the Field is 'currency', the Source is 'USD', the Filter is '=', and the Target is 'US'  # noqa: E501
+    Information about a case statement. A typical case statement would look like: CASE WHEN Field {Filter} Source THEN Target For example: CASE WHEN 'currency' = 'USD' THEN 'US' Here the Field is 'currency', the Source is 'USD', the Filter is '=', and the Target is 'US'  # noqa: E501
     """
     filter:  StrictStr = Field(...,alias="filter", description="The operator in the case statement SQL expression") 
-    source:  StrictStr = Field(...,alias="source", description="The expression that is on the LHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target") 
-    target:  StrictStr = Field(...,alias="target", description="The expression that is on the RHS of the operator  A typical case statement would look like:  CASE Field {Filter} Source THEN Target") 
-    is_target_non_literal: Optional[StrictBool] = Field(None, alias="isTargetNonLiteral", description="The Target can be a literal value or a non literal (field) and  hence will be interpreted differently.  This can be determined from the UI and passed down as a true / false")
+    source:  StrictStr = Field(...,alias="source", description="The expression that is on the LHS of the operator A typical case statement would look like: CASE Field {Filter} Source THEN Target") 
+    target:  StrictStr = Field(...,alias="target", description="The expression that is on the RHS of the operator A typical case statement would look like: CASE Field {Filter} Source THEN Target") 
+    is_target_non_literal: Optional[StrictBool] = Field(None, alias="isTargetNonLiteral", description="The Target can be a literal value or a non literal (field) and hence will be interpreted differently. This can be determined from the UI and passed down as a true / false")
     __properties = ["filter", "source", "target", "isTargetNonLiteral"]
 
     class Config:

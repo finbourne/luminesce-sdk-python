@@ -5,7 +5,7 @@ Request for Error highlighting
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **lines** | **List[str]** | The lines of text the user currently has in the editor | 
-**ensure_some_text_is_selected** | **bool** | If an editor requires some selection of non-whitespace this can be set to true to force  at least one visible character to be selected. | [optional] 
+**ensure_some_text_is_selected** | **bool** | If an editor requires some selection of non-whitespace this can be set to true to force at least one visible character to be selected. | [optional] 
 ## Example
 
 ```python

@@ -25,7 +25,7 @@ from luminesce.models.expression_with_alias import ExpressionWithAlias
 
 class MappableField(BaseModel):
     """
-    Information about a field that can be designed on (regardless if it currently is)  Kind of a \"mini-available catalog entry\"  # noqa: E501
+    Information about a field that can be designed on (regardless if it currently is) Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
     name:  Optional[StrictStr] = Field(None,alias="name", description="Name of the field in need of mapping (The field name from within the Table Parameter itself)") 
     type: Optional[DataType] = None

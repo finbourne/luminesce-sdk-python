@@ -36,7 +36,7 @@ class OptionsCsv(BaseModel):
     values_to_make_null:  Optional[StrictStr] = Field(None,alias="valuesToMakeNull", description="Regex of values to map to 'null' in the returned data.") 
     skip_pre_header: Optional[StrictInt] = Field(None, alias="skipPreHeader", description="Number of rows to ignore before the header row")
     skip_post_header: Optional[StrictInt] = Field(None, alias="skipPostHeader", description="Number of rows to ignore after the header row")
-    skip_invalid_rows: Optional[StrictBool] = Field(None, alias="skipInvalidRows", description="Skip invalid data rows (totally invalid ones),   This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows).  In either case a warning will show in the progress feedback.")
+    skip_invalid_rows: Optional[StrictBool] = Field(None, alias="skipInvalidRows", description="Skip invalid data rows (totally invalid ones),  This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows). In either case a warning will show in the progress feedback.")
     __properties = ["columnNames", "columnNamesWanted", "columnTypes", "inferTypeRowCount", "noHeader", "delimiter", "escape", "quote", "valuesToMakeNull", "skipPreHeader", "skipPostHeader", "skipInvalidRows"]
 
     class Config:

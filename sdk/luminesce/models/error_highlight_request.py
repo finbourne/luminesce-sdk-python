@@ -26,7 +26,7 @@ class ErrorHighlightRequest(BaseModel):
     Request for Error highlighting  # noqa: E501
     """
     lines: conlist(StrictStr) = Field(..., description="The lines of text the user currently has in the editor")
-    ensure_some_text_is_selected: Optional[StrictBool] = Field(None, alias="ensureSomeTextIsSelected", description="If an editor requires some selection of non-whitespace this can be set to true to force  at least one visible character to be selected.")
+    ensure_some_text_is_selected: Optional[StrictBool] = Field(None, alias="ensureSomeTextIsSelected", description="If an editor requires some selection of non-whitespace this can be set to true to force at least one visible character to be selected.")
     __properties = ["lines", "ensureSomeTextIsSelected"]
 
     class Config:
