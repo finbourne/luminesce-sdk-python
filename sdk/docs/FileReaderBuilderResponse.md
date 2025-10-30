@@ -12,12 +12,14 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.file_reader_builder_response import FileReaderBuilderResponse
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 query: Optional[StrictStr] = "example_query"
 error: Optional[StrictStr] = "example_error"
-columns: Optional[conlist(ColumnInfo)] = # Replace with your value
+columns: Optional[List[ColumnInfo]] = # Replace with your value
 data: Optional[Any] = # Replace with your value
 file_reader_builder_response_instance = FileReaderBuilderResponse(query=query, error=error, columns=columns, data=data)
 

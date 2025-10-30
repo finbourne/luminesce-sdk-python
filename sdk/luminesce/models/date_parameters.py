@@ -17,18 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
+
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field 
 
 class DateParameters(BaseModel):
     """
     Collection of date parameters used in dashboards  # noqa: E501
     """
-    date_from: Optional[datetime] = Field(None, alias="dateFrom", description="Parameter to determine the lower bound in a date range")
-    date_to: Optional[datetime] = Field(None, alias="dateTo", description="Parameter to determine the upper bound in a date range")
-    effective_at: Optional[datetime] = Field(None, alias="effectiveAt", description="EffectiveAt of the dashboard")
-    as_at: datetime = Field(..., alias="asAt", description="AsAt of the dashboard")
+    date_from: Optional[datetime] = Field(default=None, description="Parameter to determine the lower bound in a date range", alias="dateFrom")
+    date_to: Optional[datetime] = Field(default=None, description="Parameter to determine the upper bound in a date range", alias="dateTo")
+    effective_at: Optional[datetime] = Field(default=None, description="EffectiveAt of the dashboard", alias="effectiveAt")
+    as_at: datetime = Field(description="AsAt of the dashboard", alias="asAt")
     __properties = ["dateFrom", "dateTo", "effectiveAt", "asAt"]
 
     class Config:
@@ -96,3 +98,5 @@ class DateParameters(BaseModel):
             "as_at": obj.get("asAt")
         })
         return _obj
+
+DateParameters.update_forward_refs()

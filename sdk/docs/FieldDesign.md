@@ -16,8 +16,10 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.field_design import FieldDesign
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 name: StrictStr = "example_name"
 table_alias: Optional[StrictStr] = "example_table_alias"
@@ -25,8 +27,8 @@ alias: Optional[StrictStr] = "example_alias"
 data_type: Optional[DataType] = # Replace with your value
 should_select: Optional[StrictBool] = # Replace with your value
 should_select:Optional[StrictBool] = None
-filters: Optional[conlist(FilterTermDesign)] = # Replace with your value
-aggregations: Optional[conlist(Aggregation)] = # Replace with your value
+filters: Optional[List[FilterTermDesign]] = # Replace with your value
+aggregations: Optional[List[Aggregation]] = # Replace with your value
 is_expression: Optional[StrictBool] = # Replace with your value
 is_expression:Optional[StrictBool] = None
 field_design_instance = FieldDesign(name=name, table_alias=table_alias, alias=alias, data_type=data_type, should_select=should_select, filters=filters, aggregations=aggregations, is_expression=is_expression)

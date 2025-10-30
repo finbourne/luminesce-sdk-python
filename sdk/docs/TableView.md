@@ -4,7 +4,7 @@ Representation of the table structure
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**header_names** | **Dict[str, str]** | Mapping of column ids to aliases | 
+**header_names** | **Dict[str, Optional[str]]** | Mapping of column ids to aliases | 
 **column_state** | [**List[ColumnStateType]**](ColumnStateType.md) | Array of all columns in the dashboard | 
 **filters** | [**Dict[str, FilterModel]**](FilterModel.md) | Filters applied to columns in the dashboard | [optional] 
 **meta** | [**TableMeta**](TableMeta.md) |  | 
@@ -12,13 +12,15 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.table_view import TableView
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
-header_names: Dict[str, StrictStr] = # Replace with your value
-column_state: conlist(ColumnStateType) = # Replace with your value
+header_names: Dict[str, Optional[StrictStr]] = # Replace with your value
+column_state: List[ColumnStateType] = # Replace with your value
 filters: Optional[Dict[str, FilterModel]] = # Replace with your value
-meta: TableMeta = # Replace with your value
+meta: TableMeta
 table_view_instance = TableView(header_names=header_names, column_state=column_state, filters=filters, meta=meta)
 
 ```

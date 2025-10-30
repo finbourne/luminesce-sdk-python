@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 
 class ErrorHighlightResponse(BaseModel):
     """
     Response for error highlighting  # noqa: E501
     """
-    errors: conlist(ErrorHighlightItem) = Field(..., description="The errors within the Sql")
+    errors: List[ErrorHighlightItem] = Field(description="The errors within the Sql")
     sql_with_marker:  StrictStr = Field(...,alias="sqlWithMarker", description="The SQL this is for, with characters indicating the error locations") 
     __properties = ["errors", "sqlWithMarker"]
 
@@ -85,3 +87,5 @@ class ErrorHighlightResponse(BaseModel):
             "sql_with_marker": obj.get("sqlWithMarker")
         })
         return _obj
+
+ErrorHighlightResponse.update_forward_refs()

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.available_field import AvailableField
 from luminesce.models.design_join_type import DesignJoinType
 from luminesce.models.on_clause_term_design import OnClauseTermDesign
@@ -31,9 +33,9 @@ class JoinedTableDesign(BaseModel):
     joined_table_name:  StrictStr = Field(...,alias="joinedTableName", description="Name of the table on the right side of the join") 
     joined_table_alias:  StrictStr = Field(...,alias="joinedTableAlias", description="Alias for the table on the right side of the join") 
     left_table_alias:  StrictStr = Field(...,alias="leftTableAlias", description="Alias for the table on the left side of the join") 
-    join_type: DesignJoinType = Field(..., alias="joinType")
-    on_clause_terms: conlist(OnClauseTermDesign) = Field(..., alias="onClauseTerms", description="Filter clauses to apply to this join in the on clause")
-    right_table_available_fields: Optional[conlist(AvailableField)] = Field(None, alias="rightTableAvailableFields", description="Fields that are known to be available for design when parsing SQL, of the right hand table")
+    join_type: DesignJoinType = Field(alias="joinType")
+    on_clause_terms: List[OnClauseTermDesign] = Field(description="Filter clauses to apply to this join in the on clause", alias="onClauseTerms")
+    right_table_available_fields: Optional[List[AvailableField]] = Field(default=None, description="Fields that are known to be available for design when parsing SQL, of the right hand table", alias="rightTableAvailableFields")
     __properties = ["joinedTableName", "joinedTableAlias", "leftTableAlias", "joinType", "onClauseTerms", "rightTableAvailableFields"]
 
     class Config:
@@ -107,3 +109,5 @@ class JoinedTableDesign(BaseModel):
             "right_table_available_fields": [AvailableField.from_dict(_item) for _item in obj.get("rightTableAvailableFields")] if obj.get("rightTableAvailableFields") is not None else None
         })
         return _obj
+
+JoinedTableDesign.update_forward_refs()

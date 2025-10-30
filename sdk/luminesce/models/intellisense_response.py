@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.cursor_position import CursorPosition
 from luminesce.models.intellisense_item import IntellisenseItem
 
@@ -27,11 +29,11 @@ class IntellisenseResponse(BaseModel):
     """
     Available intellisense response information  # noqa: E501
     """
-    auto_complete_list: conlist(IntellisenseItem) = Field(..., alias="autoCompleteList", description="The available items at this point")
-    try_again_soon_for_more: StrictBool = Field(..., alias="tryAgainSoonForMore", description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)")
+    auto_complete_list: List[IntellisenseItem] = Field(description="The available items at this point", alias="autoCompleteList")
+    try_again_soon_for_more: StrictBool = Field(description="Should the caller try again soon? (true means a cache is being built and this is a preliminary response!)", alias="tryAgainSoonForMore")
     sql_with_marker:  StrictStr = Field(...,alias="sqlWithMarker", description="The SQL this is for with characters indicating the location the pop-up is for") 
-    start_replacement_position: CursorPosition = Field(..., alias="startReplacementPosition")
-    end_replacement_position: CursorPosition = Field(..., alias="endReplacementPosition")
+    start_replacement_position: CursorPosition = Field(alias="startReplacementPosition")
+    end_replacement_position: CursorPosition = Field(alias="endReplacementPosition")
     __properties = ["autoCompleteList", "tryAgainSoonForMore", "sqlWithMarker", "startReplacementPosition", "endReplacementPosition"]
 
     class Config:
@@ -98,3 +100,5 @@ class IntellisenseResponse(BaseModel):
             "end_replacement_position": CursorPosition.from_dict(obj.get("endReplacementPosition")) if obj.get("endReplacementPosition") is not None else None
         })
         return _obj
+
+IntellisenseResponse.update_forward_refs()

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.case_statement_item import CaseStatementItem
 
 class CaseStatementDesign(BaseModel):
@@ -27,7 +29,7 @@ class CaseStatementDesign(BaseModel):
     Representation of the selected field and a list of: filter, source, and target.  # noqa: E501
     """
     selected_field:  Optional[StrictStr] = Field(None,alias="selectedField", description="Selected field in the SQL query.") 
-    case_statement_items: Optional[conlist(CaseStatementItem)] = Field(None, alias="caseStatementItems", description="A list containing the filter, source, and target.")
+    case_statement_items: Optional[List[CaseStatementItem]] = Field(default=None, description="A list containing the filter, source, and target.", alias="caseStatementItems")
     __properties = ["selectedField", "caseStatementItems"]
 
     class Config:
@@ -95,3 +97,5 @@ class CaseStatementDesign(BaseModel):
             "case_statement_items": [CaseStatementItem.from_dict(_item) for _item in obj.get("caseStatementItems")] if obj.get("caseStatementItems") is not None else None
         })
         return _obj
+
+CaseStatementDesign.update_forward_refs()

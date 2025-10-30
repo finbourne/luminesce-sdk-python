@@ -9,21 +9,23 @@ Name | Type | Description | Notes
 **description** | **str** | Description of view | [optional] 
 **documentation_link** | **str** | Documentation link | [optional] 
 **view_parameters** | [**List[ViewParameter]**](ViewParameter.md) | View parameters | [optional] 
-**other_parameters** | **Dict[str, str]** | Other parameters not explicitly handled by the ConvertToView generation. These will be populated by the \&quot;From SQL\&quot; and should simply be returned by the web GUI should the user edit / update / regenerate | [optional] 
+**other_parameters** | **Dict[str, Optional[str]]** | Other parameters not explicitly handled by the ConvertToView generation. These will be populated by the \&quot;From SQL\&quot; and should simply be returned by the web GUI should the user edit / update / regenerate | [optional] 
 **starting_variable_name** | **str** | Which variable the this start with, null if not started from a full Create View Sql Statement. | [optional] 
 ## Example
 
 ```python
 from luminesce.models.convert_to_view_data import ConvertToViewData
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 query: StrictStr = "example_query"
 name: StrictStr = "example_name"
 description: Optional[StrictStr] = "example_description"
 documentation_link: Optional[StrictStr] = "example_documentation_link"
-view_parameters: Optional[conlist(ViewParameter)] = # Replace with your value
-other_parameters: Optional[Dict[str, StrictStr]] = # Replace with your value
+view_parameters: Optional[List[ViewParameter]] = # Replace with your value
+other_parameters: Optional[Dict[str, Optional[StrictStr]]] = # Replace with your value
 starting_variable_name: Optional[StrictStr] = "example_starting_variable_name"
 convert_to_view_data_instance = ConvertToViewData(query=query, name=name, description=description, documentation_link=documentation_link, view_parameters=view_parameters, other_parameters=other_parameters, starting_variable_name=starting_variable_name)
 

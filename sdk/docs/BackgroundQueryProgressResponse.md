@@ -16,8 +16,10 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 has_data: Optional[StrictBool] = # Replace with your value
 has_data:Optional[StrictBool] = None
@@ -26,10 +28,10 @@ row_count: Optional[StrictInt] = None
 status: Optional[TaskStatus] = None
 state: Optional[BackgroundQueryState] = None
 progress: Optional[StrictStr] = "example_progress"
-feedback: Optional[conlist(FeedbackEventArgs)] = # Replace with your value
+feedback: Optional[List[FeedbackEventArgs]] = # Replace with your value
 query: Optional[StrictStr] = "example_query"
 query_name: Optional[StrictStr] = "example_query_name"
-columns_available: Optional[conlist(Column)] = # Replace with your value
+columns_available: Optional[List[Column]] = # Replace with your value
 background_query_progress_response_instance = BackgroundQueryProgressResponse(has_data=has_data, row_count=row_count, status=status, state=state, progress=progress, feedback=feedback, query=query, query_name=query_name, columns_available=columns_available)
 
 ```

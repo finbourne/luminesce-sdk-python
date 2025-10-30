@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.inlined_property_item import InlinedPropertyItem
 
 class InlinedPropertyDesign(BaseModel):
@@ -28,7 +30,7 @@ class InlinedPropertyDesign(BaseModel):
     """
     provider_name:  Optional[StrictStr] = Field(None,alias="providerName", description="The provider name for which these properties are to be inlined") 
     provider_name_extension:  Optional[StrictStr] = Field(None,alias="providerNameExtension", description="The provider extension name for extended providers") 
-    inlined_property_items: Optional[conlist(InlinedPropertyItem)] = Field(None, alias="inlinedPropertyItems", description="Collection of Inlined properties")
+    inlined_property_items: Optional[List[InlinedPropertyItem]] = Field(default=None, description="Collection of Inlined properties", alias="inlinedPropertyItems")
     __properties = ["providerName", "providerNameExtension", "inlinedPropertyItems"]
 
     class Config:
@@ -102,3 +104,5 @@ class InlinedPropertyDesign(BaseModel):
             "inlined_property_items": [InlinedPropertyItem.from_dict(_item) for _item in obj.get("inlinedPropertyItems")] if obj.get("inlinedPropertyItems") is not None else None
         })
         return _obj
+
+InlinedPropertyDesign.update_forward_refs()

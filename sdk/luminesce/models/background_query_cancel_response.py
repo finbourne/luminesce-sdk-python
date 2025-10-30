@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.task_status import TaskStatus
 
@@ -27,9 +29,9 @@ class BackgroundQueryCancelResponse(BaseModel):
     """
     BackgroundQueryCancelResponse
     """
-    had_data: Optional[StrictBool] = Field(None, alias="hadData")
-    previous_status: Optional[TaskStatus] = Field(None, alias="previousStatus")
-    previous_state: Optional[BackgroundQueryState] = Field(None, alias="previousState")
+    had_data: Optional[StrictBool] = Field(default=None, alias="hadData")
+    previous_status: Optional[TaskStatus] = Field(default=None, alias="previousStatus")
+    previous_state: Optional[BackgroundQueryState] = Field(default=None, alias="previousState")
     progress:  Optional[StrictStr] = Field(None,alias="progress") 
     __properties = ["hadData", "previousStatus", "previousState", "progress"]
 
@@ -88,3 +90,5 @@ class BackgroundQueryCancelResponse(BaseModel):
             "progress": obj.get("progress")
         })
         return _obj
+
+BackgroundQueryCancelResponse.update_forward_refs()

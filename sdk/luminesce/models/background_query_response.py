@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.link import Link
 
 class BackgroundQueryResponse(BaseModel):
@@ -29,14 +31,14 @@ class BackgroundQueryResponse(BaseModel):
     execution_id:  Optional[StrictStr] = Field(None,alias="executionId", description="ExecutionId of the started-query") 
     progress: Optional[Link] = None
     cancel: Optional[Link] = None
-    fetch_json: Optional[Link] = Field(None, alias="fetchJson")
-    fetch_json_proper: Optional[Link] = Field(None, alias="fetchJsonProper")
-    fetch_xml: Optional[Link] = Field(None, alias="fetchXml")
-    fetch_parquet: Optional[Link] = Field(None, alias="fetchParquet")
-    fetch_csv: Optional[Link] = Field(None, alias="fetchCsv")
-    fetch_pipe: Optional[Link] = Field(None, alias="fetchPipe")
-    fetch_excel: Optional[Link] = Field(None, alias="fetchExcel")
-    fetch_sqlite: Optional[Link] = Field(None, alias="fetchSqlite")
+    fetch_json: Optional[Link] = Field(default=None, alias="fetchJson")
+    fetch_json_proper: Optional[Link] = Field(default=None, alias="fetchJsonProper")
+    fetch_xml: Optional[Link] = Field(default=None, alias="fetchXml")
+    fetch_parquet: Optional[Link] = Field(default=None, alias="fetchParquet")
+    fetch_csv: Optional[Link] = Field(default=None, alias="fetchCsv")
+    fetch_pipe: Optional[Link] = Field(default=None, alias="fetchPipe")
+    fetch_excel: Optional[Link] = Field(default=None, alias="fetchExcel")
+    fetch_sqlite: Optional[Link] = Field(default=None, alias="fetchSqlite")
     histogram: Optional[Link] = None
     __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
 
@@ -136,3 +138,5 @@ class BackgroundQueryResponse(BaseModel):
             "histogram": Link.from_dict(obj.get("histogram")) if obj.get("histogram") is not None else None
         })
         return _obj
+
+BackgroundQueryResponse.update_forward_refs()

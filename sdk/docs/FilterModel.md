@@ -15,14 +15,16 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.filter_model import FilterModel
-from typing import Any, Dict, List, Optional, Union
-from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 filter_type: FilterType = # Replace with your value
 type: Optional[Type] = None
 filter: Optional[StrictStr] = "example_filter"
 filter_to: Optional[Union[StrictFloat, StrictInt]] = # Replace with your value
-values: Optional[conlist(StrictStr)] = # Replace with your value
+values: Optional[List[StrictStr]] = # Replace with your value
 date_from: Optional[StrictStr] = "example_date_from"
 date_to: Optional[StrictStr] = "example_date_to"
 filter_model_instance = FilterModel(filter_type=filter_type, type=type, filter=filter, filter_to=filter_to, values=values, date_from=date_from, date_to=date_to)

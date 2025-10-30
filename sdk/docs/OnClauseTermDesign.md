@@ -13,12 +13,14 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.on_clause_term_design import OnClauseTermDesign
-from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 left_table_field: Optional[StrictStr] = "example_left_table_field"
 right_table_field: Optional[StrictStr] = "example_right_table_field"
-operator: QueryDesignerBinaryOperator = # Replace with your value
+operator: QueryDesignerBinaryOperator
 filter_value: Optional[StrictStr] = "example_filter_value"
 filter_value_data_type: Optional[DataType] = # Replace with your value
 on_clause_term_design_instance = OnClauseTermDesign(left_table_field=left_table_field, right_table_field=right_table_field, operator=operator, filter_value=filter_value, filter_value_data_type=filter_value_data_type)

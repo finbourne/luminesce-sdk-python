@@ -11,12 +11,14 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.inlined_property_design import InlinedPropertyDesign
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 provider_name: Optional[StrictStr] = "example_provider_name"
 provider_name_extension: Optional[StrictStr] = "example_provider_name_extension"
-inlined_property_items: Optional[conlist(InlinedPropertyItem)] = # Replace with your value
+inlined_property_items: Optional[List[InlinedPropertyItem]] = # Replace with your value
 inlined_property_design_instance = InlinedPropertyDesign(provider_name=provider_name, provider_name_extension=provider_name_extension, inlined_property_items=inlined_property_items)
 
 ```

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.data_type import DataType
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 
@@ -29,9 +31,9 @@ class OnClauseTermDesign(BaseModel):
     """
     left_table_field:  Optional[StrictStr] = Field(None,alias="leftTableField", description="Name of field in the left table to join to (complex expressions are not supported at this time)") 
     right_table_field:  Optional[StrictStr] = Field(None,alias="rightTableField", description="Name of field in the left table to join to (complex expressions are not supported at this time)") 
-    operator: QueryDesignerBinaryOperator = Field(...)
+    operator: QueryDesignerBinaryOperator
     filter_value:  Optional[StrictStr] = Field(None,alias="filterValue", description="The value to compare against (always as a string, but will be formatted to the correct type)") 
-    filter_value_data_type: Optional[DataType] = Field(None, alias="filterValueDataType")
+    filter_value_data_type: Optional[DataType] = Field(default=None, alias="filterValueDataType")
     __properties = ["leftTableField", "rightTableField", "operator", "filterValue", "filterValueDataType"]
 
     class Config:
@@ -100,3 +102,5 @@ class OnClauseTermDesign(BaseModel):
             "filter_value_data_type": obj.get("filterValueDataType")
         })
         return _obj
+
+OnClauseTermDesign.update_forward_refs()

@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class CursorPosition(BaseModel):
     """
     Represents a cursor location  # noqa: E501
     """
-    row: StrictInt = Field(..., description="Row (0 based) of the user's cursor position")
-    column: StrictInt = Field(..., description="Column (0 based) of the user's cursor position")
+    row: StrictInt = Field(description="Row (0 based) of the user's cursor position")
+    column: StrictInt = Field(description="Column (0 based) of the user's cursor position")
     __properties = ["row", "column"]
 
     class Config:
@@ -77,3 +79,5 @@ class CursorPosition(BaseModel):
             "column": obj.get("column")
         })
         return _obj
+
+CursorPosition.update_forward_refs()

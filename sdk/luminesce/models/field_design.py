@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.aggregation import Aggregation
 from luminesce.models.data_type import DataType
 from luminesce.models.filter_term_design import FilterTermDesign
@@ -31,11 +33,11 @@ class FieldDesign(BaseModel):
     name:  StrictStr = Field(...,alias="name", description="Name of the Field (column name, constant, complex expression, etc.)") 
     table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Alias of the Table the field belongs to") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias if any (if none the Name is used)") 
-    data_type: Optional[DataType] = Field(None, alias="dataType")
-    should_select: Optional[StrictBool] = Field(None, alias="shouldSelect", description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present")
-    filters: Optional[conlist(FilterTermDesign)] = Field(None, description="Filter clauses to apply to this field (And'ed together)")
-    aggregations: Optional[conlist(Aggregation)] = Field(None, description="Aggregations to apply (as opposed to simply selecting)")
-    is_expression: Optional[StrictBool] = Field(None, alias="isExpression", description="Is this field an expression")
+    data_type: Optional[DataType] = Field(default=None, alias="dataType")
+    should_select: Optional[StrictBool] = Field(default=None, description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present", alias="shouldSelect")
+    filters: Optional[List[FilterTermDesign]] = Field(default=None, description="Filter clauses to apply to this field (And'ed together)")
+    aggregations: Optional[List[Aggregation]] = Field(default=None, description="Aggregations to apply (as opposed to simply selecting)")
+    is_expression: Optional[StrictBool] = Field(default=None, description="Is this field an expression", alias="isExpression")
     __properties = ["name", "tableAlias", "alias", "dataType", "shouldSelect", "filters", "aggregations", "isExpression"]
 
     class Config:
@@ -126,3 +128,5 @@ class FieldDesign(BaseModel):
             "is_expression": obj.get("isExpression")
         })
         return _obj
+
+FieldDesign.update_forward_refs()

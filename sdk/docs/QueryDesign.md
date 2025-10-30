@@ -17,20 +17,22 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.query_design import QueryDesign
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 table_name: StrictStr = "example_table_name"
 alias: Optional[StrictStr] = "example_alias"
-fields: conlist(FieldDesign) = # Replace with your value
-joined_tables: Optional[conlist(JoinedTableDesign)] = # Replace with your value
-order_by: Optional[conlist(OrderByTermDesign)] = # Replace with your value
+fields: List[FieldDesign] = # Replace with your value
+joined_tables: Optional[List[JoinedTableDesign]] = # Replace with your value
+order_by: Optional[List[OrderByTermDesign]] = # Replace with your value
 limit: Optional[StrictInt] = # Replace with your value
 limit: Optional[StrictInt] = None
 offset: Optional[StrictInt] = # Replace with your value
 offset: Optional[StrictInt] = None
-warnings: Optional[conlist(StrictStr)] = # Replace with your value
-available_fields: Optional[conlist(AvailableField)] = # Replace with your value
+warnings: Optional[List[StrictStr]] = # Replace with your value
+available_fields: Optional[List[AvailableField]] = # Replace with your value
 query_design_instance = QueryDesign(table_name=table_name, alias=alias, fields=fields, joined_tables=joined_tables, order_by=order_by, limit=limit, offset=offset, warnings=warnings, available_fields=available_fields)
 
 ```

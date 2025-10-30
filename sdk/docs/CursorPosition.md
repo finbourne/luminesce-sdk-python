@@ -10,8 +10,10 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.cursor_position import CursorPosition
-from typing import Any, Dict
-from pydantic.v1 import BaseModel, Field, StrictInt
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 row: StrictInt = # Replace with your value
 row: StrictInt = 42

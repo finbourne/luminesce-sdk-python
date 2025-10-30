@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.column_info import ColumnInfo
 
 class FileReaderBuilderResponse(BaseModel):
@@ -28,8 +30,8 @@ class FileReaderBuilderResponse(BaseModel):
     """
     query:  Optional[StrictStr] = Field(None,alias="query", description="The generated SQL") 
     error:  Optional[StrictStr] = Field(None,alias="error", description="The error from running generated SQL Query, if any") 
-    columns: Optional[conlist(ColumnInfo)] = Field(None, description="Column information for the results")
-    data: Optional[Any] = Field(None, description="The resulting data from running the Query")
+    columns: Optional[List[ColumnInfo]] = Field(default=None, description="Column information for the results")
+    data: Optional[Any] = Field(default=None, description="The resulting data from running the Query")
     __properties = ["query", "error", "columns", "data"]
 
     class Config:
@@ -109,3 +111,5 @@ class FileReaderBuilderResponse(BaseModel):
             "data": obj.get("data")
         })
         return _obj
+
+FileReaderBuilderResponse.update_forward_refs()

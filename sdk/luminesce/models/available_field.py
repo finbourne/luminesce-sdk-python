@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.data_type import DataType
 from luminesce.models.field_type import FieldType
 
@@ -28,10 +30,10 @@ class AvailableField(BaseModel):
     Information about a field that can be designed on (regardless if it currently is) Kind of a \"mini-available catalog entry\"  # noqa: E501
     """
     name:  StrictStr = Field(...,alias="name", description="Name of the Field") 
-    data_type: Optional[DataType] = Field(None, alias="dataType")
-    field_type: FieldType = Field(..., alias="fieldType")
-    is_main: Optional[StrictBool] = Field(None, alias="isMain", description="Is this a Main Field within the Provider")
-    is_primary_key: Optional[StrictBool] = Field(None, alias="isPrimaryKey", description="Is this a member of the PrimaryKey of the Provider")
+    data_type: Optional[DataType] = Field(default=None, alias="dataType")
+    field_type: FieldType = Field(alias="fieldType")
+    is_main: Optional[StrictBool] = Field(default=None, description="Is this a Main Field within the Provider", alias="isMain")
+    is_primary_key: Optional[StrictBool] = Field(default=None, description="Is this a member of the PrimaryKey of the Provider", alias="isPrimaryKey")
     __properties = ["name", "dataType", "fieldType", "isMain", "isPrimaryKey"]
 
     class Config:
@@ -95,3 +97,5 @@ class AvailableField(BaseModel):
             "is_primary_key": obj.get("isPrimaryKey")
         })
         return _obj
+
+AvailableField.update_forward_refs()

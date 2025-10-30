@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.action_id import ActionId
 from luminesce.models.id_selector_definition import IdSelectorDefinition
 
@@ -29,7 +31,7 @@ class AccessControlledAction(BaseModel):
     """
     description:  Optional[StrictStr] = Field(None,alias="description") 
     action: Optional[ActionId] = None
-    limited_set: Optional[conlist(IdSelectorDefinition)] = Field(None, alias="limitedSet")
+    limited_set: Optional[List[IdSelectorDefinition]] = Field(default=None, alias="limitedSet")
     __properties = ["description", "action", "limitedSet"]
 
     class Config:
@@ -101,3 +103,5 @@ class AccessControlledAction(BaseModel):
             "limited_set": [IdSelectorDefinition.from_dict(_item) for _item in obj.get("limitedSet")] if obj.get("limitedSet") is not None else None
         })
         return _obj
+
+AccessControlledAction.update_forward_refs()

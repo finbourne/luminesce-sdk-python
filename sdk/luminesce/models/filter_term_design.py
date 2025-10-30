@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.query_designer_binary_operator import QueryDesignerBinaryOperator
 
 class FilterTermDesign(BaseModel):
     """
     A single filter clause  # noqa: E501
     """
-    operator: QueryDesignerBinaryOperator = Field(...)
+    operator: QueryDesignerBinaryOperator
     value:  StrictStr = Field(...,alias="value", description="The value to compare against (always as a string, but will be formatted to the correct type)") 
     __properties = ["operator", "value"]
 
@@ -78,3 +80,5 @@ class FilterTermDesign(BaseModel):
             "value": obj.get("value")
         })
         return _obj
+
+FilterTermDesign.update_forward_refs()

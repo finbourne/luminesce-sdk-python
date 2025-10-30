@@ -18,16 +18,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.cursor_position import CursorPosition
 
 class IntellisenseRequest(BaseModel):
     """
     Representation of a request for IntellisenseItems  # noqa: E501
     """
-    lines: conlist(StrictStr) = Field(..., description="The lines of text the user currently has in the editor")
-    position: CursorPosition = Field(...)
+    lines: List[StrictStr] = Field(description="The lines of text the user currently has in the editor")
+    position: CursorPosition
     __properties = ["lines", "position"]
 
     class Config:
@@ -81,3 +83,5 @@ class IntellisenseRequest(BaseModel):
             "position": CursorPosition.from_dict(obj.get("position")) if obj.get("position") is not None else None
         })
         return _obj
+
+IntellisenseRequest.update_forward_refs()

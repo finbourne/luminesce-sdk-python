@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.data_type import DataType
 
 class ColumnInfo(BaseModel):
     """
     Information on how to construct a file-read sql query  # noqa: E501
     """
-    select: Optional[StrictBool] = Field(None, description="Should the column be used/selected?")
+    select: Optional[StrictBool] = Field(default=None, description="Should the column be used/selected?")
     type: Optional[DataType] = None
     name:  Optional[StrictStr] = Field(None,alias="name", description="The name of the column") 
     x_path:  Optional[StrictStr] = Field(None,alias="xPath", description="Xpath for the column (only applicable to XML defined columns)") 
@@ -92,3 +94,5 @@ class ColumnInfo(BaseModel):
             "x_path": obj.get("xPath")
         })
         return _obj
+
+ColumnInfo.update_forward_refs()

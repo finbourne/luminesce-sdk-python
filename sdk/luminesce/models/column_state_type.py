@@ -18,17 +18,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class ColumnStateType(BaseModel):
     """
     Representation of a column within the grid  # noqa: E501
     """
     col_id:  StrictStr = Field(...,alias="colId", description="Unique identifier for the column") 
-    hide: StrictBool = Field(..., description="Flag to determine whether the column is visible in the grid")
+    hide: StrictBool = Field(description="Flag to determine whether the column is visible in the grid")
     sort:  Optional[StrictStr] = Field(None,alias="sort", description="The sort order (asc or desc)") 
-    sort_index: Optional[StrictInt] = Field(None, alias="sortIndex", description="The index of the sort to determine the order in which the sorts are applied")
+    sort_index: Optional[StrictInt] = Field(default=None, description="The index of the sort to determine the order in which the sorts are applied", alias="sortIndex")
     __properties = ["colId", "hide", "sort", "sortIndex"]
 
     class Config:
@@ -91,3 +93,5 @@ class ColumnStateType(BaseModel):
             "sort_index": obj.get("sortIndex")
         })
         return _obj
+
+ColumnStateType.update_forward_refs()

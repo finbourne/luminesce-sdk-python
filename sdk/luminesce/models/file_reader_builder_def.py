@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.auto_detect_type import AutoDetectType
 from luminesce.models.column_info import ColumnInfo
 from luminesce.models.options_csv import OptionsCsv
@@ -33,19 +35,19 @@ class FileReaderBuilderDef(BaseModel):
     """
     Information on how to construct a file-read sql query  # noqa: E501
     """
-    auto_detect: Optional[AutoDetectType] = Field(None, alias="autoDetect")
-    columns: Optional[conlist(ColumnInfo)] = Field(None, description="Column information for the results")
-    limit: Optional[StrictInt] = Field(None, description="What limit be added to the load query?  Less than or equal to zero means none")
+    auto_detect: Optional[AutoDetectType] = Field(default=None, alias="autoDetect")
+    columns: Optional[List[ColumnInfo]] = Field(default=None, description="Column information for the results")
+    limit: Optional[StrictInt] = Field(default=None, description="What limit be added to the load query?  Less than or equal to zero means none")
     source: Optional[Source] = None
-    available_sources: Optional[conlist(Source)] = Field(None, alias="availableSources", description="The source locations the user has access to.  The provider in essence.")
+    available_sources: Optional[List[Source]] = Field(default=None, description="The source locations the user has access to.  The provider in essence.", alias="availableSources")
     variable_name:  Optional[StrictStr] = Field(None,alias="variableName", description="The name of the variable for the `use` statement") 
     file_path:  Optional[StrictStr] = Field(None,alias="filePath", description="The file (or folder) path") 
     folder_filter:  Optional[StrictStr] = Field(None,alias="folderFilter", description="The filter to apply to a folder (all matching files then being read) a RegExp") 
     zip_filter:  Optional[StrictStr] = Field(None,alias="zipFilter", description="The filter to apply to folder structures with zip archives (all matching files then being read) a RegExp") 
-    add_file_name: Optional[StrictBool] = Field(None, alias="addFileName", description="Should a file name column be added to the output?")
+    add_file_name: Optional[StrictBool] = Field(default=None, description="Should a file name column be added to the output?", alias="addFileName")
     csv: Optional[OptionsCsv] = None
     excel: Optional[OptionsExcel] = None
-    sq_lite: Optional[OptionsSqLite] = Field(None, alias="sqLite")
+    sq_lite: Optional[OptionsSqLite] = Field(default=None, alias="sqLite")
     xml: Optional[OptionsXml] = None
     parquet: Optional[OptionsParquet] = None
     __properties = ["autoDetect", "columns", "limit", "source", "availableSources", "variableName", "filePath", "folderFilter", "zipFilter", "addFileName", "csv", "excel", "sqLite", "xml", "parquet"]
@@ -173,3 +175,5 @@ class FileReaderBuilderDef(BaseModel):
             "parquet": OptionsParquet.from_dict(obj.get("parquet")) if obj.get("parquet") is not None else None
         })
         return _obj
+
+FileReaderBuilderDef.update_forward_refs()

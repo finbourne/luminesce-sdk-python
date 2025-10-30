@@ -17,9 +17,11 @@ import pprint
 import re  # noqa: F401
 import json
 
+
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist 
 from luminesce.models.certificate_status import CertificateStatus
 from luminesce.models.certificate_type import CertificateType
 from luminesce.models.link import Link
@@ -29,20 +31,20 @@ class CertificateState(BaseModel):
     Information held about the minting / revoking of a certificate. It does *not* contain the certificate itself  # noqa: E501
     """
     key:  Optional[StrictStr] = Field(None,alias="key", description="The \"key\" to which this belongs in the dictionary, basically the CN without any version information") 
-    version: Optional[StrictInt] = Field(None, description="The version of this certificate")
+    version: Optional[StrictInt] = Field(default=None, description="The version of this certificate")
     common_name:  Optional[StrictStr] = Field(None,alias="commonName", description="The common Name of the Certificate") 
     type: Optional[CertificateType] = None
-    creation_status: Optional[CertificateStatus] = Field(None, alias="creationStatus")
-    revocation_status: Optional[CertificateStatus] = Field(None, alias="revocationStatus")
-    validity_start: Optional[datetime] = Field(None, alias="validityStart", description="The earliest point at which a certificate can be used")
-    validity_end: Optional[datetime] = Field(None, alias="validityEnd", description="The latest point at which a certificate can be used")
-    revoked_at: Optional[datetime] = Field(None, alias="revokedAt", description="The point at which this was revoked, if any")
+    creation_status: Optional[CertificateStatus] = Field(default=None, alias="creationStatus")
+    revocation_status: Optional[CertificateStatus] = Field(default=None, alias="revocationStatus")
+    validity_start: Optional[datetime] = Field(default=None, description="The earliest point at which a certificate can be used", alias="validityStart")
+    validity_end: Optional[datetime] = Field(default=None, description="The latest point at which a certificate can be used", alias="validityEnd")
+    revoked_at: Optional[datetime] = Field(default=None, description="The point at which this was revoked, if any", alias="revokedAt")
     revoked_by:  Optional[StrictStr] = Field(None,alias="revokedBy", description="The user which revoked this, if any") 
-    created_at: Optional[datetime] = Field(None, alias="createdAt", description="The point at which this was created")
-    permissions_set_at: Optional[datetime] = Field(None, alias="permissionsSetAt", description="The point at which permissions were adjusted by the system")
+    created_at: Optional[datetime] = Field(default=None, description="The point at which this was created", alias="createdAt")
+    permissions_set_at: Optional[datetime] = Field(default=None, description="The point at which permissions were adjusted by the system", alias="permissionsSetAt")
     created_by:  Optional[StrictStr] = Field(None,alias="createdBy", description="The user which created this") 
     serial_number:  Optional[StrictStr] = Field(None,alias="serialNumber", description="The Vault-issued serial number of the certificate, if any - used for revocation") 
-    links: Optional[conlist(Link)] = Field(None, description="The location within Configuration Store that this is saved to")
+    links: Optional[List[Link]] = Field(default=None, description="The location within Configuration Store that this is saved to")
     __properties = ["key", "version", "commonName", "type", "creationStatus", "revocationStatus", "validityStart", "validityEnd", "revokedAt", "revokedBy", "createdAt", "permissionsSetAt", "createdBy", "serialNumber", "links"]
 
     class Config:
@@ -168,3 +170,5 @@ class CertificateState(BaseModel):
             "links": [Link.from_dict(_item) for _item in obj.get("links")] if obj.get("links") is not None else None
         })
         return _obj
+
+CertificateState.update_forward_refs()

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.available_parameter import AvailableParameter
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 
@@ -28,9 +30,9 @@ class WriterDesign(BaseModel):
     Representation of a \"designable Query for a writer\" suitable for formatting to SQL or being built from compliant SQL.  # noqa: E501
     """
     sql:  StrictStr = Field(...,alias="sql", description="Original SQL that started this off") 
-    available_to_map_from: Optional[conlist(ExpressionWithAlias)] = Field(None, alias="availableToMapFrom", description="The data able to be mapped from as derived from the Sql")
+    available_to_map_from: Optional[List[ExpressionWithAlias]] = Field(default=None, description="The data able to be mapped from as derived from the Sql", alias="availableToMapFrom")
     parameter: Optional[AvailableParameter] = None
-    available_parameters: Optional[conlist(AvailableParameter)] = Field(None, alias="availableParameters", description="All the parameter the user may wish to design")
+    available_parameters: Optional[List[AvailableParameter]] = Field(default=None, description="All the parameter the user may wish to design", alias="availableParameters")
     __properties = ["sql", "availableToMapFrom", "parameter", "availableParameters"]
 
     class Config:
@@ -110,3 +112,5 @@ class WriterDesign(BaseModel):
             "available_parameters": [AvailableParameter.from_dict(_item) for _item in obj.get("availableParameters")] if obj.get("availableParameters") is not None else None
         })
         return _obj
+
+WriterDesign.update_forward_refs()

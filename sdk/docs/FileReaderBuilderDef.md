@@ -23,15 +23,17 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.file_reader_builder_def import FileReaderBuilderDef
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 auto_detect: Optional[AutoDetectType] = # Replace with your value
-columns: Optional[conlist(ColumnInfo)] = # Replace with your value
+columns: Optional[List[ColumnInfo]] = # Replace with your value
 limit: Optional[StrictInt] = # Replace with your value
 limit: Optional[StrictInt] = None
 source: Optional[Source] = None
-available_sources: Optional[conlist(Source)] = # Replace with your value
+available_sources: Optional[List[Source]] = # Replace with your value
 variable_name: Optional[StrictStr] = "example_variable_name"
 file_path: Optional[StrictStr] = "example_file_path"
 folder_filter: Optional[StrictStr] = "example_folder_filter"

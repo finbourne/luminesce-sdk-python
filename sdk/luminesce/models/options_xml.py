@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class OptionsXml(BaseModel):
     """
     Additional options applicable to the given SourceType  # noqa: E501
     """
     column_types:  Optional[StrictStr] = Field(None,alias="columnTypes", description="Column types (comma delimited list of: '{types}', some columns may be left blank while others are specified)") 
-    infer_type_row_count: Optional[StrictInt] = Field(None, alias="inferTypeRowCount", description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified")
+    infer_type_row_count: Optional[StrictInt] = Field(default=None, description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified", alias="inferTypeRowCount")
     values_to_make_null:  Optional[StrictStr] = Field(None,alias="valuesToMakeNull", description="Regex of values to map to 'null' in the returned data.") 
     column_names:  Optional[StrictStr] = Field(None,alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)") 
     node_path:  Optional[StrictStr] = Field(None,alias="nodePath", description="XPath query that selects the nodes to map to rows") 
@@ -110,3 +112,5 @@ class OptionsXml(BaseModel):
             "namespaces": obj.get("namespaces")
         })
         return _obj
+
+OptionsXml.update_forward_refs()

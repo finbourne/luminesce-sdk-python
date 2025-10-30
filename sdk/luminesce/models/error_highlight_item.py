@@ -18,18 +18,20 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.cursor_position import CursorPosition
 
 class ErrorHighlightItem(BaseModel):
     """
     Representation of a sql error  # noqa: E501
     """
-    start: CursorPosition = Field(...)
-    stop: CursorPosition = Field(...)
-    no_viable_alternative_start: Optional[CursorPosition] = Field(None, alias="noViableAlternativeStart")
-    length: StrictInt = Field(..., description="The length of the error token counting line breaks if any")
+    start: CursorPosition
+    stop: CursorPosition
+    no_viable_alternative_start: Optional[CursorPosition] = Field(default=None, alias="noViableAlternativeStart")
+    length: StrictInt = Field(description="The length of the error token counting line breaks if any")
     message:  StrictStr = Field(...,alias="message", description="The error message") 
     __properties = ["start", "stop", "noViableAlternativeStart", "length", "message"]
 
@@ -93,3 +95,5 @@ class ErrorHighlightItem(BaseModel):
             "message": obj.get("message")
         })
         return _obj
+
+ErrorHighlightItem.update_forward_refs()

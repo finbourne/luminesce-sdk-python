@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class AccessControlledResourceIdentifierPartSchemaAttribute(BaseModel):
     """
@@ -31,7 +33,7 @@ class AccessControlledResourceIdentifierPartSchemaAttribute(BaseModel):
     description:  Optional[StrictStr] = Field(None,alias="description") 
     required: Optional[StrictBool] = None
     values_path:  Optional[StrictStr] = Field(None,alias="valuesPath") 
-    type_id: Optional[Any] = Field(None, alias="typeId")
+    type_id: Optional[Any] = Field(default=None, alias="typeId")
     __properties = ["index", "name", "displayName", "description", "required", "valuesPath", "typeId"]
 
     class Config:
@@ -113,3 +115,5 @@ class AccessControlledResourceIdentifierPartSchemaAttribute(BaseModel):
             "type_id": obj.get("typeId")
         })
         return _obj
+
+AccessControlledResourceIdentifierPartSchemaAttribute.update_forward_refs()

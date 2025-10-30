@@ -10,11 +10,13 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.intellisense_request import IntellisenseRequest
-from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
-lines: conlist(StrictStr) = # Replace with your value
-position: CursorPosition = # Replace with your value
+lines: List[StrictStr] = # Replace with your value
+position: CursorPosition
 intellisense_request_instance = IntellisenseRequest(lines=lines, position=position)
 
 ```

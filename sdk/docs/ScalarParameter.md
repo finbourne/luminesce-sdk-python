@@ -13,13 +13,15 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.scalar_parameter import ScalarParameter
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 name: StrictStr = "example_name"
-type: DataType = # Replace with your value
+type: DataType
 value: Optional[Any] = # Replace with your value
-value_options: Optional[conlist(Any)] = # Replace with your value
+value_options: Optional[List[Any]] = # Replace with your value
 value_must_be_from_options: Optional[StrictBool] = # Replace with your value
 value_must_be_from_options:Optional[StrictBool] = None
 scalar_parameter_instance = ScalarParameter(name=name, type=type, value=value, value_options=value_options, value_must_be_from_options=value_must_be_from_options)

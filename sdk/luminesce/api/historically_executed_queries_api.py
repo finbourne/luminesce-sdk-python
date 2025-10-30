@@ -19,13 +19,10 @@ import warnings
 from pydantic.v1 import validate_arguments, ValidationError
 from typing import overload, Optional, Union, Awaitable
 
-from typing_extensions import Annotated
 from datetime import datetime
-
-from pydantic.v1 import Field, StrictBool, StrictInt, StrictStr, constr, validator
-
+from pydantic.v1 import Field, StrictBool, StrictInt, StrictStr
 from typing import Optional
-
+from typing_extensions import Annotated
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse

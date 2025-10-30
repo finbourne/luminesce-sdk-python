@@ -10,11 +10,13 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.case_statement_design import CaseStatementDesign
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 selected_field: Optional[StrictStr] = "example_selected_field"
-case_statement_items: Optional[conlist(CaseStatementItem)] = # Replace with your value
+case_statement_items: Optional[List[CaseStatementItem]] = # Replace with your value
 case_statement_design_instance = CaseStatementDesign(selected_field=selected_field, case_statement_items=case_statement_items)
 
 ```

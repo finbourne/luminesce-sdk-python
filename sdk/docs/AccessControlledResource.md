@@ -12,14 +12,16 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.access_controlled_resource import AccessControlledResource
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 application: Optional[StrictStr] = "example_application"
 name: Optional[StrictStr] = "example_name"
 description: Optional[StrictStr] = "example_description"
-actions: Optional[conlist(AccessControlledAction)] = None
-identifier_parts: Optional[conlist(AccessControlledResourceIdentifierPartSchemaAttribute)] = # Replace with your value
+actions: Optional[List[AccessControlledAction]] = None
+identifier_parts: Optional[List[AccessControlledResourceIdentifierPartSchemaAttribute]] = # Replace with your value
 access_controlled_resource_instance = AccessControlledResource(application=application, name=name, description=description, actions=actions, identifier_parts=identifier_parts)
 
 ```

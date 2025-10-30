@@ -10,10 +10,12 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictBool, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
-lines: conlist(StrictStr) = # Replace with your value
+lines: List[StrictStr] = # Replace with your value
 ensure_some_text_is_selected: Optional[StrictBool] = # Replace with your value
 ensure_some_text_is_selected:Optional[StrictBool] = None
 error_highlight_request_instance = ErrorHighlightRequest(lines=lines, ensure_some_text_is_selected=ensure_some_text_is_selected)

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.data_type import DataType
 
@@ -27,15 +29,15 @@ class Column(BaseModel):
     """
     Column
     """
-    is_primary_key: Optional[StrictBool] = Field(None, alias="isPrimaryKey")
-    is_main: Optional[StrictBool] = Field(None, alias="isMain")
-    is_required_by_provider: Optional[StrictBool] = Field(None, alias="isRequiredByProvider")
+    is_primary_key: Optional[StrictBool] = Field(default=None, alias="isPrimaryKey")
+    is_main: Optional[StrictBool] = Field(default=None, alias="isMain")
+    is_required_by_provider: Optional[StrictBool] = Field(default=None, alias="isRequiredByProvider")
     mandatory_for_actions:  Optional[StrictStr] = Field(None,alias="mandatoryForActions") 
     name:  Optional[StrictStr] = Field(None,alias="name") 
     type: Optional[DataType] = None
     description:  Optional[StrictStr] = Field(None,alias="description") 
     display_name:  Optional[StrictStr] = Field(None,alias="displayName") 
-    condition_usage: Optional[ConditionAttributes] = Field(None, alias="conditionUsage")
+    condition_usage: Optional[ConditionAttributes] = Field(default=None, alias="conditionUsage")
     sample_values:  Optional[StrictStr] = Field(None,alias="sampleValues") 
     allowed_values:  Optional[StrictStr] = Field(None,alias="allowedValues") 
     __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
@@ -127,3 +129,5 @@ class Column(BaseModel):
             "allowed_values": obj.get("allowedValues")
         })
         return _obj
+
+Column.update_forward_refs()

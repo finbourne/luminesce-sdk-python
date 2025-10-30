@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.mappable_field import MappableField
 
 class AvailableParameter(BaseModel):
@@ -28,7 +30,7 @@ class AvailableParameter(BaseModel):
     """
     provider_name:  StrictStr = Field(...,alias="providerName", description="Name of the Provider with a TableParameter") 
     parameter_name:  StrictStr = Field(...,alias="parameterName", description="Name of the TableParameter on the Provider") 
-    fields: conlist(MappableField) = Field(..., description="Fields that can be mapped to")
+    fields: List[MappableField] = Field(description="Fields that can be mapped to")
     __properties = ["providerName", "parameterName", "fields"]
 
     class Config:
@@ -87,3 +89,5 @@ class AvailableParameter(BaseModel):
             "fields": [MappableField.from_dict(_item) for _item in obj.get("fields")] if obj.get("fields") is not None else None
         })
         return _obj
+
+AvailableParameter.update_forward_refs()

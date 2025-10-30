@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class OptionsExcel(BaseModel):
     """
@@ -27,14 +29,14 @@ class OptionsExcel(BaseModel):
     """
     column_names:  Optional[StrictStr] = Field(None,alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)") 
     column_types:  Optional[StrictStr] = Field(None,alias="columnTypes", description="Column types (comma delimited list of: '{types}', some columns may be left blank while others are specified)") 
-    infer_type_row_count: Optional[StrictInt] = Field(None, alias="inferTypeRowCount", description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified")
-    no_header: Optional[StrictBool] = Field(None, alias="noHeader", description="Set this if there is no header row")
-    calculate: Optional[StrictBool] = Field(None, description="Whether to attempt a calculation of the imported cell range prior to import")
+    infer_type_row_count: Optional[StrictInt] = Field(default=None, description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified", alias="inferTypeRowCount")
+    no_header: Optional[StrictBool] = Field(default=None, description="Set this if there is no header row", alias="noHeader")
+    calculate: Optional[StrictBool] = Field(default=None, description="Whether to attempt a calculation of the imported cell range prior to import")
     password:  Optional[StrictStr] = Field(None,alias="password", description="If specified will be used as the password used for password protected workbooks") 
     worksheet:  Optional[StrictStr] = Field(None,alias="worksheet", description="The worksheet containing the cell range to import (name or index, will default to first)") 
     range_or_table:  Optional[StrictStr] = Field(None,alias="rangeOrTable", description="The cell range to import as either a specified range or a table name") 
-    ignore_invalid_cells: Optional[StrictBool] = Field(None, alias="ignoreInvalidCells", description="If specified cells which can not be successfully converted to the target type will be ignored")
-    ignore_blank_rows: Optional[StrictBool] = Field(None, alias="ignoreBlankRows", description="If the entire rows has only blank cells it will be ignored will be ignored")
+    ignore_invalid_cells: Optional[StrictBool] = Field(default=None, description="If specified cells which can not be successfully converted to the target type will be ignored", alias="ignoreInvalidCells")
+    ignore_blank_rows: Optional[StrictBool] = Field(default=None, description="If the entire rows has only blank cells it will be ignored will be ignored", alias="ignoreBlankRows")
     __properties = ["columnNames", "columnTypes", "inferTypeRowCount", "noHeader", "calculate", "password", "worksheet", "rangeOrTable", "ignoreInvalidCells", "ignoreBlankRows"]
 
     class Config:
@@ -118,3 +120,5 @@ class OptionsExcel(BaseModel):
             "ignore_blank_rows": obj.get("ignoreBlankRows")
         })
         return _obj
+
+OptionsExcel.update_forward_refs()

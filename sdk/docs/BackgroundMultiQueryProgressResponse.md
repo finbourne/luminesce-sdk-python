@@ -11,13 +11,15 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 progress: Optional[StrictStr] = "example_progress"
-feedback: Optional[conlist(FeedbackEventArgs)] = # Replace with your value
+feedback: Optional[List[FeedbackEventArgs]] = # Replace with your value
 status: Optional[TaskStatus] = None
-queries: Optional[conlist(BackgroundQueryProgressResponse)] = None
+queries: Optional[List[BackgroundQueryProgressResponse]] = None
 background_multi_query_progress_response_instance = BackgroundMultiQueryProgressResponse(progress=progress, feedback=feedback, status=status, queries=queries)
 
 ```

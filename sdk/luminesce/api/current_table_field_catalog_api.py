@@ -19,11 +19,9 @@ import warnings
 from pydantic.v1 import validate_arguments, ValidationError
 from typing import overload, Optional, Union, Awaitable
 
-from typing_extensions import Annotated
 from pydantic.v1 import Field, StrictBool, StrictStr
-
 from typing import Optional
-
+from typing_extensions import Annotated
 
 from luminesce.api_client import ApiClient
 from luminesce.api_response import ApiResponse

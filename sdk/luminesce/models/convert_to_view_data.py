@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.view_parameter import ViewParameter
 
 class ConvertToViewData(BaseModel):
@@ -30,8 +32,8 @@ class ConvertToViewData(BaseModel):
     name:  StrictStr = Field(...,alias="name", description="Name of view") 
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of view") 
     documentation_link:  Optional[StrictStr] = Field(None,alias="documentationLink", description="Documentation link") 
-    view_parameters: Optional[conlist(ViewParameter)] = Field(None, alias="viewParameters", description="View parameters")
-    other_parameters: Optional[Dict[str, StrictStr]] = Field(None, alias="otherParameters", description="Other parameters not explicitly handled by the ConvertToView generation. These will be populated by the \"From SQL\" and should simply be returned by the web GUI should the user edit / update / regenerate")
+    view_parameters: Optional[List[ViewParameter]] = Field(default=None, description="View parameters", alias="viewParameters")
+    other_parameters: Optional[Dict[str, Optional[StrictStr]]] = Field(default=None, description="Other parameters not explicitly handled by the ConvertToView generation. These will be populated by the \"From SQL\" and should simply be returned by the web GUI should the user edit / update / regenerate", alias="otherParameters")
     starting_variable_name:  Optional[StrictStr] = Field(None,alias="startingVariableName", description="Which variable the this start with, null if not started from a full Create View Sql Statement.") 
     __properties = ["query", "name", "description", "documentationLink", "viewParameters", "otherParameters", "startingVariableName"]
 
@@ -120,3 +122,5 @@ class ConvertToViewData(BaseModel):
             "starting_variable_name": obj.get("startingVariableName")
         })
         return _obj
+
+ConvertToViewData.update_forward_refs()

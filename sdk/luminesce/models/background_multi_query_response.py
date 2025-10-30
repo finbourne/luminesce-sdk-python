@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.link import Link
 
 class BackgroundMultiQueryResponse(BaseModel):
@@ -29,15 +31,15 @@ class BackgroundMultiQueryResponse(BaseModel):
     execution_id:  Optional[StrictStr] = Field(None,alias="executionId") 
     progress: Optional[Link] = None
     cancel: Optional[Link] = None
-    fetch_json: Optional[conlist(Link)] = Field(None, alias="fetchJson", description="Json (as a string) data request links for all of the child queries")
-    fetch_json_proper: Optional[conlist(Link)] = Field(None, alias="fetchJsonProper", description="Json-proper data request links for all of the child queries")
-    fetch_xml: Optional[conlist(Link)] = Field(None, alias="fetchXml", description="Xml data request links for all of the child queries")
-    fetch_parquet: Optional[conlist(Link)] = Field(None, alias="fetchParquet", description="Parquet data request links for all of the child queries")
-    fetch_csv: Optional[conlist(Link)] = Field(None, alias="fetchCsv", description="CSV data request links for all of the child queries")
-    fetch_pipe: Optional[conlist(Link)] = Field(None, alias="fetchPipe", description="Pipe delimited data request links for all of the child queries")
-    fetch_excel: Optional[conlist(Link)] = Field(None, alias="fetchExcel", description="Excel workbook data request links for all of the child queries")
-    fetch_sqlite: Optional[conlist(Link)] = Field(None, alias="fetchSqlite", description="SqLite DB data request links for all of the child queries")
-    histogram: Optional[conlist(Link)] = Field(None, description="Histogram links for all of the child queries")
+    fetch_json: Optional[List[Link]] = Field(default=None, description="Json (as a string) data request links for all of the child queries", alias="fetchJson")
+    fetch_json_proper: Optional[List[Link]] = Field(default=None, description="Json-proper data request links for all of the child queries", alias="fetchJsonProper")
+    fetch_xml: Optional[List[Link]] = Field(default=None, description="Xml data request links for all of the child queries", alias="fetchXml")
+    fetch_parquet: Optional[List[Link]] = Field(default=None, description="Parquet data request links for all of the child queries", alias="fetchParquet")
+    fetch_csv: Optional[List[Link]] = Field(default=None, description="CSV data request links for all of the child queries", alias="fetchCsv")
+    fetch_pipe: Optional[List[Link]] = Field(default=None, description="Pipe delimited data request links for all of the child queries", alias="fetchPipe")
+    fetch_excel: Optional[List[Link]] = Field(default=None, description="Excel workbook data request links for all of the child queries", alias="fetchExcel")
+    fetch_sqlite: Optional[List[Link]] = Field(default=None, description="SqLite DB data request links for all of the child queries", alias="fetchSqlite")
+    histogram: Optional[List[Link]] = Field(default=None, description="Histogram links for all of the child queries")
     __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
 
     class Config:
@@ -222,3 +224,5 @@ class BackgroundMultiQueryResponse(BaseModel):
             "histogram": [Link.from_dict(_item) for _item in obj.get("histogram")] if obj.get("histogram") is not None else None
         })
         return _obj
+
+BackgroundMultiQueryResponse.update_forward_refs()

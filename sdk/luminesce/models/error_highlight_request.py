@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class ErrorHighlightRequest(BaseModel):
     """
     Request for Error highlighting  # noqa: E501
     """
-    lines: conlist(StrictStr) = Field(..., description="The lines of text the user currently has in the editor")
-    ensure_some_text_is_selected: Optional[StrictBool] = Field(None, alias="ensureSomeTextIsSelected", description="If an editor requires some selection of non-whitespace this can be set to true to force at least one visible character to be selected.")
+    lines: List[StrictStr] = Field(description="The lines of text the user currently has in the editor")
+    ensure_some_text_is_selected: Optional[StrictBool] = Field(default=None, description="If an editor requires some selection of non-whitespace this can be set to true to force at least one visible character to be selected.", alias="ensureSomeTextIsSelected")
     __properties = ["lines", "ensureSomeTextIsSelected"]
 
     class Config:
@@ -77,3 +79,5 @@ class ErrorHighlightRequest(BaseModel):
             "ensure_some_text_is_selected": obj.get("ensureSomeTextIsSelected")
         })
         return _obj
+
+ErrorHighlightRequest.update_forward_refs()

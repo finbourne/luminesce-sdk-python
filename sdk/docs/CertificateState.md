@@ -23,9 +23,11 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.certificate_state import CertificateState
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
+
 key: Optional[StrictStr] = "example_key"
 version: Optional[StrictInt] = # Replace with your value
 version: Optional[StrictInt] = None
@@ -41,7 +43,7 @@ created_at: Optional[datetime] = # Replace with your value
 permissions_set_at: Optional[datetime] = # Replace with your value
 created_by: Optional[StrictStr] = "example_created_by"
 serial_number: Optional[StrictStr] = "example_serial_number"
-links: Optional[conlist(Link)] = # Replace with your value
+links: Optional[List[Link]] = # Replace with your value
 certificate_state_instance = CertificateState(key=key, version=version, common_name=common_name, type=type, creation_status=creation_status, revocation_status=revocation_status, validity_start=validity_start, validity_end=validity_end, revoked_at=revoked_at, revoked_by=revoked_by, created_at=created_at, permissions_set_at=permissions_set_at, created_by=created_by, serial_number=serial_number, links=links)
 
 ```

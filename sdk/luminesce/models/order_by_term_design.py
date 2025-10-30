@@ -18,15 +18,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.order_by_direction import OrderByDirection
 
 class OrderByTermDesign(BaseModel):
     """
     A single clause within an Order BY  # noqa: E501
     """
-    field:  StrictStr = Field(...,alias="field", description="Name of the field to order by") 
+    var_field:  StrictStr = Field(...,alias="field", description="Name of the field to order by") 
     direction: Optional[OrderByDirection] = None
     table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Table Alias of the field to order by") 
     __properties = ["field", "direction", "tableAlias"]
@@ -80,8 +82,10 @@ class OrderByTermDesign(BaseModel):
             return OrderByTermDesign.parse_obj(obj)
 
         _obj = OrderByTermDesign.parse_obj({
-            "field": obj.get("field"),
+            "var_field": obj.get("field"),
             "direction": obj.get("direction"),
             "table_alias": obj.get("tableAlias")
         })
         return _obj
+
+OrderByTermDesign.update_forward_refs()

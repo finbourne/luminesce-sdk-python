@@ -10,10 +10,12 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
-from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
-errors: conlist(ErrorHighlightItem) = # Replace with your value
+errors: List[ErrorHighlightItem] = # Replace with your value
 sql_with_marker: StrictStr = "example_sql_with_marker"
 error_highlight_response_instance = ErrorHighlightResponse(errors=errors, sql_with_marker=sql_with_marker)
 

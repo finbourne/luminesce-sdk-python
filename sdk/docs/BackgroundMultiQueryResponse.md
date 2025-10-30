@@ -19,21 +19,23 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 execution_id: Optional[StrictStr] = "example_execution_id"
 progress: Optional[Link] = None
 cancel: Optional[Link] = None
-fetch_json: Optional[conlist(Link)] = # Replace with your value
-fetch_json_proper: Optional[conlist(Link)] = # Replace with your value
-fetch_xml: Optional[conlist(Link)] = # Replace with your value
-fetch_parquet: Optional[conlist(Link)] = # Replace with your value
-fetch_csv: Optional[conlist(Link)] = # Replace with your value
-fetch_pipe: Optional[conlist(Link)] = # Replace with your value
-fetch_excel: Optional[conlist(Link)] = # Replace with your value
-fetch_sqlite: Optional[conlist(Link)] = # Replace with your value
-histogram: Optional[conlist(Link)] = # Replace with your value
+fetch_json: Optional[List[Link]] = # Replace with your value
+fetch_json_proper: Optional[List[Link]] = # Replace with your value
+fetch_xml: Optional[List[Link]] = # Replace with your value
+fetch_parquet: Optional[List[Link]] = # Replace with your value
+fetch_csv: Optional[List[Link]] = # Replace with your value
+fetch_pipe: Optional[List[Link]] = # Replace with your value
+fetch_excel: Optional[List[Link]] = # Replace with your value
+fetch_sqlite: Optional[List[Link]] = # Replace with your value
+histogram: Optional[List[Link]] = # Replace with your value
 background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
 ```

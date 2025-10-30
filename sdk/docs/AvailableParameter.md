@@ -11,12 +11,14 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.available_parameter import AvailableParameter
-from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 provider_name: StrictStr = "example_provider_name"
 parameter_name: StrictStr = "example_parameter_name"
-fields: conlist(MappableField) = # Replace with your value
+fields: List[MappableField] = # Replace with your value
 available_parameter_instance = AvailableParameter(provider_name=provider_name, parameter_name=parameter_name, fields=fields)
 
 ```

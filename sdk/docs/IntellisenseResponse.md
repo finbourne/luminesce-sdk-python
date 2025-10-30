@@ -13,10 +13,12 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.intellisense_response import IntellisenseResponse
-from typing import Any, Dict, List
-from pydantic.v1 import BaseModel, Field, StrictBool, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
-auto_complete_list: conlist(IntellisenseItem) = # Replace with your value
+auto_complete_list: List[IntellisenseItem] = # Replace with your value
 try_again_soon_for_more: StrictBool = # Replace with your value
 try_again_soon_for_more:StrictBool = True
 sql_with_marker: StrictStr = "example_sql_with_marker"

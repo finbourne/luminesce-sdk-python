@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.intellisense_type import IntellisenseType
 
 class IntellisenseItem(BaseModel):
@@ -29,7 +31,7 @@ class IntellisenseItem(BaseModel):
     caption:  StrictStr = Field(...,alias="caption", description="The value to show the user in the popup") 
     value:  StrictStr = Field(...,alias="value", description="The value to substitute in") 
     meta:  Optional[StrictStr] = Field(None,alias="meta", description="The light-grey text shown to the right of the Caption in the popup") 
-    score: Optional[StrictInt] = Field(None, description="How important is this.  Bigger is more important.")
+    score: Optional[StrictInt] = Field(default=None, description="How important is this.  Bigger is more important.")
     doc_html:  Optional[StrictStr] = Field(None,alias="docHTML", description="Popup further info (as in a whole documentation article!)") 
     type: Optional[IntellisenseType] = None
     __properties = ["caption", "value", "meta", "score", "docHTML", "type"]
@@ -96,3 +98,5 @@ class IntellisenseItem(BaseModel):
             "type": obj.get("type")
         })
         return _obj
+
+IntellisenseItem.update_forward_refs()

@@ -17,9 +17,11 @@ import pprint
 import re  # noqa: F401
 import json
 
+
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist 
 from luminesce.models.feedback_level import FeedbackLevel
 
 class FeedbackEventArgs(BaseModel):
@@ -31,9 +33,9 @@ class FeedbackEventArgs(BaseModel):
     execution_id:  Optional[StrictStr] = Field(None,alias="executionId") 
     level: Optional[FeedbackLevel] = None
     sender:  Optional[StrictStr] = Field(None,alias="sender") 
-    state_id: Optional[StrictInt] = Field(None, alias="stateId")
+    state_id: Optional[StrictInt] = Field(default=None, alias="stateId")
     message_template:  Optional[StrictStr] = Field(None,alias="messageTemplate") 
-    property_values: Optional[conlist(Any)] = Field(None, alias="propertyValues")
+    property_values: Optional[List[Any]] = Field(default=None, alias="propertyValues")
     message:  Optional[StrictStr] = Field(None,alias="message") 
     __properties = ["when", "sessionId", "executionId", "level", "sender", "stateId", "messageTemplate", "propertyValues", "message"]
 
@@ -118,3 +120,5 @@ class FeedbackEventArgs(BaseModel):
             "message": obj.get("message")
         })
         return _obj
+
+FeedbackEventArgs.update_forward_refs()

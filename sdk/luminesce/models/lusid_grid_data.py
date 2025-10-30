@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.dashboard_type import DashboardType
 from luminesce.models.date_parameters import DateParameters
 from luminesce.models.resource_id import ResourceId
@@ -29,10 +31,10 @@ class LusidGridData(BaseModel):
     """
     Representation of the data we will get from the dashboard  # noqa: E501
     """
-    lusid_grid_design: TableView = Field(..., alias="lusidGridDesign")
-    resource_id: ResourceId = Field(..., alias="resourceId")
-    dashboard_type: Optional[DashboardType] = Field(None, alias="dashboardType")
-    use_settle_date: Optional[StrictBool] = Field(None, alias="useSettleDate", description="Whether to use the Settlement date or the Transaction date")
+    lusid_grid_design: TableView = Field(alias="lusidGridDesign")
+    resource_id: ResourceId = Field(alias="resourceId")
+    dashboard_type: Optional[DashboardType] = Field(default=None, alias="dashboardType")
+    use_settle_date: Optional[StrictBool] = Field(default=None, description="Whether to use the Settlement date or the Transaction date", alias="useSettleDate")
     dates: Optional[DateParameters] = None
     __properties = ["lusidGridDesign", "resourceId", "dashboardType", "useSettleDate", "dates"]
 
@@ -101,3 +103,5 @@ class LusidGridData(BaseModel):
             "dates": DateParameters.from_dict(obj.get("dates")) if obj.get("dates") is not None else None
         })
         return _obj
+
+LusidGridData.update_forward_refs()

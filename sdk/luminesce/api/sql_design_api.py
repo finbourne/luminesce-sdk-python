@@ -19,11 +19,9 @@ import warnings
 from pydantic.v1 import validate_arguments, ValidationError
 from typing import overload, Optional, Union, Awaitable
 
-from typing_extensions import Annotated
-from pydantic.v1 import Field, StrictBool, StrictInt, StrictStr
-
+from pydantic.v1 import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import List, Optional, Union
-
+from typing_extensions import Annotated
 from luminesce.models.case_statement_design import CaseStatementDesign
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
@@ -387,15 +385,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> str:  # noqa: E501
+    async def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_case_statement_design_to_sql(self, case_statement_design : Annotated[CaseStatementDesign, Field(description="CaseStatementDesign object to try and create a SQL query from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutCaseStatementDesignToSql: Convert a case statement design object to SQL  # noqa: E501
 
         Generates a SQL case statement query from a structured CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -426,7 +424,7 @@ class SqlDesignApi:
         return self.put_case_statement_design_to_sql_with_http_info(case_statement_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_case_statement_design_to_sql_with_http_info(self, case_statement_design : Annotated[CaseStatementDesign, Field(..., description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_case_statement_design_to_sql_with_http_info(self, case_statement_design : Annotated[CaseStatementDesign, Field(description="CaseStatementDesign object to try and create a SQL query from")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutCaseStatementDesignToSql: Convert a case statement design object to SQL  # noqa: E501
 
         Generates a SQL case statement query from a structured CaseStatementDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -547,15 +545,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
+    async def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
         ...
 
     @overload
-    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=True, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
+    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=True, **kwargs) -> FileReaderBuilderResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderResponse, Awaitable[FileReaderBuilderResponse]]:  # noqa: E501
+    def put_file_read_design_to_sql(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[FileReaderBuilderResponse, Awaitable[FileReaderBuilderResponse]]:  # noqa: E501
         """PutFileReadDesignToSql: Make file read SQL from a design object  # noqa: E501
 
         Generates SQL from a FileReaderBuilderDef object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -588,7 +586,7 @@ class SqlDesignApi:
         return self.put_file_read_design_to_sql_with_http_info(file_reader_builder_def, execute_query, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_file_read_design_to_sql_with_http_info(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(..., description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_file_read_design_to_sql_with_http_info(self, file_reader_builder_def : Annotated[FileReaderBuilderDef, Field(description="Structured file read design object to generate SQL from")], execute_query : Annotated[Optional[StrictBool], Field(description="Should the generated query be executed to build preview data or determine errors.>")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutFileReadDesignToSql: Make file read SQL from a design object  # noqa: E501
 
         Generates SQL from a FileReaderBuilderDef object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -875,15 +873,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_inlined_properties_design_to_sql(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(description="Inlined properties Designer specification to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object  # noqa: E501
 
         Generates inlined properties SQL from a structured design  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -914,7 +912,7 @@ class SqlDesignApi:
         return self.put_inlined_properties_design_to_sql_with_http_info(inlined_property_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_inlined_properties_design_to_sql_with_http_info(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(..., description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_inlined_properties_design_to_sql_with_http_info(self, inlined_property_design : Annotated[InlinedPropertyDesign, Field(description="Inlined properties Designer specification to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object  # noqa: E501
 
         Generates inlined properties SQL from a structured design  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1035,15 +1033,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> IntellisenseResponse:  # noqa: E501
+    async def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> IntellisenseResponse:  # noqa: E501
         ...
 
     @overload
-    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=True, **kwargs) -> IntellisenseResponse:  # noqa: E501
+    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=True, **kwargs) -> IntellisenseResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
+    def put_intellisense(self, intellisense_request : Annotated[IntellisenseRequest, Field(description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], async_req: Optional[bool]=None, **kwargs) -> Union[IntellisenseResponse, Awaitable[IntellisenseResponse]]:  # noqa: E501
         """PutIntellisense: Make intellisense prompts given an SQL snip-it  # noqa: E501
 
         Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid SQL) and cursor location  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1074,7 +1072,7 @@ class SqlDesignApi:
         return self.put_intellisense_with_http_info(intellisense_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_intellisense_with_http_info(self, intellisense_request : Annotated[IntellisenseRequest, Field(..., description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_intellisense_with_http_info(self, intellisense_request : Annotated[IntellisenseRequest, Field(description="SQL and a row/colum position within it from which to determine intellisense options for the user to potentially choose from.")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutIntellisense: Make intellisense prompts given an SQL snip-it  # noqa: E501
 
         Generate a set of possible intellisense prompts given a SQL snip-it (in need not yet be valid SQL) and cursor location  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1195,15 +1193,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ErrorHighlightResponse:  # noqa: E501
+    async def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ErrorHighlightResponse:  # noqa: E501
         ...
 
     @overload
-    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=True, **kwargs) -> ErrorHighlightResponse:  # noqa: E501
+    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=True, **kwargs) -> ErrorHighlightResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=None, **kwargs) -> Union[ErrorHighlightResponse, Awaitable[ErrorHighlightResponse]]:  # noqa: E501
+    def put_intellisense_error(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(description="SQL (by line) to syntax check and return error ranges from within, if any.")], async_req: Optional[bool]=None, **kwargs) -> Union[ErrorHighlightResponse, Awaitable[ErrorHighlightResponse]]:  # noqa: E501
         """PutIntellisenseError: Get error ranges from SQL  # noqa: E501
 
         Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1234,7 +1232,7 @@ class SqlDesignApi:
         return self.put_intellisense_error_with_http_info(error_highlight_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_intellisense_error_with_http_info(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(..., description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_intellisense_error_with_http_info(self, error_highlight_request : Annotated[ErrorHighlightRequest, Field(description="SQL (by line) to syntax check and return error ranges from within, if any.")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutIntellisenseError: Get error ranges from SQL  # noqa: E501
 
         Generate a set of error ranges, if any, in the given SQL (expressed as Lines)  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1515,15 +1513,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(description="Structured Query design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_query_design_to_sql(self, query_design : Annotated[QueryDesign, Field(description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutQueryDesignToSql: Make SQL from a structured query design  # noqa: E501
 
         Generates SQL from a QueryDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -1554,7 +1552,7 @@ class SqlDesignApi:
         return self.put_query_design_to_sql_with_http_info(query_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_query_design_to_sql_with_http_info(self, query_design : Annotated[QueryDesign, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_query_design_to_sql_with_http_info(self, query_design : Annotated[QueryDesign, Field(description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutQueryDesignToSql: Make SQL from a structured query design  # noqa: E501
 
         Generates SQL from a QueryDesign object  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2771,15 +2769,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(description="Structured Query design object to generate SQL from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_view_design_to_sql(self, convert_to_view_data : Annotated[ConvertToViewData, Field(description="Structured Query design object to generate SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutViewDesignToSql: Make view creation sql from a view-design  # noqa: E501
 
         Converts a ConvertToView specification into SQL that creates a view  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2810,7 +2808,7 @@ class SqlDesignApi:
         return self.put_view_design_to_sql_with_http_info(convert_to_view_data, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_view_design_to_sql_with_http_info(self, convert_to_view_data : Annotated[ConvertToViewData, Field(..., description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_view_design_to_sql_with_http_info(self, convert_to_view_data : Annotated[ConvertToViewData, Field(description="Structured Query design object to generate SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutViewDesignToSql: Make view creation sql from a view-design  # noqa: E501
 
         Converts a ConvertToView specification into SQL that creates a view  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2931,15 +2929,15 @@ class SqlDesignApi:
 
 
     @overload
-    async def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], **kwargs) -> str:  # noqa: E501
+    async def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(description="Structured Writer Design design object to generate Writer SQL from")], **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(description="Structured Writer Design design object to generate Writer SQL from")], async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_writer_design_to_sql(self, writer_design : Annotated[WriterDesign, Field(description="Structured Writer Design design object to generate Writer SQL from")], async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutWriterDesignToSql: Make writer SQL from a writer-design object  # noqa: E501
 
         Generates writer SQL from a valid WriterDesign structure  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501
@@ -2970,7 +2968,7 @@ class SqlDesignApi:
         return self.put_writer_design_to_sql_with_http_info(writer_design, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_writer_design_to_sql_with_http_info(self, writer_design : Annotated[WriterDesign, Field(..., description="Structured Writer Design design object to generate Writer SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
+    def put_writer_design_to_sql_with_http_info(self, writer_design : Annotated[WriterDesign, Field(description="Structured Writer Design design object to generate Writer SQL from")], **kwargs) -> ApiResponse:  # noqa: E501
         """PutWriterDesignToSql: Make writer SQL from a writer-design object  # noqa: E501
 
         Generates writer SQL from a valid WriterDesign structure  > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice.   # noqa: E501

@@ -10,12 +10,14 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.access_controlled_action import AccessControlledAction
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 description: Optional[StrictStr] = "example_description"
 action: Optional[ActionId] = None
-limited_set: Optional[conlist(IdSelectorDefinition)] = # Replace with your value
+limited_set: Optional[List[IdSelectorDefinition]] = # Replace with your value
 access_controlled_action_instance = AccessControlledAction(description=description, action=action, limited_set=limited_set)
 
 ```

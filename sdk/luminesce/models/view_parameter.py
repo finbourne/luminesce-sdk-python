@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.data_type import DataType
 
 class ViewParameter(BaseModel):
@@ -27,9 +29,9 @@ class ViewParameter(BaseModel):
     Parameters of view  # noqa: E501
     """
     name:  StrictStr = Field(...,alias="name", description="Name of the provider") 
-    data_type: DataType = Field(..., alias="dataType")
+    data_type: DataType = Field(alias="dataType")
     value:  StrictStr = Field(...,alias="value", description="Value of the provider") 
-    is_table_data_mandatory: Optional[StrictBool] = Field(None, alias="isTableDataMandatory", description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present")
+    is_table_data_mandatory: Optional[StrictBool] = Field(default=None, description="Should this be selected? False would imply it is only being filtered on. Ignored when Aggregations are present", alias="isTableDataMandatory")
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of the parameter") 
     __properties = ["name", "dataType", "value", "isTableDataMandatory", "description"]
 
@@ -89,3 +91,5 @@ class ViewParameter(BaseModel):
             "description": obj.get("description")
         })
         return _obj
+
+ViewParameter.update_forward_refs()

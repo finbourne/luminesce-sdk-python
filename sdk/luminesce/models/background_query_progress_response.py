@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.column import Column
 from luminesce.models.feedback_event_args import FeedbackEventArgs
@@ -29,15 +31,15 @@ class BackgroundQueryProgressResponse(BaseModel):
     """
     BackgroundQueryProgressResponse
     """
-    has_data: Optional[StrictBool] = Field(None, alias="hasData", description="Is there currently data for this Query?")
-    row_count: Optional[StrictInt] = Field(None, alias="rowCount", description="Number of rows of data held. -1 if none as yet.")
+    has_data: Optional[StrictBool] = Field(default=None, description="Is there currently data for this Query?", alias="hasData")
+    row_count: Optional[StrictInt] = Field(default=None, description="Number of rows of data held. -1 if none as yet.", alias="rowCount")
     status: Optional[TaskStatus] = None
     state: Optional[BackgroundQueryState] = None
     progress:  Optional[StrictStr] = Field(None,alias="progress", description="The full progress log (up to this point at least)") 
-    feedback: Optional[conlist(FeedbackEventArgs)] = Field(None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
+    feedback: Optional[List[FeedbackEventArgs]] = Field(default=None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
     query:  Optional[StrictStr] = Field(None,alias="query", description="The LuminesceSql of the original request") 
     query_name:  Optional[StrictStr] = Field(None,alias="queryName", description="The QueryName given in the original request") 
-    columns_available: Optional[conlist(Column)] = Field(None, alias="columnsAvailable", description="When HasData is true this is the schema of columns that will be returned if the data is requested")
+    columns_available: Optional[List[Column]] = Field(default=None, description="When HasData is true this is the schema of columns that will be returned if the data is requested", alias="columnsAvailable")
     __properties = ["hasData", "rowCount", "status", "state", "progress", "feedback", "query", "queryName", "columnsAvailable"]
 
     class Config:
@@ -134,3 +136,5 @@ class BackgroundQueryProgressResponse(BaseModel):
             "columns_available": [Column.from_dict(_item) for _item in obj.get("columnsAvailable")] if obj.get("columnsAvailable") is not None else None
         })
         return _obj
+
+BackgroundQueryProgressResponse.update_forward_refs()

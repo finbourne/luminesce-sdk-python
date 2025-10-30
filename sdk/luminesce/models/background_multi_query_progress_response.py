@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.task_status import TaskStatus
@@ -29,9 +31,9 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
     BackgroundMultiQueryProgressResponse
     """
     progress:  Optional[StrictStr] = Field(None,alias="progress", description="The full progress log (up to this point at least)") 
-    feedback: Optional[conlist(FeedbackEventArgs)] = Field(None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
+    feedback: Optional[List[FeedbackEventArgs]] = Field(default=None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
     status: Optional[TaskStatus] = None
-    queries: Optional[conlist(BackgroundQueryProgressResponse)] = None
+    queries: Optional[List[BackgroundQueryProgressResponse]] = None
     __properties = ["progress", "feedback", "status", "queries"]
 
     class Config:
@@ -113,3 +115,5 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
             "queries": [BackgroundQueryProgressResponse.from_dict(_item) for _item in obj.get("queries")] if obj.get("queries") is not None else None
         })
         return _obj
+
+BackgroundMultiQueryProgressResponse.update_forward_refs()

@@ -12,13 +12,15 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.writer_design import WriterDesign
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import BaseModel, Field, conlist, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 sql: StrictStr = "example_sql"
-available_to_map_from: Optional[conlist(ExpressionWithAlias)] = # Replace with your value
+available_to_map_from: Optional[List[ExpressionWithAlias]] = # Replace with your value
 parameter: Optional[AvailableParameter] = None
-available_parameters: Optional[conlist(AvailableParameter)] = # Replace with your value
+available_parameters: Optional[List[AvailableParameter]] = # Replace with your value
 writer_design_instance = WriterDesign(sql=sql, available_to_map_from=available_to_map_from, parameter=parameter, available_parameters=available_parameters)
 
 ```

@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.data_type import DataType
 
 class ScalarParameter(BaseModel):
@@ -27,10 +29,10 @@ class ScalarParameter(BaseModel):
     Describes a scalar parameter as defined in the SQL  # noqa: E501
     """
     name:  StrictStr = Field(...,alias="name", description="Name of the scalar parameter") 
-    type: DataType = Field(...)
-    value: Optional[Any] = Field(None, description="the default value of the parameter")
-    value_options: Optional[conlist(Any)] = Field(None, alias="valueOptions", description="Values of the parameter listed as being available for choosing from.")
-    value_must_be_from_options: Optional[StrictBool] = Field(None, alias="valueMustBeFromOptions", description="Must Value be one of ValueOptions (if any)?")
+    type: DataType
+    value: Optional[Any] = Field(default=None, description="the default value of the parameter")
+    value_options: Optional[List[Any]] = Field(default=None, description="Values of the parameter listed as being available for choosing from.", alias="valueOptions")
+    value_must_be_from_options: Optional[StrictBool] = Field(default=None, description="Must Value be one of ValueOptions (if any)?", alias="valueMustBeFromOptions")
     __properties = ["name", "type", "value", "valueOptions", "valueMustBeFromOptions"]
 
     class Config:
@@ -94,3 +96,5 @@ class ScalarParameter(BaseModel):
             "value_must_be_from_options": obj.get("valueMustBeFromOptions")
         })
         return _obj
+
+ScalarParameter.update_forward_refs()

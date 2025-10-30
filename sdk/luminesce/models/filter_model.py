@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional, Union
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.filter_type import FilterType
 from luminesce.models.type import Type
 
@@ -27,11 +29,11 @@ class FilterModel(BaseModel):
     """
     Representation of the data used in a filter for the where clause  # noqa: E501
     """
-    filter_type: FilterType = Field(..., alias="filterType")
+    filter_type: FilterType = Field(alias="filterType")
     type: Optional[Type] = None
     filter:  Optional[StrictStr] = Field(None,alias="filter", description="The filter value") 
-    filter_to: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="filterTo", description="The upper bound filter value for the number filter type")
-    values: Optional[conlist(StrictStr)] = Field(None, description="An array of possible values for the set filter type")
+    filter_to: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The upper bound filter value for the number filter type", alias="filterTo")
+    values: Optional[List[StrictStr]] = Field(default=None, description="An array of possible values for the set filter type")
     date_from:  Optional[StrictStr] = Field(None,alias="dateFrom", description="A lower bound date for the date filter type") 
     date_to:  Optional[StrictStr] = Field(None,alias="dateTo", description="An upper bound date for the date filter type") 
     __properties = ["filterType", "type", "filter", "filterTo", "values", "dateFrom", "dateTo"]
@@ -114,3 +116,5 @@ class FilterModel(BaseModel):
             "date_to": obj.get("dateTo")
         })
         return _obj
+
+FilterModel.update_forward_refs()

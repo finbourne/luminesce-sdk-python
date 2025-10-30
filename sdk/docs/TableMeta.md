@@ -9,8 +9,10 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.table_meta import TableMeta
-from typing import Any, Dict
-from pydantic.v1 import BaseModel, Field, constr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 table_id: StrictStr = "example_table_id"
 table_meta_instance = TableMeta(table_id=table_id)

@@ -16,8 +16,10 @@ Name | Type | Description | Notes
 
 ```python
 from luminesce.models.mappable_field import MappableField
-from typing import Any, Dict, Optional
-from pydantic.v1 import BaseModel, Field, StrictStr
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 name: Optional[StrictStr] = "example_name"
 type: Optional[DataType] = None

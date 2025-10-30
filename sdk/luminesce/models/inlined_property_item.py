@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictStr, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class InlinedPropertyItem(BaseModel):
     """
@@ -27,7 +29,7 @@ class InlinedPropertyItem(BaseModel):
     """
     key:  StrictStr = Field(...,alias="key", description="Key of the property") 
     name:  Optional[StrictStr] = Field(None,alias="name", description="Name of the property") 
-    is_main: Optional[StrictBool] = Field(None, alias="isMain", description="Is Main indicator for the property")
+    is_main: Optional[StrictBool] = Field(default=None, description="Is Main indicator for the property", alias="isMain")
     description:  Optional[StrictStr] = Field(None,alias="description", description="Description of the property") 
     data_type:  Optional[StrictStr] = Field(None,alias="dataType", description="Data type of the property") 
     __properties = ["key", "name", "isMain", "description", "dataType"]
@@ -98,3 +100,5 @@ class InlinedPropertyItem(BaseModel):
             "data_type": obj.get("dataType")
         })
         return _obj
+
+InlinedPropertyItem.update_forward_refs()

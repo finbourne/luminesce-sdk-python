@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictBool, StrictInt, StrictStr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 
 class OptionsCsv(BaseModel):
     """
@@ -28,15 +30,15 @@ class OptionsCsv(BaseModel):
     column_names:  Optional[StrictStr] = Field(None,alias="columnNames", description="Column Names either overrides the header row or steps in when there is no header row (comma delimited list)") 
     column_names_wanted:  Optional[StrictStr] = Field(None,alias="columnNamesWanted", description="Column (by Name) that should be returned (comma delimited list)") 
     column_types:  Optional[StrictStr] = Field(None,alias="columnTypes", description="Column types (comma delimited list of: '{types}', some columns may be left blank while others are specified)") 
-    infer_type_row_count: Optional[StrictInt] = Field(None, alias="inferTypeRowCount", description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified")
-    no_header: Optional[StrictBool] = Field(None, alias="noHeader", description="Set this if there is no header row")
+    infer_type_row_count: Optional[StrictInt] = Field(default=None, description="If non-zero and 'types' is not specified (or not specified for some columns) this will look through N rows to attempt to work out the column types for columns not pre-specified", alias="inferTypeRowCount")
+    no_header: Optional[StrictBool] = Field(default=None, description="Set this if there is no header row", alias="noHeader")
     delimiter:  Optional[StrictStr] = Field(None,alias="delimiter", description="The delimiter between values (\\t for tab)") 
     escape:  Optional[StrictStr] = Field(None,alias="escape", description="Character used to escape the 'Quote' character when within a value") 
     quote:  Optional[StrictStr] = Field(None,alias="quote", description="Character used around any field containing the 'delimiter' or a line break.") 
     values_to_make_null:  Optional[StrictStr] = Field(None,alias="valuesToMakeNull", description="Regex of values to map to 'null' in the returned data.") 
-    skip_pre_header: Optional[StrictInt] = Field(None, alias="skipPreHeader", description="Number of rows to ignore before the header row")
-    skip_post_header: Optional[StrictInt] = Field(None, alias="skipPostHeader", description="Number of rows to ignore after the header row")
-    skip_invalid_rows: Optional[StrictBool] = Field(None, alias="skipInvalidRows", description="Skip invalid data rows (totally invalid ones),  This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows). In either case a warning will show in the progress feedback.")
+    skip_pre_header: Optional[StrictInt] = Field(default=None, description="Number of rows to ignore before the header row", alias="skipPreHeader")
+    skip_post_header: Optional[StrictInt] = Field(default=None, description="Number of rows to ignore after the header row", alias="skipPostHeader")
+    skip_invalid_rows: Optional[StrictBool] = Field(default=None, description="Skip invalid data rows (totally invalid ones),  This also allows for potentially wrong data if it can be handled somewhat e.g. embedded quotes misused (and still returns such rows). In either case a warning will show in the progress feedback.", alias="skipInvalidRows")
     __properties = ["columnNames", "columnNamesWanted", "columnTypes", "inferTypeRowCount", "noHeader", "delimiter", "escape", "quote", "valuesToMakeNull", "skipPreHeader", "skipPostHeader", "skipInvalidRows"]
 
     class Config:
@@ -132,3 +134,5 @@ class OptionsCsv(BaseModel):
             "skip_invalid_rows": obj.get("skipInvalidRows")
         })
         return _obj
+
+OptionsCsv.update_forward_refs()

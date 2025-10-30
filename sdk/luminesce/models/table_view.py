@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictStr, conlist 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.column_state_type import ColumnStateType
 from luminesce.models.filter_model import FilterModel
 from luminesce.models.table_meta import TableMeta
@@ -28,10 +30,10 @@ class TableView(BaseModel):
     """
     Representation of the table structure  # noqa: E501
     """
-    header_names: Dict[str, StrictStr] = Field(..., alias="headerNames", description="Mapping of column ids to aliases")
-    column_state: conlist(ColumnStateType) = Field(..., alias="columnState", description="Array of all columns in the dashboard")
-    filters: Optional[Dict[str, FilterModel]] = Field(None, description="Filters applied to columns in the dashboard")
-    meta: TableMeta = Field(...)
+    header_names: Dict[str, Optional[StrictStr]] = Field(description="Mapping of column ids to aliases", alias="headerNames")
+    column_state: List[ColumnStateType] = Field(description="Array of all columns in the dashboard", alias="columnState")
+    filters: Optional[Dict[str, FilterModel]] = Field(default=None, description="Filters applied to columns in the dashboard")
+    meta: TableMeta
     __properties = ["headerNames", "columnState", "filters", "meta"]
 
     class Config:
@@ -111,3 +113,5 @@ class TableView(BaseModel):
             "meta": TableMeta.from_dict(obj.get("meta")) if obj.get("meta") is not None else None
         })
         return _obj
+
+TableView.update_forward_refs()

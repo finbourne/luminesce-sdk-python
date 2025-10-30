@@ -18,8 +18,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic.v1 import StrictStr, Field, BaseModel, Field, StrictInt, StrictStr, conlist, constr 
+from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
+from typing_extensions import Annotated
+from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
+from datetime import datetime
 from luminesce.models.available_field import AvailableField
 from luminesce.models.field_design import FieldDesign
 from luminesce.models.joined_table_design import JoinedTableDesign
@@ -31,13 +33,13 @@ class QueryDesign(BaseModel):
     """
     table_name:  StrictStr = Field(...,alias="tableName", description="Name of the table being designed") 
     alias:  Optional[StrictStr] = Field(None,alias="alias", description="Alias for the table in the generated SQL, if any") 
-    fields: conlist(FieldDesign) = Field(..., description="Fields to be selected, aggregated over and/or filtered on")
-    joined_tables: Optional[conlist(JoinedTableDesign)] = Field(None, alias="joinedTables", description="Joined in table to the main TableName / Alias")
-    order_by: Optional[conlist(OrderByTermDesign)] = Field(None, alias="orderBy", description="Order By clauses to apply")
-    limit: Optional[StrictInt] = Field(None, description="Row limit to apply, if any")
-    offset: Optional[StrictInt] = Field(None, description="Row offset to apply, if any")
-    warnings: Optional[conlist(StrictStr)] = Field(None, description="Any warnings to show the user when converting from SQL to this representation")
-    available_fields: Optional[conlist(AvailableField)] = Field(None, alias="availableFields", description="Fields that are known to be available for design when parsing SQL")
+    fields: List[FieldDesign] = Field(description="Fields to be selected, aggregated over and/or filtered on")
+    joined_tables: Optional[List[JoinedTableDesign]] = Field(default=None, description="Joined in table to the main TableName / Alias", alias="joinedTables")
+    order_by: Optional[List[OrderByTermDesign]] = Field(default=None, description="Order By clauses to apply", alias="orderBy")
+    limit: Optional[StrictInt] = Field(default=None, description="Row limit to apply, if any")
+    offset: Optional[StrictInt] = Field(default=None, description="Row offset to apply, if any")
+    warnings: Optional[List[StrictStr]] = Field(default=None, description="Any warnings to show the user when converting from SQL to this representation")
+    available_fields: Optional[List[AvailableField]] = Field(default=None, description="Fields that are known to be available for design when parsing SQL", alias="availableFields")
     __properties = ["tableName", "alias", "fields", "joinedTables", "orderBy", "limit", "offset", "warnings", "availableFields"]
 
     class Config:
@@ -158,3 +160,5 @@ class QueryDesign(BaseModel):
             "available_fields": [AvailableField.from_dict(_item) for _item in obj.get("availableFields")] if obj.get("availableFields") is not None else None
         })
         return _obj
+
+QueryDesign.update_forward_refs()
