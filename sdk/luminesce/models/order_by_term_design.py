@@ -28,7 +28,7 @@ class OrderByTermDesign(BaseModel):
     """
     A single clause within an Order BY  # noqa: E501
     """
-    var_field:  StrictStr = Field(...,alias="field", description="Name of the field to order by") 
+    field:  StrictStr = Field(...,alias="field", description="Name of the field to order by") 
     direction: Optional[OrderByDirection] = None
     table_alias:  Optional[StrictStr] = Field(None,alias="tableAlias", description="Table Alias of the field to order by") 
     __properties = ["field", "direction", "tableAlias"]
@@ -82,7 +82,7 @@ class OrderByTermDesign(BaseModel):
             return OrderByTermDesign.parse_obj(obj)
 
         _obj = OrderByTermDesign.parse_obj({
-            "var_field": obj.get("field"),
+            "field": obj.get("field"),
             "direction": obj.get("direction"),
             "table_alias": obj.get("tableAlias")
         })

@@ -4,7 +4,7 @@ A single clause within an Order BY
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**var_field** | **str** | Name of the field to order by | 
+**field** | **str** | Name of the field to order by | 
 **direction** | [**OrderByDirection**](OrderByDirection.md) |  | [optional] 
 **table_alias** | **str** | Table Alias of the field to order by | [optional] 
 ## Example
@@ -16,10 +16,10 @@ from typing_extensions import Annotated
 from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
 
-var_field: StrictStr = "example_var_field"
+field: StrictStr = "example_field"
 direction: Optional[OrderByDirection] = None
 table_alias: Optional[StrictStr] = "example_table_alias"
-order_by_term_design_instance = OrderByTermDesign(var_field=var_field, direction=direction, table_alias=table_alias)
+order_by_term_design_instance = OrderByTermDesign(field=field, direction=direction, table_alias=table_alias)
 
 ```
 
