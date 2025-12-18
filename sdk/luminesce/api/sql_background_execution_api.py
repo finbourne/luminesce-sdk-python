@@ -2117,9 +2117,9 @@ class SqlBackgroundExecutionApi:
 
     @validate_arguments
     def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
-        """GetHistoricalFeedback: View query progress up to this point  # noqa: E501
+        """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
-        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2148,9 +2148,9 @@ class SqlBackgroundExecutionApi:
 
     @validate_arguments
     def get_historical_feedback_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
-        """GetHistoricalFeedback: View query progress up to this point  # noqa: E501
+        """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
-        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2259,28 +2259,30 @@ class SqlBackgroundExecutionApi:
 
 
     @overload
-    async def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    async def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, include_all_feedback : Annotated[Optional[StrictBool], Field(description="Should all the feedback be returned?  As opposed to just the new feedback.")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @overload
-    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, include_all_feedback : Annotated[Optional[StrictBool], Field(description="Should all the feedback be returned?  As opposed to just the new feedback.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
+    def get_progress_of(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, include_all_feedback : Annotated[Optional[StrictBool], Field(description="Should all the feedback be returned?  As opposed to just the new feedback.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
         """GetProgressOf: View query progress up to this point.  # noqa: E501
 
         View progress information (up until this point and starting from the last point requested) The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running or the calling user did not run the query. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_progress_of(execution_id, build_from_logs, async_req=True)
+        >>> thread = api.get_progress_of(execution_id, build_from_logs, include_all_feedback, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
         :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)
         :type build_from_logs: bool
+        :param include_all_feedback: Should all the feedback be returned?  As opposed to just the new feedback.
+        :type include_all_feedback: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -2297,23 +2299,25 @@ class SqlBackgroundExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_progress_of_with_http_info(execution_id, build_from_logs, **kwargs)  # noqa: E501
+        return self.get_progress_of_with_http_info(execution_id, build_from_logs, include_all_feedback, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_progress_of_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_progress_of_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], build_from_logs : Annotated[Optional[StrictBool], Field(description="Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)")] = None, include_all_feedback : Annotated[Optional[StrictBool], Field(description="Should all the feedback be returned?  As opposed to just the new feedback.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetProgressOf: View query progress up to this point.  # noqa: E501
 
         View progress information (up until this point and starting from the last point requested) The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running or the calling user did not run the query. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_progress_of_with_http_info(execution_id, build_from_logs, async_req=True)
+        >>> thread = api.get_progress_of_with_http_info(execution_id, build_from_logs, include_all_feedback, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
         :param build_from_logs: Should the response state be build from query logs if missing from the shared-db-state?  Deprecated. Regardless of the value here it is now the case that:  False [and now even True] will mean `404 Not Found` in cases where it was a real query but has passed its `keepForSeconds` since the query completed (as well as 'this was not a query at all' of course)
         :type build_from_logs: bool
+        :param include_all_feedback: Should all the feedback be returned?  As opposed to just the new feedback.
+        :type include_all_feedback: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -2342,7 +2346,8 @@ class SqlBackgroundExecutionApi:
 
         _all_params = [
             'execution_id',
-            'build_from_logs'
+            'build_from_logs',
+            'include_all_feedback'
         ]
         _all_params.extend(
             [
@@ -2379,6 +2384,9 @@ class SqlBackgroundExecutionApi:
         _query_params = []
         if _params.get('build_from_logs') is not None:  # noqa: E501
             _query_params.append(('buildFromLogs', _params['build_from_logs']))
+
+        if _params.get('include_all_feedback') is not None:  # noqa: E501
+            _query_params.append(('includeAllFeedback', _params['include_all_feedback']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
