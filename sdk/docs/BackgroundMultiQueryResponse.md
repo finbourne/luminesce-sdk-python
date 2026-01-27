@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **cancel** | [**Link**](Link.md) |  | [optional] 
 **fetch_json** | [**List[Link]**](Link.md) | Json (as a string) data request links for all of the child queries | [optional] [readonly] 
 **fetch_json_proper** | [**List[Link]**](Link.md) | Json-proper data request links for all of the child queries | [optional] [readonly] 
+**fetch_json_proper_with_lineage** | [**List[Link]**](Link.md) | Json-proper-with-lineage data request links for all of the child queries | [optional] [readonly] 
 **fetch_xml** | [**List[Link]**](Link.md) | Xml data request links for all of the child queries | [optional] [readonly] 
 **fetch_parquet** | [**List[Link]**](Link.md) | Parquet data request links for all of the child queries | [optional] [readonly] 
 **fetch_csv** | [**List[Link]**](Link.md) | CSV data request links for all of the child queries | [optional] [readonly] 
@@ -29,6 +30,7 @@ progress: Optional[Link] = None
 cancel: Optional[Link] = None
 fetch_json: Optional[List[Link]] = # Replace with your value
 fetch_json_proper: Optional[List[Link]] = # Replace with your value
+fetch_json_proper_with_lineage: Optional[List[Link]] = # Replace with your value
 fetch_xml: Optional[List[Link]] = # Replace with your value
 fetch_parquet: Optional[List[Link]] = # Replace with your value
 fetch_csv: Optional[List[Link]] = # Replace with your value
@@ -36,7 +38,7 @@ fetch_pipe: Optional[List[Link]] = # Replace with your value
 fetch_excel: Optional[List[Link]] = # Replace with your value
 fetch_sqlite: Optional[List[Link]] = # Replace with your value
 histogram: Optional[List[Link]] = # Replace with your value
-background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
+background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
 ```
 

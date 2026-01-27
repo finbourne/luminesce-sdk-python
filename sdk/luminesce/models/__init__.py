@@ -67,6 +67,7 @@ from luminesce.models.intellisense_request import IntellisenseRequest
 from luminesce.models.intellisense_response import IntellisenseResponse
 from luminesce.models.intellisense_type import IntellisenseType
 from luminesce.models.joined_table_design import JoinedTableDesign
+from luminesce.models.lineage import Lineage
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_grid_data import LusidGridData
@@ -90,6 +91,8 @@ from luminesce.models.resource_list_of_access_controlled_resource import Resourc
 from luminesce.models.scalar_parameter import ScalarParameter
 from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
+from luminesce.models.sql_execution_flags import SqlExecutionFlags
+from luminesce.models.table_lineage import TableLineage
 from luminesce.models.table_meta import TableMeta
 from luminesce.models.table_view import TableView
 from luminesce.models.task_status import TaskStatus
@@ -152,6 +155,7 @@ __all__ = [
     "IntellisenseResponse",
     "IntellisenseType",
     "JoinedTableDesign",
+    "Lineage",
     "Link",
     "LuminesceBinaryType",
     "LusidGridData",
@@ -175,6 +179,8 @@ __all__ = [
     "ScalarParameter",
     "Source",
     "SourceType",
+    "SqlExecutionFlags",
+    "TableLineage",
     "TableMeta",
     "TableView",
     "TaskStatus",

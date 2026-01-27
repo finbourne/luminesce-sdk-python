@@ -25,6 +25,7 @@ from datetime import datetime
 from luminesce.models.background_query_state import BackgroundQueryState
 from luminesce.models.column import Column
 from luminesce.models.feedback_event_args import FeedbackEventArgs
+from luminesce.models.table_lineage import TableLineage
 from luminesce.models.task_status import TaskStatus
 
 class BackgroundQueryProgressResponse(BaseModel):
@@ -40,7 +41,8 @@ class BackgroundQueryProgressResponse(BaseModel):
     query:  Optional[StrictStr] = Field(None,alias="query", description="The LuminesceSql of the original request") 
     query_name:  Optional[StrictStr] = Field(None,alias="queryName", description="The QueryName given in the original request") 
     columns_available: Optional[List[Column]] = Field(default=None, description="When HasData is true this is the schema of columns that will be returned if the data is requested", alias="columnsAvailable")
-    __properties = ["hasData", "rowCount", "status", "state", "progress", "feedback", "query", "queryName", "columnsAvailable"]
+    lineage: Optional[TableLineage] = None
+    __properties = ["hasData", "rowCount", "status", "state", "progress", "feedback", "query", "queryName", "columnsAvailable", "lineage"]
 
     class Config:
         """Pydantic configuration"""
@@ -88,6 +90,9 @@ class BackgroundQueryProgressResponse(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['columnsAvailable'] = _items
+        # override the default output from pydantic by calling `to_dict()` of lineage
+        if self.lineage:
+            _dict['lineage'] = self.lineage.to_dict()
         # set to None if progress (nullable) is None
         # and __fields_set__ contains the field
         if self.progress is None and "progress" in self.__fields_set__:
@@ -133,7 +138,8 @@ class BackgroundQueryProgressResponse(BaseModel):
             "feedback": [FeedbackEventArgs.from_dict(_item) for _item in obj.get("feedback")] if obj.get("feedback") is not None else None,
             "query": obj.get("query"),
             "query_name": obj.get("queryName"),
-            "columns_available": [Column.from_dict(_item) for _item in obj.get("columnsAvailable")] if obj.get("columnsAvailable") is not None else None
+            "columns_available": [Column.from_dict(_item) for _item in obj.get("columnsAvailable")] if obj.get("columnsAvailable") is not None else None,
+            "lineage": TableLineage.from_dict(obj.get("lineage")) if obj.get("lineage") is not None else None
         })
         return _obj
 

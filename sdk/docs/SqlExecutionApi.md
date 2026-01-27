@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_by_query_json**
-> str get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper)
+> str get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper, include_lineage=include_lineage)
 
 GetByQueryJson: Execute Sql from the url returning JSON
 
@@ -283,13 +283,14 @@ def main():
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     timeout = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+    include_lineage = False # bool | Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper, opts=opts)
+        # api_response =  api_instance.get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper, include_lineage=include_lineage, opts=opts)
 
         # GetByQueryJson: Execute Sql from the url returning JSON
-        api_response = api_instance.get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper)
+        api_response = api_instance.get_by_query_json(query, scalar_parameters=scalar_parameters, query_name=query_name, timeout=timeout, json_proper=json_proper, include_lineage=include_lineage)
         pprint(api_response)
 
     except ApiException as e:
@@ -307,6 +308,7 @@ Name | Type | Description  | Notes
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **timeout** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **json_proper** | **bool**| Should this be text/json (not json-encoded-as-a-string) | [optional] [default to False]
+ **include_lineage** | **bool**| Should lineage be included? If true this will be &#x60;properJson&#x60; and the jsonProper flag ignored | [optional] [default to False]
 
 ### Return type
 
@@ -931,7 +933,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **put_by_query_json**
-> str put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper)
+> str put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper, include_lineage=include_lineage)
 
 PutByQueryJson: Execute Sql from the body returning JSON
 
@@ -987,13 +989,14 @@ def main():
     query_name = 'Get tables/fields' # str | Name to apply to the query in logs and `Sys.Logs.HcQueryStart` (optional)
     timeout_seconds = 0 # int | In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s (optional) (default to 0)
     json_proper = False # bool | Should this be text/json (not json-encoded-as-a-string) (optional) (default to False)
+    include_lineage = False # bool | Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper, opts=opts)
+        # api_response =  api_instance.put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper, include_lineage=include_lineage, opts=opts)
 
         # PutByQueryJson: Execute Sql from the body returning JSON
-        api_response = api_instance.put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper)
+        api_response = api_instance.put_by_query_json(body, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, json_proper=json_proper, include_lineage=include_lineage)
         pprint(api_response)
 
     except ApiException as e:
@@ -1011,6 +1014,7 @@ Name | Type | Description  | Notes
  **query_name** | **str**| Name to apply to the query in logs and &#x60;Sys.Logs.HcQueryStart&#x60; | [optional] 
  **timeout_seconds** | **int**| In seconds: &lt;0 or &gt; 175 → 175s (Maximum allowed), 0 → 120s | [optional] [default to 0]
  **json_proper** | **bool**| Should this be text/json (not json-encoded-as-a-string) | [optional] [default to False]
+ **include_lineage** | **bool**| Should lineage be included? If true this will be &#x60;properJson&#x60; and the jsonProper flag ignored | [optional] [default to False]
 
 ### Return type
 

@@ -36,7 +36,11 @@ class LusidGridData(BaseModel):
     dashboard_type: Optional[DashboardType] = Field(default=None, alias="dashboardType")
     use_settle_date: Optional[StrictBool] = Field(default=None, description="Whether to use the Settlement date or the Transaction date", alias="useSettleDate")
     dates: Optional[DateParameters] = None
-    __properties = ["lusidGridDesign", "resourceId", "dashboardType", "useSettleDate", "dates"]
+    recipe:  Optional[StrictStr] = Field(None,alias="recipe", description="The recipe to use for valuations") 
+    currency:  Optional[StrictStr] = Field(None,alias="currency", description="The currency to use for valuations") 
+    tenor:  Optional[StrictStr] = Field(None,alias="tenor", description="The tenor to use for valuations") 
+    order_flow:  Optional[StrictStr] = Field(None,alias="orderFlow", description="Type of order flow to include") 
+    __properties = ["lusidGridDesign", "resourceId", "dashboardType", "useSettleDate", "dates", "recipe", "currency", "tenor", "orderFlow"]
 
     class Config:
         """Pydantic configuration"""
@@ -84,6 +88,26 @@ class LusidGridData(BaseModel):
         if self.use_settle_date is None and "use_settle_date" in self.__fields_set__:
             _dict['useSettleDate'] = None
 
+        # set to None if recipe (nullable) is None
+        # and __fields_set__ contains the field
+        if self.recipe is None and "recipe" in self.__fields_set__:
+            _dict['recipe'] = None
+
+        # set to None if currency (nullable) is None
+        # and __fields_set__ contains the field
+        if self.currency is None and "currency" in self.__fields_set__:
+            _dict['currency'] = None
+
+        # set to None if tenor (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tenor is None and "tenor" in self.__fields_set__:
+            _dict['tenor'] = None
+
+        # set to None if order_flow (nullable) is None
+        # and __fields_set__ contains the field
+        if self.order_flow is None and "order_flow" in self.__fields_set__:
+            _dict['orderFlow'] = None
+
         return _dict
 
     @classmethod
@@ -100,7 +124,11 @@ class LusidGridData(BaseModel):
             "resource_id": ResourceId.from_dict(obj.get("resourceId")) if obj.get("resourceId") is not None else None,
             "dashboard_type": obj.get("dashboardType"),
             "use_settle_date": obj.get("useSettleDate"),
-            "dates": DateParameters.from_dict(obj.get("dates")) if obj.get("dates") is not None else None
+            "dates": DateParameters.from_dict(obj.get("dates")) if obj.get("dates") is not None else None,
+            "recipe": obj.get("recipe"),
+            "currency": obj.get("currency"),
+            "tenor": obj.get("tenor"),
+            "order_flow": obj.get("orderFlow")
         })
         return _obj
 

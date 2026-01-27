@@ -9,6 +9,10 @@ Name | Type | Description | Notes
 **dashboard_type** | [**DashboardType**](DashboardType.md) |  | [optional] 
 **use_settle_date** | **bool** | Whether to use the Settlement date or the Transaction date | [optional] 
 **dates** | [**DateParameters**](DateParameters.md) |  | [optional] 
+**recipe** | **str** | The recipe to use for valuations | [optional] 
+**currency** | **str** | The currency to use for valuations | [optional] 
+**tenor** | **str** | The tenor to use for valuations | [optional] 
+**order_flow** | **str** | Type of order flow to include | [optional] 
 ## Example
 
 ```python
@@ -24,7 +28,11 @@ dashboard_type: Optional[DashboardType] = # Replace with your value
 use_settle_date: Optional[StrictBool] = # Replace with your value
 use_settle_date:Optional[StrictBool] = None
 dates: Optional[DateParameters] = None
-lusid_grid_data_instance = LusidGridData(lusid_grid_design=lusid_grid_design, resource_id=resource_id, dashboard_type=dashboard_type, use_settle_date=use_settle_date, dates=dates)
+recipe: Optional[StrictStr] = "example_recipe"
+currency: Optional[StrictStr] = "example_currency"
+tenor: Optional[StrictStr] = "example_tenor"
+order_flow: Optional[StrictStr] = "example_order_flow"
+lusid_grid_data_instance = LusidGridData(lusid_grid_design=lusid_grid_design, resource_id=resource_id, dashboard_type=dashboard_type, use_settle_date=use_settle_date, dates=dates, recipe=recipe, currency=currency, tenor=tenor, order_flow=order_flow)
 
 ```
 

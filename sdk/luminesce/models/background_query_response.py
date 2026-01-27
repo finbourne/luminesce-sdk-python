@@ -33,6 +33,7 @@ class BackgroundQueryResponse(BaseModel):
     cancel: Optional[Link] = None
     fetch_json: Optional[Link] = Field(default=None, alias="fetchJson")
     fetch_json_proper: Optional[Link] = Field(default=None, alias="fetchJsonProper")
+    fetch_json_proper_with_lineage: Optional[Link] = Field(default=None, alias="fetchJsonProperWithLineage")
     fetch_xml: Optional[Link] = Field(default=None, alias="fetchXml")
     fetch_parquet: Optional[Link] = Field(default=None, alias="fetchParquet")
     fetch_csv: Optional[Link] = Field(default=None, alias="fetchCsv")
@@ -40,7 +41,7 @@ class BackgroundQueryResponse(BaseModel):
     fetch_excel: Optional[Link] = Field(default=None, alias="fetchExcel")
     fetch_sqlite: Optional[Link] = Field(default=None, alias="fetchSqlite")
     histogram: Optional[Link] = None
-    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
+    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
 
     class Config:
         """Pydantic configuration"""
@@ -86,6 +87,9 @@ class BackgroundQueryResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of fetch_json_proper
         if self.fetch_json_proper:
             _dict['fetchJsonProper'] = self.fetch_json_proper.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of fetch_json_proper_with_lineage
+        if self.fetch_json_proper_with_lineage:
+            _dict['fetchJsonProperWithLineage'] = self.fetch_json_proper_with_lineage.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fetch_xml
         if self.fetch_xml:
             _dict['fetchXml'] = self.fetch_xml.to_dict()
@@ -129,6 +133,7 @@ class BackgroundQueryResponse(BaseModel):
             "cancel": Link.from_dict(obj.get("cancel")) if obj.get("cancel") is not None else None,
             "fetch_json": Link.from_dict(obj.get("fetchJson")) if obj.get("fetchJson") is not None else None,
             "fetch_json_proper": Link.from_dict(obj.get("fetchJsonProper")) if obj.get("fetchJsonProper") is not None else None,
+            "fetch_json_proper_with_lineage": Link.from_dict(obj.get("fetchJsonProperWithLineage")) if obj.get("fetchJsonProperWithLineage") is not None else None,
             "fetch_xml": Link.from_dict(obj.get("fetchXml")) if obj.get("fetchXml") is not None else None,
             "fetch_parquet": Link.from_dict(obj.get("fetchParquet")) if obj.get("fetchParquet") is not None else None,
             "fetch_csv": Link.from_dict(obj.get("fetchCsv")) if obj.get("fetchCsv") is not None else None,

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **date_from** | **datetime** | Parameter to determine the lower bound in a date range | [optional] 
 **date_to** | **datetime** | Parameter to determine the upper bound in a date range | [optional] 
 **effective_at** | **datetime** | EffectiveAt of the dashboard | [optional] 
+**effective_from** | **datetime** | EffectiveFrom of the dashboard | [optional] 
 **as_at** | **datetime** | AsAt of the dashboard | 
 ## Example
 
@@ -20,8 +21,9 @@ from datetime import datetime
 date_from: Optional[datetime] = # Replace with your value
 date_to: Optional[datetime] = # Replace with your value
 effective_at: Optional[datetime] = # Replace with your value
+effective_from: Optional[datetime] = # Replace with your value
 as_at: datetime = # Replace with your value
-date_parameters_instance = DateParameters(date_from=date_from, date_to=date_to, effective_at=effective_at, as_at=as_at)
+date_parameters_instance = DateParameters(date_from=date_from, date_to=date_to, effective_at=effective_at, effective_from=effective_from, as_at=as_at)
 
 ```
 

@@ -30,8 +30,9 @@ class DateParameters(BaseModel):
     date_from: Optional[datetime] = Field(default=None, description="Parameter to determine the lower bound in a date range", alias="dateFrom")
     date_to: Optional[datetime] = Field(default=None, description="Parameter to determine the upper bound in a date range", alias="dateTo")
     effective_at: Optional[datetime] = Field(default=None, description="EffectiveAt of the dashboard", alias="effectiveAt")
+    effective_from: Optional[datetime] = Field(default=None, description="EffectiveFrom of the dashboard", alias="effectiveFrom")
     as_at: datetime = Field(description="AsAt of the dashboard", alias="asAt")
-    __properties = ["dateFrom", "dateTo", "effectiveAt", "asAt"]
+    __properties = ["dateFrom", "dateTo", "effectiveAt", "effectiveFrom", "asAt"]
 
     class Config:
         """Pydantic configuration"""
@@ -80,6 +81,11 @@ class DateParameters(BaseModel):
         if self.effective_at is None and "effective_at" in self.__fields_set__:
             _dict['effectiveAt'] = None
 
+        # set to None if effective_from (nullable) is None
+        # and __fields_set__ contains the field
+        if self.effective_from is None and "effective_from" in self.__fields_set__:
+            _dict['effectiveFrom'] = None
+
         return _dict
 
     @classmethod
@@ -95,6 +101,7 @@ class DateParameters(BaseModel):
             "date_from": obj.get("dateFrom"),
             "date_to": obj.get("dateTo"),
             "effective_at": obj.get("effectiveAt"),
+            "effective_from": obj.get("effectiveFrom"),
             "as_at": obj.get("asAt")
         })
         return _obj

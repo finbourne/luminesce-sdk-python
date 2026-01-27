@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_fields**
-> str get_fields(table_like=table_like)
+> str get_fields(table_like=table_like, add_lineage=add_lineage)
 
 GetFields: List field and parameters for providers
 
@@ -153,14 +153,15 @@ def main():
     
     # Create an instance of the API class
     api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
-    table_like = '%' # str |  (optional) (default to '%')
+    table_like = '%' # str | Allows for SQL-LIKE style filtering of which Providers you want the fields for. (optional) (default to '%')
+    add_lineage = False # bool | Adds in any column lineage which is registered in the catalog to the results. (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_fields(table_like=table_like, opts=opts)
+        # api_response =  api_instance.get_fields(table_like=table_like, add_lineage=add_lineage, opts=opts)
 
         # GetFields: List field and parameters for providers
-        api_response = api_instance.get_fields(table_like=table_like)
+        api_response = api_instance.get_fields(table_like=table_like, add_lineage=add_lineage)
         pprint(api_response)
 
     except ApiException as e:
@@ -173,7 +174,8 @@ main()
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **table_like** | **str**|  | [optional] [default to &#39;%&#39;]
+ **table_like** | **str**| Allows for SQL-LIKE style filtering of which Providers you want the fields for. | [optional] [default to &#39;%&#39;]
+ **add_lineage** | **bool**| Adds in any column lineage which is registered in the catalog to the results. | [optional] [default to False]
 
 ### Return type
 

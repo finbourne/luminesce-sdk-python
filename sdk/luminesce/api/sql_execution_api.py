@@ -444,22 +444,22 @@ class SqlExecutionApi:
 
 
     @overload
-    async def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_by_query_json(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetByQueryJson: Execute Sql from the url returning JSON  # noqa: E501
 
          Returns data from a simple single-line query execution which is specified on the url. e.g. `select ^ from Sys.Field order by 1, 2`, returned in the format of the method name.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_json(query, scalar_parameters, query_name, timeout, json_proper, async_req=True)
+        >>> thread = api.get_by_query_json(query, scalar_parameters, query_name, timeout, json_proper, include_lineage, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
@@ -472,6 +472,8 @@ class SqlExecutionApi:
         :type timeout: int
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
+        :param include_lineage: Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored
+        :type include_lineage: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -488,17 +490,17 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, **kwargs)  # noqa: E501
+        return self.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, include_lineage, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_by_query_json_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_by_query_json_with_http_info(self, query : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (must be one line only)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetByQueryJson: Execute Sql from the url returning JSON  # noqa: E501
 
          Returns data from a simple single-line query execution which is specified on the url. e.g. `select ^ from Sys.Field order by 1, 2`, returned in the format of the method name.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, async_req=True)
+        >>> thread = api.get_by_query_json_with_http_info(query, scalar_parameters, query_name, timeout, json_proper, include_lineage, async_req=True)
         >>> result = thread.get()
 
         :param query: LuminesceSql to Execute (must be one line only) (required)
@@ -511,6 +513,8 @@ class SqlExecutionApi:
         :type timeout: int
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
+        :param include_lineage: Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored
+        :type include_lineage: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -542,7 +546,8 @@ class SqlExecutionApi:
             'scalar_parameters',
             'query_name',
             'timeout',
-            'json_proper'
+            'json_proper',
+            'include_lineage'
         ]
         _all_params.extend(
             [
@@ -588,6 +593,9 @@ class SqlExecutionApi:
 
         if _params.get('json_proper') is not None:  # noqa: E501
             _query_params.append(('jsonProper', _params['json_proper']))
+
+        if _params.get('include_lineage') is not None:  # noqa: E501
+            _query_params.append(('includeLineage', _params['include_lineage']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -1769,22 +1777,22 @@ class SqlExecutionApi:
 
 
     @overload
-    async def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> str:  # noqa: E501
+    async def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def put_by_query_json(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """PutByQueryJson: Execute Sql from the body returning JSON  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer and line break delimited Sql, whic will be returned in the format of the method name. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_json(body, scalar_parameters, query_name, timeout_seconds, json_proper, async_req=True)
+        >>> thread = api.put_by_query_json(body, scalar_parameters, query_name, timeout_seconds, json_proper, include_lineage, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
@@ -1797,6 +1805,8 @@ class SqlExecutionApi:
         :type timeout_seconds: int
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
+        :param include_lineage: Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored
+        :type include_lineage: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -1813,17 +1823,17 @@ class SqlExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, **kwargs)  # noqa: E501
+        return self.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, include_lineage, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def put_by_query_json_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def put_by_query_json_with_http_info(self, body : Annotated[StrictStr, Field(..., description="LuminesceSql to Execute (may be multi-line)")], scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="Name to apply to the query in logs and `Sys.Logs.HcQueryStart`")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="In seconds: <0 or > 175 → 175s (Maximum allowed), 0 → 120s")] = None, json_proper : Annotated[Optional[StrictBool], Field(description="Should this be text/json (not json-encoded-as-a-string)")] = None, include_lineage : Annotated[Optional[StrictBool], Field(description="Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """PutByQueryJson: Execute Sql from the body returning JSON  # noqa: E501
 
          For more complex LuminesceSql a PUT will allow for longer and line break delimited Sql, whic will be returned in the format of the method name. e.g.: ```sql @@cutoff = select #2020-02-01#; @issues = select Id, SortId, Summary, Created, Updated from Dev.Jira.Issue where Project='HC' and Created < @@cutoff and Updated > @@cutoff;  select i.Id, i.SortId, i.Summary, LinkText, LinkedIssueId, LinkedIssueSortId, LinkedIssueSummary from @issues i inner join Dev.Jira.Issue.Link li     on i.Id = li.IssueId ```  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - something failed with the execution or parsing of your query - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, async_req=True)
+        >>> thread = api.put_by_query_json_with_http_info(body, scalar_parameters, query_name, timeout_seconds, json_proper, include_lineage, async_req=True)
         >>> result = thread.get()
 
         :param body: LuminesceSql to Execute (may be multi-line) (required)
@@ -1836,6 +1846,8 @@ class SqlExecutionApi:
         :type timeout_seconds: int
         :param json_proper: Should this be text/json (not json-encoded-as-a-string)
         :type json_proper: bool
+        :param include_lineage: Should lineage be included? If true this will be `properJson` and the jsonProper flag ignored
+        :type include_lineage: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -1867,7 +1879,8 @@ class SqlExecutionApi:
             'scalar_parameters',
             'query_name',
             'timeout_seconds',
-            'json_proper'
+            'json_proper',
+            'include_lineage'
         ]
         _all_params.extend(
             [
@@ -1910,6 +1923,9 @@ class SqlExecutionApi:
 
         if _params.get('json_proper') is not None:  # noqa: E501
             _query_params.append(('jsonProper', _params['json_proper']))
+
+        if _params.get('include_lineage') is not None:  # noqa: E501
+            _query_params.append(('includeLineage', _params['include_lineage']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

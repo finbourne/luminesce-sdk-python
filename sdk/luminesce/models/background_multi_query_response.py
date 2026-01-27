@@ -33,6 +33,7 @@ class BackgroundMultiQueryResponse(BaseModel):
     cancel: Optional[Link] = None
     fetch_json: Optional[List[Link]] = Field(default=None, description="Json (as a string) data request links for all of the child queries", alias="fetchJson")
     fetch_json_proper: Optional[List[Link]] = Field(default=None, description="Json-proper data request links for all of the child queries", alias="fetchJsonProper")
+    fetch_json_proper_with_lineage: Optional[List[Link]] = Field(default=None, description="Json-proper-with-lineage data request links for all of the child queries", alias="fetchJsonProperWithLineage")
     fetch_xml: Optional[List[Link]] = Field(default=None, description="Xml data request links for all of the child queries", alias="fetchXml")
     fetch_parquet: Optional[List[Link]] = Field(default=None, description="Parquet data request links for all of the child queries", alias="fetchParquet")
     fetch_csv: Optional[List[Link]] = Field(default=None, description="CSV data request links for all of the child queries", alias="fetchCsv")
@@ -40,7 +41,7 @@ class BackgroundMultiQueryResponse(BaseModel):
     fetch_excel: Optional[List[Link]] = Field(default=None, description="Excel workbook data request links for all of the child queries", alias="fetchExcel")
     fetch_sqlite: Optional[List[Link]] = Field(default=None, description="SqLite DB data request links for all of the child queries", alias="fetchSqlite")
     histogram: Optional[List[Link]] = Field(default=None, description="Histogram links for all of the child queries")
-    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
+    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
 
     class Config:
         """Pydantic configuration"""
@@ -75,6 +76,7 @@ class BackgroundMultiQueryResponse(BaseModel):
                             "execution_id",
                             "fetch_json",
                             "fetch_json_proper",
+                            "fetch_json_proper_with_lineage",
                             "fetch_xml",
                             "fetch_parquet",
                             "fetch_csv",
@@ -104,6 +106,13 @@ class BackgroundMultiQueryResponse(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['fetchJsonProper'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in fetch_json_proper_with_lineage (list)
+        _items = []
+        if self.fetch_json_proper_with_lineage:
+            for _item in self.fetch_json_proper_with_lineage:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['fetchJsonProperWithLineage'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in fetch_xml (list)
         _items = []
         if self.fetch_xml:
@@ -163,6 +172,11 @@ class BackgroundMultiQueryResponse(BaseModel):
         if self.fetch_json_proper is None and "fetch_json_proper" in self.__fields_set__:
             _dict['fetchJsonProper'] = None
 
+        # set to None if fetch_json_proper_with_lineage (nullable) is None
+        # and __fields_set__ contains the field
+        if self.fetch_json_proper_with_lineage is None and "fetch_json_proper_with_lineage" in self.__fields_set__:
+            _dict['fetchJsonProperWithLineage'] = None
+
         # set to None if fetch_xml (nullable) is None
         # and __fields_set__ contains the field
         if self.fetch_xml is None and "fetch_xml" in self.__fields_set__:
@@ -215,6 +229,7 @@ class BackgroundMultiQueryResponse(BaseModel):
             "cancel": Link.from_dict(obj.get("cancel")) if obj.get("cancel") is not None else None,
             "fetch_json": [Link.from_dict(_item) for _item in obj.get("fetchJson")] if obj.get("fetchJson") is not None else None,
             "fetch_json_proper": [Link.from_dict(_item) for _item in obj.get("fetchJsonProper")] if obj.get("fetchJsonProper") is not None else None,
+            "fetch_json_proper_with_lineage": [Link.from_dict(_item) for _item in obj.get("fetchJsonProperWithLineage")] if obj.get("fetchJsonProperWithLineage") is not None else None,
             "fetch_xml": [Link.from_dict(_item) for _item in obj.get("fetchXml")] if obj.get("fetchXml") is not None else None,
             "fetch_parquet": [Link.from_dict(_item) for _item in obj.get("fetchParquet")] if obj.get("fetchParquet") is not None else None,
             "fetch_csv": [Link.from_dict(_item) for _item in obj.get("fetchCsv")] if obj.get("fetchCsv") is not None else None,

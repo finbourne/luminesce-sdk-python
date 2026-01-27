@@ -29,6 +29,7 @@ Class | Method | HTTP request | Description
 *SqlBackgroundExecutionApi* | [**fetch_query_result_histogram**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_histogram) | **GET** /api/SqlBackground/{executionId}/histogram | FetchQueryResultHistogram: Construct a histogram of the result of a query
 *SqlBackgroundExecutionApi* | [**fetch_query_result_json**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_json) | **GET** /api/SqlBackground/{executionId}/json | FetchQueryResultJson: Fetch the result of a query as a JSON string
 *SqlBackgroundExecutionApi* | [**fetch_query_result_json_proper**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_json_proper) | **GET** /api/SqlBackground/{executionId}/jsonProper | FetchQueryResultJsonProper: Fetch the result of a query as JSON
+*SqlBackgroundExecutionApi* | [**fetch_query_result_json_proper_with_lineage**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_json_proper_with_lineage) | **GET** /api/SqlBackground/{executionId}/jsonProperWithLineage | FetchQueryResultJsonProperWithLineage: Fetch the result of a query as JSON, but including a Lineage Node (if available)
 *SqlBackgroundExecutionApi* | [**fetch_query_result_parquet**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_parquet) | **GET** /api/SqlBackground/{executionId}/parquet | FetchQueryResultParquet: Fetch the result of a query as Parquet
 *SqlBackgroundExecutionApi* | [**fetch_query_result_pipe**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_pipe) | **GET** /api/SqlBackground/{executionId}/pipe | FetchQueryResultPipe: Fetch the result of a query as pipe-delimited
 *SqlBackgroundExecutionApi* | [**fetch_query_result_sqlite**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_sqlite) | **GET** /api/SqlBackground/{executionId}/sqlite | FetchQueryResultSqlite: Fetch the result of a query as SqLite
@@ -126,6 +127,7 @@ Class | Method | HTTP request | Description
  - [IntellisenseResponse](docs/IntellisenseResponse.md)
  - [IntellisenseType](docs/IntellisenseType.md)
  - [JoinedTableDesign](docs/JoinedTableDesign.md)
+ - [Lineage](docs/Lineage.md)
  - [Link](docs/Link.md)
  - [LuminesceBinaryType](docs/LuminesceBinaryType.md)
  - [LusidGridData](docs/LusidGridData.md)
@@ -149,6 +151,8 @@ Class | Method | HTTP request | Description
  - [ScalarParameter](docs/ScalarParameter.md)
  - [Source](docs/Source.md)
  - [SourceType](docs/SourceType.md)
+ - [SqlExecutionFlags](docs/SqlExecutionFlags.md)
+ - [TableLineage](docs/TableLineage.md)
  - [TableMeta](docs/TableMeta.md)
  - [TableView](docs/TableView.md)
  - [TaskStatus](docs/TaskStatus.md)

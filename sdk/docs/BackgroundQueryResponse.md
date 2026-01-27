@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **cancel** | [**Link**](Link.md) |  | [optional] 
 **fetch_json** | [**Link**](Link.md) |  | [optional] 
 **fetch_json_proper** | [**Link**](Link.md) |  | [optional] 
+**fetch_json_proper_with_lineage** | [**Link**](Link.md) |  | [optional] 
 **fetch_xml** | [**Link**](Link.md) |  | [optional] 
 **fetch_parquet** | [**Link**](Link.md) |  | [optional] 
 **fetch_csv** | [**Link**](Link.md) |  | [optional] 
@@ -30,6 +31,7 @@ progress: Optional[Link] = None
 cancel: Optional[Link] = None
 fetch_json: Optional[Link] = # Replace with your value
 fetch_json_proper: Optional[Link] = # Replace with your value
+fetch_json_proper_with_lineage: Optional[Link] = # Replace with your value
 fetch_xml: Optional[Link] = # Replace with your value
 fetch_parquet: Optional[Link] = # Replace with your value
 fetch_csv: Optional[Link] = # Replace with your value
@@ -37,7 +39,7 @@ fetch_pipe: Optional[Link] = # Replace with your value
 fetch_excel: Optional[Link] = # Replace with your value
 fetch_sqlite: Optional[Link] = # Replace with your value
 histogram: Optional[Link] = None
-background_query_response_instance = BackgroundQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
+background_query_response_instance = BackgroundQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
 ```
 

@@ -24,6 +24,7 @@ from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat
 from datetime import datetime
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.data_type import DataType
+from luminesce.models.lineage import Lineage
 
 class Column(BaseModel):
     """
@@ -33,6 +34,7 @@ class Column(BaseModel):
     is_main: Optional[StrictBool] = Field(default=None, alias="isMain")
     is_required_by_provider: Optional[StrictBool] = Field(default=None, alias="isRequiredByProvider")
     mandatory_for_actions:  Optional[StrictStr] = Field(None,alias="mandatoryForActions") 
+    lineage: Optional[Lineage] = None
     name:  Optional[StrictStr] = Field(None,alias="name") 
     type: Optional[DataType] = None
     description:  Optional[StrictStr] = Field(None,alias="description") 
@@ -40,7 +42,7 @@ class Column(BaseModel):
     condition_usage: Optional[ConditionAttributes] = Field(default=None, alias="conditionUsage")
     sample_values:  Optional[StrictStr] = Field(None,alias="sampleValues") 
     allowed_values:  Optional[StrictStr] = Field(None,alias="allowedValues") 
-    __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
+    __properties = ["isPrimaryKey", "isMain", "isRequiredByProvider", "mandatoryForActions", "lineage", "name", "type", "description", "displayName", "conditionUsage", "sampleValues", "allowedValues"]
 
     class Config:
         """Pydantic configuration"""
@@ -74,6 +76,9 @@ class Column(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of lineage
+        if self.lineage:
+            _dict['lineage'] = self.lineage.to_dict()
         # set to None if mandatory_for_actions (nullable) is None
         # and __fields_set__ contains the field
         if self.mandatory_for_actions is None and "mandatory_for_actions" in self.__fields_set__:
@@ -120,6 +125,7 @@ class Column(BaseModel):
             "is_main": obj.get("isMain"),
             "is_required_by_provider": obj.get("isRequiredByProvider"),
             "mandatory_for_actions": obj.get("mandatoryForActions"),
+            "lineage": Lineage.from_dict(obj.get("lineage")) if obj.get("lineage") is not None else None,
             "name": obj.get("name"),
             "type": obj.get("type"),
             "description": obj.get("description"),

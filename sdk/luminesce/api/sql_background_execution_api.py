@@ -26,6 +26,7 @@ from typing_extensions import Annotated
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse
+from luminesce.models.sql_execution_flags import SqlExecutionFlags
 
 from luminesce.api_client import ApiClient
 from luminesce.api_response import ApiResponse
@@ -1280,6 +1281,223 @@ class SqlBackgroundExecutionApi:
 
 
     @overload
+    async def fetch_query_result_json_proper_with_lineage(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, sort_by : Annotated[Optional[StrictStr], Field( description="Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[StrictStr], Field( description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field( description="Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field( description="Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @overload
+    def fetch_query_result_json_proper_with_lineage(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, sort_by : Annotated[Optional[StrictStr], Field( description="Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[StrictStr], Field( description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field( description="Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field( description="Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def fetch_query_result_json_proper_with_lineage(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, sort_by : Annotated[Optional[StrictStr], Field( description="Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[StrictStr], Field( description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field( description="Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field( description="Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """FetchQueryResultJsonProperWithLineage: Fetch the result of a query as JSON, but including a Lineage Node (if available)  # noqa: E501
+
+        Fetch the data in proper Json format (if available, or if not simply being informed it is not yet ready) But embeds the data under a `Data` node and Lineage (if requested when starting the execution) under a `Lineage` node. Lineage is just for the 'raw query' it ignores all of these parameters: sortBy, filter, select, groupBy and limit.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : Something failed with the execution of your query - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist or the calling user did not run the query. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.fetch_query_result_json_proper_with_lineage(execution_id, download, sort_by, filter, select, group_by, limit, page, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query (required)
+        :type execution_id: str
+        :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
+        :type download: bool
+        :param sort_by: Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.
+        :type sort_by: str
+        :param filter: An ODATA filter per Finbourne.Filtering syntax.
+        :type filter: str
+        :param select: Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.
+        :type select: str
+        :param group_by: Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.
+        :type group_by: str
+        :param limit: When paginating, only return this number of records, page should also be specified.
+        :type limit: int
+        :param page: 0-N based on chunk sized determined by the limit, ignored if limit < 1.
+        :type page: int
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: str
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the fetch_query_result_json_proper_with_lineage_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.fetch_query_result_json_proper_with_lineage_with_http_info(execution_id, download, sort_by, filter, select, group_by, limit, page, load_wait_milliseconds, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def fetch_query_result_json_proper_with_lineage_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], download : Annotated[Optional[StrictBool], Field(description="Makes this a file-download request (as opposed to returning the data in the response-body)")] = None, sort_by : Annotated[Optional[StrictStr], Field( description="Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[StrictStr], Field( description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field( description="Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field( description="Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, limit : Annotated[Optional[StrictInt], Field(description="When paginating, only return this number of records, page should also be specified.")] = None, page : Annotated[Optional[StrictInt], Field(description="0-N based on chunk sized determined by the limit, ignored if limit < 1.")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """FetchQueryResultJsonProperWithLineage: Fetch the result of a query as JSON, but including a Lineage Node (if available)  # noqa: E501
+
+        Fetch the data in proper Json format (if available, or if not simply being informed it is not yet ready) But embeds the data under a `Data` node and Lineage (if requested when starting the execution) under a `Lineage` node. Lineage is just for the 'raw query' it ignores all of these parameters: sortBy, filter, select, groupBy and limit.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : Something failed with the execution of your query - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist or the calling user did not run the query. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.fetch_query_result_json_proper_with_lineage_with_http_info(execution_id, download, sort_by, filter, select, group_by, limit, page, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query (required)
+        :type execution_id: str
+        :param download: Makes this a file-download request (as opposed to returning the data in the response-body)
+        :type download: bool
+        :param sort_by: Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.
+        :type sort_by: str
+        :param filter: An ODATA filter per Finbourne.Filtering syntax.
+        :type filter: str
+        :param select: Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.
+        :type select: str
+        :param group_by: Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.
+        :type group_by: str
+        :param limit: When paginating, only return this number of records, page should also be specified.
+        :type limit: int
+        :param page: 0-N based on chunk sized determined by the limit, ignored if limit < 1.
+        :type page: int
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'execution_id',
+            'download',
+            'sort_by',
+            'filter',
+            'select',
+            'group_by',
+            'limit',
+            'page',
+            'load_wait_milliseconds'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method fetch_query_result_json_proper_with_lineage" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['execution_id']:
+            _path_params['executionId'] = _params['execution_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('download') is not None:  # noqa: E501
+            _query_params.append(('download', _params['download']))
+
+        if _params.get('sort_by') is not None:  # noqa: E501
+            _query_params.append(('sortBy', _params['sort_by']))
+
+        if _params.get('filter') is not None:  # noqa: E501
+            _query_params.append(('filter', _params['filter']))
+
+        if _params.get('select') is not None:  # noqa: E501
+            _query_params.append(('select', _params['select']))
+
+        if _params.get('group_by') is not None:  # noqa: E501
+            _query_params.append(('groupBy', _params['group_by']))
+
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('load_wait_milliseconds') is not None:  # noqa: E501
+            _query_params.append(('loadWaitMilliseconds', _params['load_wait_milliseconds']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "str",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/SqlBackground/{executionId}/jsonProperWithLineage', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
     async def fetch_query_result_parquet(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], sort_by : Annotated[Optional[StrictStr], Field( description="Order the results by these fields.             Use the `-` sign to denote descending order, e.g. `-MyFieldName`.  Numeric indexes may be used also, e.g. `2,-3`.             Multiple fields can be denoted by a comma e.g. `-MyFieldName,AnotherFieldName,-AFurtherFieldName`.             Default is null, the sort order specified in the query itself.")] = None, filter : Annotated[Optional[StrictStr], Field( description="An ODATA filter per Finbourne.Filtering syntax.")] = None, select : Annotated[Optional[StrictStr], Field( description="Default is null (meaning return all columns in the original query itself). The values are in terms of the result column name from the original data set and are comma delimited. The power of this comes in that you may aggregate the data if you wish (that is the main reason for allowing this, in fact). e.g.: - `MyField` - `Max(x) FILTER (WHERE y > 12) as ABC` (max of a field, if another field lets it qualify, with a nice column name) - `count(*)` (count the rows for the given group, that would produce a rather ugly column name, but  it works) - `count(distinct x) as numOfXs` If there was an illegal character in a field you are selecting from, you are responsible for bracketing it with [ ].  e.g. - `some_field, count(*) as a, max(x) as b, min([column with space in name]) as nice_name`   where you would likely want to pass `1` as the `groupBy` also.")] = None, group_by : Annotated[Optional[StrictStr], Field( description="Groups by the specified fields.             A comma delimited list of: 1 based numeric indexes (cleaner), or repeats of the select expressions (a bit verbose and must match exactly).             e.g. `2,3`, `myColumn`.             Default is null (meaning no grouping will be performed on the selected columns).             This applies only over the result set being requested here, meaning indexes into the \"select\" parameter fields.             Only specify this if you are selecting aggregations in the \"select\" parameter.")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> bytearray:  # noqa: E501
         ...
 
@@ -2108,26 +2326,28 @@ class SqlBackgroundExecutionApi:
 
 
     @overload
-    async def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    async def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @overload
-    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
+    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
         """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
-        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days.  This method is slow by its nature of looking at the stream of historical feedback data.   On the other hand under some circumstances this can fail to wait long enough and return 404s where really there is data. To help with this `nextMessageWaitSeconds` may be specified to non-default values larger then the 2-7s used internally.  Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_historical_feedback(execution_id, async_req=True)
+        >>> thread = api.get_historical_feedback(execution_id, next_message_wait_seconds, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
+        :param next_message_wait_seconds: An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
+        :type next_message_wait_seconds: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -2144,21 +2364,23 @@ class SqlBackgroundExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_historical_feedback_with_http_info(execution_id, **kwargs)  # noqa: E501
+        return self.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_historical_feedback_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_historical_feedback_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
-        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days. Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days.  This method is slow by its nature of looking at the stream of historical feedback data.   On the other hand under some circumstances this can fail to wait long enough and return 404s where really there is data. To help with this `nextMessageWaitSeconds` may be specified to non-default values larger then the 2-7s used internally.  Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_historical_feedback_with_http_info(execution_id, async_req=True)
+        >>> thread = api.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
+        :param next_message_wait_seconds: An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
+        :type next_message_wait_seconds: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -2186,7 +2408,8 @@ class SqlBackgroundExecutionApi:
         _params = locals()
 
         _all_params = [
-            'execution_id'
+            'execution_id',
+            'next_message_wait_seconds'
         ]
         _all_params.extend(
             [
@@ -2221,6 +2444,9 @@ class SqlBackgroundExecutionApi:
 
         # process the query parameters
         _query_params = []
+        if _params.get('next_message_wait_seconds') is not None:  # noqa: E501
+            _query_params.append(('nextMessageWaitSeconds', _params['next_message_wait_seconds']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         # process the form parameters
@@ -2426,22 +2652,22 @@ class SqlBackgroundExecutionApi:
 
 
     @overload
-    async def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    async def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, execution_flags : Annotated[Optional[str], Field( description="Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.")] = None, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @overload
-    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
+    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, execution_flags : Annotated[Optional[str], Field( description="Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
+    def start_query(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, execution_flags : Annotated[Optional[str], Field( description="Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryResponse, Awaitable[BackgroundQueryResponse]]:  # noqa: E501
         """StartQuery: Start to Execute Sql in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready) - view progress information (up until this point) - cancel the query (if still running) / clear the data (if already returned)  This can still error on things like an outright syntax error, but more runtime errors (e.g. from providers) will not cause this to error (that will happen when attempting to fetch data)  Here is an example that intentionally takes one minute to run:  ```sql select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 ```  This is the only place in the Luminesce WebAPI where the following is supported. This will allow for the same user running a character-identical query not kick off a new query but simply be returned a reference  to the already running one for up to `N` seconds (where `N` should be `<=` `keepForSeconds`).  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.start_query(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
+        >>> thread = api.start_query(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, execution_flags, async_req=True)
         >>> result = thread.get()
 
         :param body: The LuminesceSql query to kick off. (required)
@@ -2456,6 +2682,8 @@ class SqlBackgroundExecutionApi:
         :type timeout_seconds: int
         :param keep_for_seconds: Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)
         :type keep_for_seconds: int
+        :param execution_flags: Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.
+        :type execution_flags: SqlExecutionFlags
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -2472,17 +2700,17 @@ class SqlBackgroundExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, **kwargs)  # noqa: E501
+        return self.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, execution_flags, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def start_query_with_http_info(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def start_query_with_http_info(self, body : Annotated[StrictStr, Field(..., description="The LuminesceSql query to kick off.")], execution_id : Annotated[Optional[StrictStr], Field( description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string. It might be ignored / replaced, for example if using the query cache and a cached query is found.")] = None, scalar_parameters : Annotated[Optional[Dict[str, Dict[str, StrictStr]]], Field(description="Json encoded dictionary of key-value pairs for scalar parameter values to use in the sql execution.")] = None, query_name : Annotated[Optional[StrictStr], Field( description="A name for this query.  This goes into logs and is available in `Sys.Logs.HcQueryStart`.")] = None, timeout_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h)")] = None, keep_for_seconds : Annotated[Optional[StrictInt], Field(description="Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)")] = None, execution_flags : Annotated[Optional[str], Field( description="Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """StartQuery: Start to Execute Sql in the background  # noqa: E501
 
          Allow for starting a potentially long running query and getting back an immediate response with how to  - fetch the data in various formats (if available, or if not simply being informed it is not yet ready) - view progress information (up until this point) - cancel the query (if still running) / clear the data (if already returned)  This can still error on things like an outright syntax error, but more runtime errors (e.g. from providers) will not cause this to error (that will happen when attempting to fetch data)  Here is an example that intentionally takes one minute to run:  ```sql select Str, Takes500Ms from Testing1K where UseLinq = true and [Int] <= 120 ```  This is the only place in the Luminesce WebAPI where the following is supported. This will allow for the same user running a character-identical query not kick off a new query but simply be returned a reference  to the already running one for up to `N` seconds (where `N` should be `<=` `keepForSeconds`).  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - there was something wrong with your query syntax (the issue was detected at parse-time) - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, async_req=True)
+        >>> thread = api.start_query_with_http_info(body, execution_id, scalar_parameters, query_name, timeout_seconds, keep_for_seconds, execution_flags, async_req=True)
         >>> result = thread.get()
 
         :param body: The LuminesceSql query to kick off. (required)
@@ -2497,6 +2725,8 @@ class SqlBackgroundExecutionApi:
         :type timeout_seconds: int
         :param keep_for_seconds: Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)
         :type keep_for_seconds: int
+        :param execution_flags: Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage.
+        :type execution_flags: SqlExecutionFlags
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -2529,7 +2759,8 @@ class SqlBackgroundExecutionApi:
             'scalar_parameters',
             'query_name',
             'timeout_seconds',
-            'keep_for_seconds'
+            'keep_for_seconds',
+            'execution_flags'
         ]
         _all_params.extend(
             [
@@ -2575,6 +2806,9 @@ class SqlBackgroundExecutionApi:
 
         if _params.get('keep_for_seconds') is not None:  # noqa: E501
             _query_params.append(('keepForSeconds', _params['keep_for_seconds']))
+
+        if _params.get('execution_flags') is not None:  # noqa: E501
+            _query_params.append(('executionFlags', _params['execution_flags']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
