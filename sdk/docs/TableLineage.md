@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **column_lineage** | [**List[Lineage]**](Lineage.md) |  | [optional] 
-**row_lineage** | [**Lineage**](Lineage.md) |  | [optional] 
+**whole_table_lineage** | [**Lineage**](Lineage.md) |  | [optional] 
 **failure_reason** | **str** |  | [optional] 
 ## Example
 
@@ -16,9 +16,9 @@ from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat
 from datetime import datetime
 
 column_lineage: Optional[List[Lineage]] = # Replace with your value
-row_lineage: Optional[Lineage] = # Replace with your value
+whole_table_lineage: Optional[Lineage] = # Replace with your value
 failure_reason: Optional[StrictStr] = "example_failure_reason"
-table_lineage_instance = TableLineage(column_lineage=column_lineage, row_lineage=row_lineage, failure_reason=failure_reason)
+table_lineage_instance = TableLineage(column_lineage=column_lineage, whole_table_lineage=whole_table_lineage, failure_reason=failure_reason)
 
 ```
 

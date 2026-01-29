@@ -29,9 +29,9 @@ class TableLineage(BaseModel):
     TableLineage
     """
     column_lineage: Optional[List[Lineage]] = Field(default=None, alias="columnLineage")
-    row_lineage: Optional[Lineage] = Field(default=None, alias="rowLineage")
+    whole_table_lineage: Optional[Lineage] = Field(default=None, alias="wholeTableLineage")
     failure_reason:  Optional[StrictStr] = Field(None,alias="failureReason") 
-    __properties = ["columnLineage", "rowLineage", "failureReason"]
+    __properties = ["columnLineage", "wholeTableLineage", "failureReason"]
 
     class Config:
         """Pydantic configuration"""
@@ -72,9 +72,9 @@ class TableLineage(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['columnLineage'] = _items
-        # override the default output from pydantic by calling `to_dict()` of row_lineage
-        if self.row_lineage:
-            _dict['rowLineage'] = self.row_lineage.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of whole_table_lineage
+        if self.whole_table_lineage:
+            _dict['wholeTableLineage'] = self.whole_table_lineage.to_dict()
         # set to None if column_lineage (nullable) is None
         # and __fields_set__ contains the field
         if self.column_lineage is None and "column_lineage" in self.__fields_set__:
@@ -98,7 +98,7 @@ class TableLineage(BaseModel):
 
         _obj = TableLineage.parse_obj({
             "column_lineage": [Lineage.from_dict(_item) for _item in obj.get("columnLineage")] if obj.get("columnLineage") is not None else None,
-            "row_lineage": Lineage.from_dict(obj.get("rowLineage")) if obj.get("rowLineage") is not None else None,
+            "whole_table_lineage": Lineage.from_dict(obj.get("wholeTableLineage")) if obj.get("wholeTableLineage") is not None else None,
             "failure_reason": obj.get("failureReason")
         })
         return _obj
