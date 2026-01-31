@@ -6,11 +6,12 @@ Name | Type | Description | Notes
 **type** | **str** |  | [optional] 
 **subtype** | **str** |  | [optional] 
 **alias** | **str** |  | [optional] 
-**display_name** | **str** |  | [optional] 
-**description** | **str** |  | [optional] 
+**column_title_tooltip** | **str** |  | [optional] 
+**explain_title** | **str** |  | [optional] 
+**explain_tooltip** | **str** |  | [optional] 
+**full_formula** | **str** |  | [optional] 
 **documentation_as_html** | **str** |  | [optional] 
 **documentation_as_mark_down** | **str** |  | [optional] 
-**full_text** | **str** |  | [optional] 
 **children** | [**List[Lineage]**](Lineage.md) |  | [optional] 
 ## Example
 
@@ -24,13 +25,14 @@ from datetime import datetime
 type: Optional[StrictStr] = "example_type"
 subtype: Optional[StrictStr] = "example_subtype"
 alias: Optional[StrictStr] = "example_alias"
-display_name: Optional[StrictStr] = "example_display_name"
-description: Optional[StrictStr] = "example_description"
+column_title_tooltip: Optional[StrictStr] = "example_column_title_tooltip"
+explain_title: Optional[StrictStr] = "example_explain_title"
+explain_tooltip: Optional[StrictStr] = "example_explain_tooltip"
+full_formula: Optional[StrictStr] = "example_full_formula"
 documentation_as_html: Optional[StrictStr] = "example_documentation_as_html"
 documentation_as_mark_down: Optional[StrictStr] = "example_documentation_as_mark_down"
-full_text: Optional[StrictStr] = "example_full_text"
 children: Optional[List[Lineage]] = None
-lineage_instance = Lineage(type=type, subtype=subtype, alias=alias, display_name=display_name, description=description, documentation_as_html=documentation_as_html, documentation_as_mark_down=documentation_as_mark_down, full_text=full_text, children=children)
+lineage_instance = Lineage(type=type, subtype=subtype, alias=alias, column_title_tooltip=column_title_tooltip, explain_title=explain_title, explain_tooltip=explain_tooltip, full_formula=full_formula, documentation_as_html=documentation_as_html, documentation_as_mark_down=documentation_as_mark_down, children=children)
 
 ```
 

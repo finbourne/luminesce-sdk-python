@@ -30,13 +30,14 @@ class Lineage(BaseModel):
     type:  Optional[StrictStr] = Field(None,alias="type") 
     subtype:  Optional[StrictStr] = Field(None,alias="subtype") 
     alias:  Optional[StrictStr] = Field(None,alias="alias") 
-    display_name:  Optional[StrictStr] = Field(None,alias="displayName") 
-    description:  Optional[StrictStr] = Field(None,alias="description") 
+    column_title_tooltip:  Optional[StrictStr] = Field(None,alias="columnTitleTooltip") 
+    explain_title:  Optional[StrictStr] = Field(None,alias="explainTitle") 
+    explain_tooltip:  Optional[StrictStr] = Field(None,alias="explainTooltip") 
+    full_formula:  Optional[StrictStr] = Field(None,alias="fullFormula") 
     documentation_as_html:  Optional[StrictStr] = Field(None,alias="documentationAsHtml") 
     documentation_as_mark_down:  Optional[StrictStr] = Field(None,alias="documentationAsMarkDown") 
-    full_text:  Optional[StrictStr] = Field(None,alias="fullText") 
     children: Optional[List[Lineage]] = None
-    __properties = ["type", "subtype", "alias", "displayName", "description", "documentationAsHtml", "documentationAsMarkDown", "fullText", "children"]
+    __properties = ["type", "subtype", "alias", "columnTitleTooltip", "explainTitle", "explainTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
 
     class Config:
         """Pydantic configuration"""
@@ -92,15 +93,25 @@ class Lineage(BaseModel):
         if self.alias is None and "alias" in self.__fields_set__:
             _dict['alias'] = None
 
-        # set to None if display_name (nullable) is None
+        # set to None if column_title_tooltip (nullable) is None
         # and __fields_set__ contains the field
-        if self.display_name is None and "display_name" in self.__fields_set__:
-            _dict['displayName'] = None
+        if self.column_title_tooltip is None and "column_title_tooltip" in self.__fields_set__:
+            _dict['columnTitleTooltip'] = None
 
-        # set to None if description (nullable) is None
+        # set to None if explain_title (nullable) is None
         # and __fields_set__ contains the field
-        if self.description is None and "description" in self.__fields_set__:
-            _dict['description'] = None
+        if self.explain_title is None and "explain_title" in self.__fields_set__:
+            _dict['explainTitle'] = None
+
+        # set to None if explain_tooltip (nullable) is None
+        # and __fields_set__ contains the field
+        if self.explain_tooltip is None and "explain_tooltip" in self.__fields_set__:
+            _dict['explainTooltip'] = None
+
+        # set to None if full_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.full_formula is None and "full_formula" in self.__fields_set__:
+            _dict['fullFormula'] = None
 
         # set to None if documentation_as_html (nullable) is None
         # and __fields_set__ contains the field
@@ -111,11 +122,6 @@ class Lineage(BaseModel):
         # and __fields_set__ contains the field
         if self.documentation_as_mark_down is None and "documentation_as_mark_down" in self.__fields_set__:
             _dict['documentationAsMarkDown'] = None
-
-        # set to None if full_text (nullable) is None
-        # and __fields_set__ contains the field
-        if self.full_text is None and "full_text" in self.__fields_set__:
-            _dict['fullText'] = None
 
         # set to None if children (nullable) is None
         # and __fields_set__ contains the field
@@ -137,11 +143,12 @@ class Lineage(BaseModel):
             "type": obj.get("type"),
             "subtype": obj.get("subtype"),
             "alias": obj.get("alias"),
-            "display_name": obj.get("displayName"),
-            "description": obj.get("description"),
+            "column_title_tooltip": obj.get("columnTitleTooltip"),
+            "explain_title": obj.get("explainTitle"),
+            "explain_tooltip": obj.get("explainTooltip"),
+            "full_formula": obj.get("fullFormula"),
             "documentation_as_html": obj.get("documentationAsHtml"),
             "documentation_as_mark_down": obj.get("documentationAsMarkDown"),
-            "full_text": obj.get("fullText"),
             "children": [Lineage.from_dict(_item) for _item in obj.get("children")] if obj.get("children") is not None else None
         })
         return _obj
