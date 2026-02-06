@@ -68,6 +68,7 @@ from luminesce.models.intellisense_response import IntellisenseResponse
 from luminesce.models.intellisense_type import IntellisenseType
 from luminesce.models.joined_table_design import JoinedTableDesign
 from luminesce.models.lineage import Lineage
+from luminesce.models.lineage_column_icon import LineageColumnIcon
 from luminesce.models.link import Link
 from luminesce.models.luminesce_binary_type import LuminesceBinaryType
 from luminesce.models.lusid_grid_data import LusidGridData
@@ -156,6 +157,7 @@ __all__ = [
     "IntellisenseType",
     "JoinedTableDesign",
     "Lineage",
+    "LineageColumnIcon",
     "Link",
     "LuminesceBinaryType",
     "LusidGridData",

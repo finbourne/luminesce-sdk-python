@@ -22,6 +22,7 @@ from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
 from typing_extensions import Annotated
 from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
+from luminesce.models.lineage_column_icon import LineageColumnIcon
 
 class Lineage(BaseModel):
     """
@@ -31,13 +32,14 @@ class Lineage(BaseModel):
     subtype:  Optional[StrictStr] = Field(None,alias="subtype") 
     alias:  Optional[StrictStr] = Field(None,alias="alias") 
     column_title_tooltip:  Optional[StrictStr] = Field(None,alias="columnTitleTooltip") 
+    column_title_icon: Optional[LineageColumnIcon] = Field(default=None, alias="columnTitleIcon")
     explain_title:  Optional[StrictStr] = Field(None,alias="explainTitle") 
     explain_tooltip:  Optional[StrictStr] = Field(None,alias="explainTooltip") 
     full_formula:  Optional[StrictStr] = Field(None,alias="fullFormula") 
     documentation_as_html:  Optional[StrictStr] = Field(None,alias="documentationAsHtml") 
     documentation_as_mark_down:  Optional[StrictStr] = Field(None,alias="documentationAsMarkDown") 
     children: Optional[List[Lineage]] = None
-    __properties = ["type", "subtype", "alias", "columnTitleTooltip", "explainTitle", "explainTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
+    __properties = ["type", "subtype", "alias", "columnTitleTooltip", "columnTitleIcon", "explainTitle", "explainTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
 
     class Config:
         """Pydantic configuration"""
@@ -144,6 +146,7 @@ class Lineage(BaseModel):
             "subtype": obj.get("subtype"),
             "alias": obj.get("alias"),
             "column_title_tooltip": obj.get("columnTitleTooltip"),
+            "column_title_icon": obj.get("columnTitleIcon"),
             "explain_title": obj.get("explainTitle"),
             "explain_tooltip": obj.get("explainTooltip"),
             "full_formula": obj.get("fullFormula"),
