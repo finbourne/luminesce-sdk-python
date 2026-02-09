@@ -1177,7 +1177,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_historical_feedback**
-> BackgroundQueryProgressResponse get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds)
+> BackgroundQueryProgressResponse get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds, started_at=started_at)
 
 GetHistoricalFeedback: View historical query progress (for older queries)
 
@@ -1229,14 +1229,15 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
     execution_id = 'execution_id_example' # str | ExecutionId returned when starting the query
-    next_message_wait_seconds = 56 # int | An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect. (optional)
+    next_message_wait_seconds = 56 # int | An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect. (optional)
+    started_at = '2013-10-20T19:20:30+01:00' # datetime | Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'. (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds, opts=opts)
+        # api_response =  api_instance.get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds, started_at=started_at, opts=opts)
 
         # GetHistoricalFeedback: View historical query progress (for older queries)
-        api_response = api_instance.get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds)
+        api_response = api_instance.get_historical_feedback(execution_id, next_message_wait_seconds=next_message_wait_seconds, started_at=started_at)
         pprint(api_response)
 
     except ApiException as e:
@@ -1250,7 +1251,8 @@ main()
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **execution_id** | **str**| ExecutionId returned when starting the query | 
- **next_message_wait_seconds** | **int**| An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect. | [optional] 
+ **next_message_wait_seconds** | **int**| An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect. | [optional] 
+ **started_at** | **datetime**| Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between &#39;there is no query with this executionId&#39; and &#39;there is such a query but we couldn&#39;t wait long enough for it to come back from the Feedback Stream&#39;. | [optional] 
 
 ### Return type
 

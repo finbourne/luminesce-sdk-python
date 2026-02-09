@@ -2326,28 +2326,30 @@ class SqlBackgroundExecutionApi:
 
 
     @overload
-    async def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    async def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, started_at : Annotated[Optional[datetime], Field(description="Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.")] = None, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @overload
-    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
+    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, started_at : Annotated[Optional[datetime], Field(description="Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.")] = None, async_req: Optional[bool]=True, **kwargs) -> BackgroundQueryProgressResponse:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
+    def get_historical_feedback(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, started_at : Annotated[Optional[datetime], Field(description="Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundQueryProgressResponse, Awaitable[BackgroundQueryProgressResponse]]:  # noqa: E501
         """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
         View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days.  This method is slow by its nature of looking at the stream of historical feedback data.   On the other hand under some circumstances this can fail to wait long enough and return 404s where really there is data. To help with this `nextMessageWaitSeconds` may be specified to non-default values larger then the 2-7s used internally.  Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_historical_feedback(execution_id, next_message_wait_seconds, async_req=True)
+        >>> thread = api.get_historical_feedback(execution_id, next_message_wait_seconds, started_at, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
-        :param next_message_wait_seconds: An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
+        :param next_message_wait_seconds: An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
         :type next_message_wait_seconds: int
+        :param started_at: Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.
+        :type started_at: datetime
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -2364,23 +2366,25 @@ class SqlBackgroundExecutionApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, **kwargs)  # noqa: E501
+        return self.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, started_at, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_historical_feedback_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_historical_feedback_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], next_message_wait_seconds : Annotated[Optional[StrictInt], Field(description="An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.")] = None, started_at : Annotated[Optional[datetime], Field(description="Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetHistoricalFeedback: View historical query progress (for older queries)  # noqa: E501
 
         View full progress information, including historical feedback for queries which have passed their `keepForSeconds` time, so long as they were executed in the last 31 days.  This method is slow by its nature of looking at the stream of historical feedback data.   On the other hand under some circumstances this can fail to wait long enough and return 404s where really there is data. To help with this `nextMessageWaitSeconds` may be specified to non-default values larger then the 2-7s used internally.  Unlike most methods here this may be called by a user that did not run the original query, if your entitlements allow this, as this is pure telemetry information.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't exist and is not running. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, async_req=True)
+        >>> thread = api.get_historical_feedback_with_http_info(execution_id, next_message_wait_seconds, started_at, async_req=True)
         >>> result = thread.get()
 
         :param execution_id: ExecutionId returned when starting the query (required)
         :type execution_id: str
-        :param next_message_wait_seconds: An override to the internal default as the the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
+        :param next_message_wait_seconds: An override to the internal default for the number of seconds to wait for stream-messages. Meant to help understand 404s that would seem on the surface to be incorrect.
         :type next_message_wait_seconds: int
+        :param started_at: Performance will be hugely improved if thet time (in UTC) when the query was started is provided. It will also significantly decrease the chances of a 404 where there really is data, as it can help to disambiguate between 'there is no query with this executionId' and 'there is such a query but we couldn't wait long enough for it to come back from the Feedback Stream'.
+        :type started_at: datetime
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -2409,7 +2413,8 @@ class SqlBackgroundExecutionApi:
 
         _all_params = [
             'execution_id',
-            'next_message_wait_seconds'
+            'next_message_wait_seconds',
+            'started_at'
         ]
         _all_params.extend(
             [
@@ -2446,6 +2451,12 @@ class SqlBackgroundExecutionApi:
         _query_params = []
         if _params.get('next_message_wait_seconds') is not None:  # noqa: E501
             _query_params.append(('nextMessageWaitSeconds', _params['next_message_wait_seconds']))
+
+        if _params.get('started_at') is not None:  # noqa: E501
+            if isinstance(_params['started_at'], datetime):
+                _query_params.append(('startedAt', _params['started_at'].strftime(self.api_client.configuration.datetime_format)))
+            else:
+                _query_params.append(('startedAt', _params['started_at']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
