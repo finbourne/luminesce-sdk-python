@@ -30,16 +30,18 @@ class Lineage(BaseModel):
     """
     type:  Optional[StrictStr] = Field(None,alias="type") 
     subtype:  Optional[StrictStr] = Field(None,alias="subtype") 
+    legend_text:  Optional[StrictStr] = Field(None,alias="legendText") 
     alias:  Optional[StrictStr] = Field(None,alias="alias") 
     column_title_tooltip:  Optional[StrictStr] = Field(None,alias="columnTitleTooltip") 
     column_title_icon: Optional[LineageColumnIcon] = Field(default=None, alias="columnTitleIcon")
     explain_title:  Optional[StrictStr] = Field(None,alias="explainTitle") 
     explain_tooltip:  Optional[StrictStr] = Field(None,alias="explainTooltip") 
+    arrow_to_parent_tooltip:  Optional[StrictStr] = Field(None,alias="arrowToParentTooltip") 
     full_formula:  Optional[StrictStr] = Field(None,alias="fullFormula") 
     documentation_as_html:  Optional[StrictStr] = Field(None,alias="documentationAsHtml") 
     documentation_as_mark_down:  Optional[StrictStr] = Field(None,alias="documentationAsMarkDown") 
     children: Optional[List[Lineage]] = None
-    __properties = ["type", "subtype", "alias", "columnTitleTooltip", "columnTitleIcon", "explainTitle", "explainTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
+    __properties = ["type", "subtype", "legendText", "alias", "columnTitleTooltip", "columnTitleIcon", "explainTitle", "explainTooltip", "arrowToParentTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
 
     class Config:
         """Pydantic configuration"""
@@ -90,6 +92,11 @@ class Lineage(BaseModel):
         if self.subtype is None and "subtype" in self.__fields_set__:
             _dict['subtype'] = None
 
+        # set to None if legend_text (nullable) is None
+        # and __fields_set__ contains the field
+        if self.legend_text is None and "legend_text" in self.__fields_set__:
+            _dict['legendText'] = None
+
         # set to None if alias (nullable) is None
         # and __fields_set__ contains the field
         if self.alias is None and "alias" in self.__fields_set__:
@@ -109,6 +116,11 @@ class Lineage(BaseModel):
         # and __fields_set__ contains the field
         if self.explain_tooltip is None and "explain_tooltip" in self.__fields_set__:
             _dict['explainTooltip'] = None
+
+        # set to None if arrow_to_parent_tooltip (nullable) is None
+        # and __fields_set__ contains the field
+        if self.arrow_to_parent_tooltip is None and "arrow_to_parent_tooltip" in self.__fields_set__:
+            _dict['arrowToParentTooltip'] = None
 
         # set to None if full_formula (nullable) is None
         # and __fields_set__ contains the field
@@ -144,11 +156,13 @@ class Lineage(BaseModel):
         _obj = Lineage.parse_obj({
             "type": obj.get("type"),
             "subtype": obj.get("subtype"),
+            "legend_text": obj.get("legendText"),
             "alias": obj.get("alias"),
             "column_title_tooltip": obj.get("columnTitleTooltip"),
             "column_title_icon": obj.get("columnTitleIcon"),
             "explain_title": obj.get("explainTitle"),
             "explain_tooltip": obj.get("explainTooltip"),
+            "arrow_to_parent_tooltip": obj.get("arrowToParentTooltip"),
             "full_formula": obj.get("fullFormula"),
             "documentation_as_html": obj.get("documentationAsHtml"),
             "documentation_as_mark_down": obj.get("documentationAsMarkDown"),
