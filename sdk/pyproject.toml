@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "luminesce-sdk"
-version = "2.4.39"
+version = "2.4.40"
 description = "FINBOURNE Luminesce Web API"
 authors = ["FINBOURNE Technology <info@finbourne.com>"]
 license = "MIT"
@@ -26,7 +26,7 @@ aenum = "^3.1.11"
 pytest = "^7.2.1"
 pytest-asyncio = "^0"
 flake8 = "^4.0.0"
-black = "^23.9.1"
+black = "^26.3.1"
 xeger = "^0.4"
 
 [build-system]
