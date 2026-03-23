@@ -98,6 +98,7 @@ from luminesce.models.table_meta import TableMeta
 from luminesce.models.table_view import TableView
 from luminesce.models.task_status import TaskStatus
 from luminesce.models.type import Type
+from luminesce.models.view_item import ViewItem
 from luminesce.models.view_parameter import ViewParameter
 from luminesce.models.writer_design import WriterDesign
 
@@ -187,6 +188,7 @@ __all__ = [
     "TableView",
     "TaskStatus",
     "Type",
+    "ViewItem",
     "ViewParameter",
     "WriterDesign"
 ]

@@ -27,6 +27,7 @@ from luminesce.api.multi_query_execution_api import MultiQueryExecutionApi
 from luminesce.api.sql_background_execution_api import SqlBackgroundExecutionApi
 from luminesce.api.sql_design_api import SqlDesignApi
 from luminesce.api.sql_execution_api import SqlExecutionApi
+from luminesce.api.view_management_api import ViewManagementApi
 
 # import ApiClient
 from luminesce.api_client import ApiClient
@@ -121,6 +122,7 @@ from luminesce.models.table_meta import TableMeta
 from luminesce.models.table_view import TableView
 from luminesce.models.task_status import TaskStatus
 from luminesce.models.type import Type
+from luminesce.models.view_item import ViewItem
 from luminesce.models.view_parameter import ViewParameter
 from luminesce.models.writer_design import WriterDesign
 
@@ -148,6 +150,7 @@ __all__ = [
     "SqlBackgroundExecutionApi",
     "SqlDesignApi",
     "SqlExecutionApi",
+    "ViewManagementApi",
     "AccessControlledAction",
     "AccessControlledResource",
     "AccessControlledResourceIdentifierPartSchemaAttribute",
@@ -232,6 +235,7 @@ __all__ = [
     "TableView",
     "TaskStatus",
     "Type",
+    "ViewItem",
     "ViewParameter",
     "WriterDesign",
     "ApiClient",
