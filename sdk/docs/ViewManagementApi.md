@@ -5,7 +5,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_view_creation_sql**](ViewManagementApi.md#get_view_creation_sql) | **PUT** /api/View/sql | [EXPERIMENTAL] GetViewCreationSql: Gets the original source Sql for a view (if available)
-[**list_views**](ViewManagementApi.md#list_views) | **GET** /api/View/list | [EXPERIMENTAL] ListViews: List views which are visible to the current users
+[**list_views**](ViewManagementApi.md#list_views) | **GET** /api/View/list | [EXPERIMENTAL] ListViews: List views which are visible to the current user
 
 
 # **get_view_creation_sql**
@@ -106,11 +106,11 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **list_views**
-> List[ViewItem] list_views(show_all=show_all, reg_ex_filter=reg_ex_filter)
+> List[ViewItem] list_views(show_all=show_all, reg_ex_filter=reg_ex_filter, name_like_filter=name_like_filter)
 
-[EXPERIMENTAL] ListViews: List views which are visible to the current users
+[EXPERIMENTAL] ListViews: List views which are visible to the current user
 
- Lists all the views which you have access, some limited filtering is available. These come from directly from persisted files in the file system.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
+ Lists all the views which you have access to see. These come from directly from persisted files in the file system. Some limited filtering is available.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden 
 
 ### Example
 
@@ -158,14 +158,15 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(ViewManagementApi)
     show_all = False # bool | Show additional views if permissions allow (optional) (default to False)
-    reg_ex_filter = 'reg_ex_filter_example' # str | Regular Expression filter to apply to the view content (optional)
+    reg_ex_filter = 'reg_ex_filter_example' # str | Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.) (optional)
+    name_like_filter = 'name_like_filter_example' # str | SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.) (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.list_views(show_all=show_all, reg_ex_filter=reg_ex_filter, opts=opts)
+        # api_response =  api_instance.list_views(show_all=show_all, reg_ex_filter=reg_ex_filter, name_like_filter=name_like_filter, opts=opts)
 
-        # [EXPERIMENTAL] ListViews: List views which are visible to the current users
-        api_response = api_instance.list_views(show_all=show_all, reg_ex_filter=reg_ex_filter)
+        # [EXPERIMENTAL] ListViews: List views which are visible to the current user
+        api_response = api_instance.list_views(show_all=show_all, reg_ex_filter=reg_ex_filter, name_like_filter=name_like_filter)
         pprint(api_response)
 
     except ApiException as e:
@@ -179,7 +180,8 @@ main()
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **show_all** | **bool**| Show additional views if permissions allow | [optional] [default to False]
- **reg_ex_filter** | **str**| Regular Expression filter to apply to the view content | [optional] 
+ **reg_ex_filter** | **str**| Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.) | [optional] 
+ **name_like_filter** | **str**| SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.) | [optional] 
 
 ### Return type
 

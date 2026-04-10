@@ -211,28 +211,30 @@ class ViewManagementApi:
 
 
     @overload
-    async def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to apply to the view content")] = None, **kwargs) -> List[ViewItem]:  # noqa: E501
+    async def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)")] = None, name_like_filter : Annotated[Optional[StrictStr], Field( description="SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)")] = None, **kwargs) -> List[ViewItem]:  # noqa: E501
         ...
 
     @overload
-    def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to apply to the view content")] = None, async_req: Optional[bool]=True, **kwargs) -> List[ViewItem]:  # noqa: E501
+    def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)")] = None, name_like_filter : Annotated[Optional[StrictStr], Field( description="SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)")] = None, async_req: Optional[bool]=True, **kwargs) -> List[ViewItem]:  # noqa: E501
         ...
 
     @validate_arguments
-    def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to apply to the view content")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[ViewItem], Awaitable[List[ViewItem]]]:  # noqa: E501
-        """[EXPERIMENTAL] ListViews: List views which are visible to the current users  # noqa: E501
+    def list_views(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)")] = None, name_like_filter : Annotated[Optional[StrictStr], Field( description="SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[ViewItem], Awaitable[List[ViewItem]]]:  # noqa: E501
+        """[EXPERIMENTAL] ListViews: List views which are visible to the current user  # noqa: E501
 
-         Lists all the views which you have access, some limited filtering is available. These come from directly from persisted files in the file system.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Lists all the views which you have access to see. These come from directly from persisted files in the file system. Some limited filtering is available.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_views(show_all, reg_ex_filter, async_req=True)
+        >>> thread = api.list_views(show_all, reg_ex_filter, name_like_filter, async_req=True)
         >>> result = thread.get()
 
         :param show_all: Show additional views if permissions allow
         :type show_all: bool
-        :param reg_ex_filter: Regular Expression filter to apply to the view content
+        :param reg_ex_filter: Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)
         :type reg_ex_filter: str
+        :param name_like_filter: SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)
+        :type name_like_filter: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -249,23 +251,25 @@ class ViewManagementApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.list_views_with_http_info(show_all, reg_ex_filter, **kwargs)  # noqa: E501
+        return self.list_views_with_http_info(show_all, reg_ex_filter, name_like_filter, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_views_with_http_info(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to apply to the view content")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """[EXPERIMENTAL] ListViews: List views which are visible to the current users  # noqa: E501
+    def list_views_with_http_info(self, show_all : Annotated[Optional[StrictBool], Field(description="Show additional views if permissions allow")] = None, reg_ex_filter : Annotated[Optional[StrictStr], Field( description="Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)")] = None, name_like_filter : Annotated[Optional[StrictStr], Field( description="SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] ListViews: List views which are visible to the current user  # noqa: E501
 
-         Lists all the views which you have access, some limited filtering is available. These come from directly from persisted files in the file system.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+         Lists all the views which you have access to see. These come from directly from persisted files in the file system. Some limited filtering is available.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_views_with_http_info(show_all, reg_ex_filter, async_req=True)
+        >>> thread = api.list_views_with_http_info(show_all, reg_ex_filter, name_like_filter, async_req=True)
         >>> result = thread.get()
 
         :param show_all: Show additional views if permissions allow
         :type show_all: bool
-        :param reg_ex_filter: Regular Expression filter to apply to the view content
+        :param reg_ex_filter: Regular Expression filter to reduce the number of views returned, it is applied to the view *content* (this filter is applied withing the Filesystem itself.)
         :type reg_ex_filter: str
+        :param name_like_filter: SQL Like-style filter on the view name, to reduce the number of views returned (this filter is applied to the Filesystem-returned view list.)
+        :type name_like_filter: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -294,7 +298,8 @@ class ViewManagementApi:
 
         _all_params = [
             'show_all',
-            'reg_ex_filter'
+            'reg_ex_filter',
+            'name_like_filter'
         ]
         _all_params.extend(
             [
@@ -331,6 +336,9 @@ class ViewManagementApi:
 
         if _params.get('reg_ex_filter') is not None:  # noqa: E501
             _query_params.append(('regExFilter', _params['reg_ex_filter']))
+
+        if _params.get('name_like_filter') is not None:  # noqa: E501
+            _query_params.append(('nameLikeFilter', _params['name_like_filter']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

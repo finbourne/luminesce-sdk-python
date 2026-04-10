@@ -70,7 +70,7 @@ Class | Method | HTTP request | Description
 *SqlExecutionApi* | [**put_by_query_sqlite**](docs/SqlExecutionApi.md#put_by_query_sqlite) | **PUT** /api/Sql/sqlite | PutByQuerySqlite: Execute Sql from the body returning SqLite DB
 *SqlExecutionApi* | [**put_by_query_xml**](docs/SqlExecutionApi.md#put_by_query_xml) | **PUT** /api/Sql/xml | PutByQueryXml: Execute Sql from the body returning XML
 *ViewManagementApi* | [**get_view_creation_sql**](docs/ViewManagementApi.md#get_view_creation_sql) | **PUT** /api/View/sql | [EXPERIMENTAL] GetViewCreationSql: Gets the original source Sql for a view (if available)
-*ViewManagementApi* | [**list_views**](docs/ViewManagementApi.md#list_views) | **GET** /api/View/list | [EXPERIMENTAL] ListViews: List views which are visible to the current users
+*ViewManagementApi* | [**list_views**](docs/ViewManagementApi.md#list_views) | **GET** /api/View/list | [EXPERIMENTAL] ListViews: List views which are visible to the current user
 
 
 <a id="documentation-for-models"></a>
