@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **last_updated_at** | **datetime** | The last updated at time, needed to get the creating Sql out of the logs | [optional] 
 **last_updated_by** | **str** | The last updated by this user | [optional] 
 **created_by_user_id** | **str** | Originally created by this user | [optional] 
+**notes** | **str** | Any notes around saving or whatnot | [optional] 
 ## Example
 
 ```python
@@ -28,7 +29,8 @@ last_updated_execution_id: Optional[StrictStr] = "example_last_updated_execution
 last_updated_at: Optional[datetime] = # Replace with your value
 last_updated_by: Optional[StrictStr] = "example_last_updated_by"
 created_by_user_id: Optional[StrictStr] = "example_created_by_user_id"
-view_item_instance = ViewItem(name=name, domain=domain, file_path=file_path, file_content=file_content, last_updated_execution_id=last_updated_execution_id, last_updated_at=last_updated_at, last_updated_by=last_updated_by, created_by_user_id=created_by_user_id)
+notes: Optional[StrictStr] = "example_notes"
+view_item_instance = ViewItem(name=name, domain=domain, file_path=file_path, file_content=file_content, last_updated_execution_id=last_updated_execution_id, last_updated_at=last_updated_at, last_updated_by=last_updated_by, created_by_user_id=created_by_user_id, notes=notes)
 
 ```
 

@@ -35,7 +35,8 @@ class ViewItem(BaseModel):
     last_updated_at: Optional[datetime] = Field(default=None, description="The last updated at time, needed to get the creating Sql out of the logs", alias="lastUpdatedAt")
     last_updated_by:  Optional[StrictStr] = Field(None,alias="lastUpdatedBy", description="The last updated by this user") 
     created_by_user_id:  Optional[StrictStr] = Field(None,alias="createdByUserId", description="Originally created by this user") 
-    __properties = ["name", "domain", "filePath", "fileContent", "lastUpdatedExecutionId", "lastUpdatedAt", "lastUpdatedBy", "createdByUserId"]
+    notes:  Optional[StrictStr] = Field(None,alias="notes", description="Any notes around saving or whatnot") 
+    __properties = ["name", "domain", "filePath", "fileContent", "lastUpdatedExecutionId", "lastUpdatedAt", "lastUpdatedBy", "createdByUserId", "notes"]
 
     class Config:
         """Pydantic configuration"""
@@ -109,6 +110,11 @@ class ViewItem(BaseModel):
         if self.created_by_user_id is None and "created_by_user_id" in self.__fields_set__:
             _dict['createdByUserId'] = None
 
+        # set to None if notes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.notes is None and "notes" in self.__fields_set__:
+            _dict['notes'] = None
+
         return _dict
 
     @classmethod
@@ -128,7 +134,8 @@ class ViewItem(BaseModel):
             "last_updated_execution_id": obj.get("lastUpdatedExecutionId"),
             "last_updated_at": obj.get("lastUpdatedAt"),
             "last_updated_by": obj.get("lastUpdatedBy"),
-            "created_by_user_id": obj.get("createdByUserId")
+            "created_by_user_id": obj.get("createdByUserId"),
+            "notes": obj.get("notes")
         })
         return _obj
 

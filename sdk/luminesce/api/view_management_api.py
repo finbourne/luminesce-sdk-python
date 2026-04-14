@@ -51,6 +51,159 @@ class ViewManagementApi:
 
 
     @overload
+    async def delete_view(self, view_name : Annotated[Optional[StrictStr], Field( description="View to delete")] = None, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @overload
+    def delete_view(self, view_name : Annotated[Optional[StrictStr], Field( description="View to delete")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def delete_view(self, view_name : Annotated[Optional[StrictStr], Field( description="View to delete")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] DeleteView: Deletes a view by name  # noqa: E501
+
+         Deletes a view.  This is primarily intended for use by an automated tool to synchronise views between domains.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.delete_view(view_name, async_req=True)
+        >>> result = thread.get()
+
+        :param view_name: View to delete
+        :type view_name: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: str
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the delete_view_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.delete_view_with_http_info(view_name, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def delete_view_with_http_info(self, view_name : Annotated[Optional[StrictStr], Field( description="View to delete")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] DeleteView: Deletes a view by name  # noqa: E501
+
+         Deletes a view.  This is primarily intended for use by an automated tool to synchronise views between domains.  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.delete_view_with_http_info(view_name, async_req=True)
+        >>> result = thread.get()
+
+        :param view_name: View to delete
+        :type view_name: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'view_name'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_view" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('view_name') is not None:  # noqa: E501
+            _query_params.append(('viewName', _params['view_name']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "str",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/View/update', 'DELETE',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
     async def get_view_creation_sql(self, view_item : Annotated[Optional[ViewItem], Field(description="View to fetch the create SQL for. Only the LastUpdatedAt and LastUpdatedExecutionId properties are required.")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
@@ -362,6 +515,182 @@ class ViewManagementApi:
 
         return self.api_client.call_api(
             '/api/View/list', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
+    async def upsert_view(self, allow_warnings : Annotated[Optional[StrictBool], Field(description="May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`")] = None, may_update_existing : Annotated[Optional[StrictBool], Field(description="May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.")] = None, view_item : Annotated[Optional[ViewItem], Field(description="View to create / change the definition of.")] = None, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @overload
+    def upsert_view(self, allow_warnings : Annotated[Optional[StrictBool], Field(description="May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`")] = None, may_update_existing : Annotated[Optional[StrictBool], Field(description="May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.")] = None, view_item : Annotated[Optional[ViewItem], Field(description="View to create / change the definition of.")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def upsert_view(self, allow_warnings : Annotated[Optional[StrictBool], Field(description="May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`")] = None, may_update_existing : Annotated[Optional[StrictBool], Field(description="May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.")] = None, view_item : Annotated[Optional[ViewItem], Field(description="View to create / change the definition of.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] UpsertView: Creates or updates a view from a full ViewDefinition.  # noqa: E501
+
+         Creates or updates a view from a full ViewDefinition.  Adds or creates a view from a view definition - without running the SQL of the view.  This is primarily intended for use by an automated tool to copy views between domains.  What this is *absolutely not* intended to do is to update views to tampered with definitions that were not originally created by `Sys.Admin.SetupView`, not even the smallest of changes are permitted as they may not work and will lead to additional support loads.  The flow for using fbn-config and these endpoints should generally be: - version control the `Sys.Admin.SetupView` query or the fbn-config resource that runs that query. - that can be automatically deployed to a development environment / domain. - an automated process then uses the `list` endpoint to get the full view definition (see above) from the dev-domain - then that definition can be given to a sit/uat/prod domain via this endpoint   - fbn-config could be responsible for this via a new resource type or simply a new, or any other script with PATs for both domains could be responsible for that)  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.upsert_view(allow_warnings, may_update_existing, view_item, async_req=True)
+        >>> result = thread.get()
+
+        :param allow_warnings: May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`
+        :type allow_warnings: bool
+        :param may_update_existing: May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.
+        :type may_update_existing: bool
+        :param view_item: View to create / change the definition of.
+        :type view_item: ViewItem
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: str
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the upsert_view_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.upsert_view_with_http_info(allow_warnings, may_update_existing, view_item, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def upsert_view_with_http_info(self, allow_warnings : Annotated[Optional[StrictBool], Field(description="May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`")] = None, may_update_existing : Annotated[Optional[StrictBool], Field(description="May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.")] = None, view_item : Annotated[Optional[ViewItem], Field(description="View to create / change the definition of.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] UpsertView: Creates or updates a view from a full ViewDefinition.  # noqa: E501
+
+         Creates or updates a view from a full ViewDefinition.  Adds or creates a view from a view definition - without running the SQL of the view.  This is primarily intended for use by an automated tool to copy views between domains.  What this is *absolutely not* intended to do is to update views to tampered with definitions that were not originally created by `Sys.Admin.SetupView`, not even the smallest of changes are permitted as they may not work and will lead to additional support loads.  The flow for using fbn-config and these endpoints should generally be: - version control the `Sys.Admin.SetupView` query or the fbn-config resource that runs that query. - that can be automatically deployed to a development environment / domain. - an automated process then uses the `list` endpoint to get the full view definition (see above) from the dev-domain - then that definition can be given to a sit/uat/prod domain via this endpoint   - fbn-config could be responsible for this via a new resource type or simply a new, or any other script with PATs for both domains could be responsible for that)  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.upsert_view_with_http_info(allow_warnings, may_update_existing, view_item, async_req=True)
+        >>> result = thread.get()
+
+        :param allow_warnings: May views with *warnings* be upserted?  Regardless of this views with *errors* may not be. Warnings includes things like: - not using macros properly so that filters or aggregations cannot be passed down - using things like `select *` that can lead to results changing over time Errors includes things like: - uses a provider or view that simply doesn't exists (so perhaps a view this depends on needs creating first?) - The SQL or Metadata of the view was manually edited, not setup correctly by `Sys.Admin.SetupView`
+        :type allow_warnings: bool
+        :param may_update_existing: May an existing view be overwritten?  Defaults to false to prevent accidental overwrites. Set to true when intentionally deploying an updated view definition to a domain.
+        :type may_update_existing: bool
+        :param view_item: View to create / change the definition of.
+        :type view_item: ViewItem
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'allow_warnings',
+            'may_update_existing',
+            'view_item'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method upsert_view" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('allow_warnings') is not None:  # noqa: E501
+            _query_params.append(('allowWarnings', _params['allow_warnings']))
+
+        if _params.get('may_update_existing') is not None:  # noqa: E501
+            _query_params.append(('mayUpdateExisting', _params['may_update_existing']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['view_item'] is not None:
+            _body_params = _params['view_item']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json-patch+json', 'application/json', 'text/json', 'application/*+json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "str",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/View/update', 'PUT',
             _path_params,
             _query_params,
             _header_params,
