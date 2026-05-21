@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_fields**
-> str get_fields(table_like=table_like, add_lineage=add_lineage)
+> str get_fields(table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker)
 
 GetFields: List field and parameters for providers
 
@@ -155,13 +155,14 @@ def main():
     api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
     table_like = '%' # str | Allows for SQL-LIKE style filtering of which Providers you want the fields for. (optional) (default to '%')
     add_lineage = False # bool | Adds in any column lineage which is registered in the catalog to the results. (optional) (default to False)
+    add_lineage_marker = False # bool | Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_fields(table_like=table_like, add_lineage=add_lineage, opts=opts)
+        # api_response =  api_instance.get_fields(table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker, opts=opts)
 
         # GetFields: List field and parameters for providers
-        api_response = api_instance.get_fields(table_like=table_like, add_lineage=add_lineage)
+        api_response = api_instance.get_fields(table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker)
         pprint(api_response)
 
     except ApiException as e:
@@ -176,6 +177,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **table_like** | **str**| Allows for SQL-LIKE style filtering of which Providers you want the fields for. | [optional] [default to &#39;%&#39;]
  **add_lineage** | **bool**| Adds in any column lineage which is registered in the catalog to the results. | [optional] [default to False]
+ **add_lineage_marker** | **bool**| Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false | [optional] [default to False]
 
 ### Return type
 
@@ -194,7 +196,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **get_providers**
-> str get_providers(free_text_search=free_text_search, add_lineage=add_lineage)
+> str get_providers(free_text_search=free_text_search, table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker)
 
 GetProviders: List available providers
 
@@ -246,14 +248,16 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(CurrentTableFieldCatalogApi)
     free_text_search = 'free_text_search_example' # str | Limit the catalog to only things in some way dealing with the passed in text string (optional)
-    add_lineage = False # bool | Adds in any column lineage which is registered in the catalog to the results. (optional) (default to False)
+    table_like = 'table_like_example' # str | Allows for SQL-LIKE style filtering of which Providers you want the data for. (optional)
+    add_lineage = False # bool | Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses). (optional) (default to False)
+    add_lineage_marker = False # bool | Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.get_providers(free_text_search=free_text_search, add_lineage=add_lineage, opts=opts)
+        # api_response =  api_instance.get_providers(free_text_search=free_text_search, table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker, opts=opts)
 
         # GetProviders: List available providers
-        api_response = api_instance.get_providers(free_text_search=free_text_search, add_lineage=add_lineage)
+        api_response = api_instance.get_providers(free_text_search=free_text_search, table_like=table_like, add_lineage=add_lineage, add_lineage_marker=add_lineage_marker)
         pprint(api_response)
 
     except ApiException as e:
@@ -267,7 +271,9 @@ main()
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **free_text_search** | **str**| Limit the catalog to only things in some way dealing with the passed in text string | [optional] 
- **add_lineage** | **bool**| Adds in any column lineage which is registered in the catalog to the results. | [optional] [default to False]
+ **table_like** | **str**| Allows for SQL-LIKE style filtering of which Providers you want the data for. | [optional] 
+ **add_lineage** | **bool**| Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses). | [optional] [default to False]
+ **add_lineage_marker** | **bool**| Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false | [optional] [default to False]
 
 ### Return type
 

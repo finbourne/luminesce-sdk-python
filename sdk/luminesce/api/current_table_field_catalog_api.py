@@ -209,28 +209,30 @@ class CurrentTableFieldCatalogApi:
 
 
     @overload
-    async def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_fields(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetFields: List field and parameters for providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The internal results are cached for several minutes.  It is possible to be throttled if you make too many requests in a short period of time, receiving a: - 429 Too Many Requests : Please try your request again soon  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_fields(table_like, add_lineage, async_req=True)
+        >>> thread = api.get_fields(table_like, add_lineage, add_lineage_marker, async_req=True)
         >>> result = thread.get()
 
         :param table_like: Allows for SQL-LIKE style filtering of which Providers you want the fields for.
         :type table_like: str
         :param add_lineage: Adds in any column lineage which is registered in the catalog to the results.
         :type add_lineage: bool
+        :param add_lineage_marker: Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false
+        :type add_lineage_marker: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -247,23 +249,25 @@ class CurrentTableFieldCatalogApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_fields_with_http_info(table_like, add_lineage, **kwargs)  # noqa: E501
+        return self.get_fields_with_http_info(table_like, add_lineage, add_lineage_marker, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_fields_with_http_info(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_fields_with_http_info(self, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the fields for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetFields: List field and parameters for providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the field/parameter-level information  (as well as the TableName they refer to, of course) for tables matching the `tableLike` (manually include wildcards if desired).  The internal results are cached for several minutes.  It is possible to be throttled if you make too many requests in a short period of time, receiving a: - 429 Too Many Requests : Please try your request again soon  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_fields_with_http_info(table_like, add_lineage, async_req=True)
+        >>> thread = api.get_fields_with_http_info(table_like, add_lineage, add_lineage_marker, async_req=True)
         >>> result = thread.get()
 
         :param table_like: Allows for SQL-LIKE style filtering of which Providers you want the fields for.
         :type table_like: str
         :param add_lineage: Adds in any column lineage which is registered in the catalog to the results.
         :type add_lineage: bool
+        :param add_lineage_marker: Adds in a marker for column lineage which is registered in the catalog to the results: hasLineage true/false
+        :type add_lineage_marker: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -292,7 +296,8 @@ class CurrentTableFieldCatalogApi:
 
         _all_params = [
             'table_like',
-            'add_lineage'
+            'add_lineage',
+            'add_lineage_marker'
         ]
         _all_params.extend(
             [
@@ -329,6 +334,9 @@ class CurrentTableFieldCatalogApi:
 
         if _params.get('add_lineage') is not None:  # noqa: E501
             _query_params.append(('addLineage', _params['add_lineage']))
+
+        if _params.get('add_lineage_marker') is not None:  # noqa: E501
+            _query_params.append(('addLineageMarker', _params['add_lineage_marker']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -368,28 +376,32 @@ class CurrentTableFieldCatalogApi:
 
 
     @overload
-    async def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, **kwargs) -> str:  # noqa: E501
+    async def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the data for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false")] = None, **kwargs) -> str:  # noqa: E501
         ...
 
     @overload
-    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the data for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
         ...
 
     @validate_arguments
-    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+    def get_providers(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the data for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
         """GetProviders: List available providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  It is possible to be throttled if you make too many requests in a short period of time, receiving a: - 429 Too Many Requests : Please try your request again soon  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_providers(free_text_search, add_lineage, async_req=True)
+        >>> thread = api.get_providers(free_text_search, table_like, add_lineage, add_lineage_marker, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
-        :param add_lineage: Adds in any column lineage which is registered in the catalog to the results.
+        :param table_like: Allows for SQL-LIKE style filtering of which Providers you want the data for.
+        :type table_like: str
+        :param add_lineage: Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).
         :type add_lineage: bool
+        :param add_lineage_marker: Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false
+        :type add_lineage_marker: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
@@ -406,23 +418,27 @@ class CurrentTableFieldCatalogApi:
             raise ValueError(message)
         if async_req is not None:
             kwargs['async_req'] = async_req
-        return self.get_providers_with_http_info(free_text_search, add_lineage, **kwargs)  # noqa: E501
+        return self.get_providers_with_http_info(free_text_search, table_like, add_lineage, add_lineage_marker, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_providers_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any column lineage which is registered in the catalog to the results.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_providers_with_http_info(self, free_text_search : Annotated[Optional[StrictStr], Field( description="Limit the catalog to only things in some way dealing with the passed in text string")] = None, table_like : Annotated[Optional[StrictStr], Field( description="Allows for SQL-LIKE style filtering of which Providers you want the data for.")] = None, add_lineage : Annotated[Optional[StrictBool], Field(description="Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).")] = None, add_lineage_marker : Annotated[Optional[StrictBool], Field(description="Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """GetProviders: List available providers  # noqa: E501
 
          Returns the User's full version of the catalog but only the table/provider-level information they have access to.  The internal results are cached for several minutes.  It is possible to be throttled if you make too many requests in a short period of time, receiving a: - 429 Too Many Requests : Please try your request again soon  The following error codes are to be anticipated with standard Problem Detail reports: - 401 Unauthorized - 403 Forbidden   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_providers_with_http_info(free_text_search, add_lineage, async_req=True)
+        >>> thread = api.get_providers_with_http_info(free_text_search, table_like, add_lineage, add_lineage_marker, async_req=True)
         >>> result = thread.get()
 
         :param free_text_search: Limit the catalog to only things in some way dealing with the passed in text string
         :type free_text_search: str
-        :param add_lineage: Adds in any column lineage which is registered in the catalog to the results.
+        :param table_like: Allows for SQL-LIKE style filtering of which Providers you want the data for.
+        :type table_like: str
+        :param add_lineage: Adds in any provider lineage which is registered in the catalog to the results (can produce very large responses).
         :type add_lineage: bool
+        :param add_lineage_marker: Adds in a marker for provider lineage which is registered in the catalog to the results: hasLineage true/false
+        :type add_lineage_marker: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -451,7 +467,9 @@ class CurrentTableFieldCatalogApi:
 
         _all_params = [
             'free_text_search',
-            'add_lineage'
+            'table_like',
+            'add_lineage',
+            'add_lineage_marker'
         ]
         _all_params.extend(
             [
@@ -486,8 +504,14 @@ class CurrentTableFieldCatalogApi:
         if _params.get('free_text_search') is not None:  # noqa: E501
             _query_params.append(('freeTextSearch', _params['free_text_search']))
 
+        if _params.get('table_like') is not None:  # noqa: E501
+            _query_params.append(('tableLike', _params['table_like']))
+
         if _params.get('add_lineage') is not None:  # noqa: E501
             _query_params.append(('addLineage', _params['add_lineage']))
+
+        if _params.get('add_lineage_marker') is not None:  # noqa: E501
+            _query_params.append(('addLineageMarker', _params['add_lineage_marker']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
