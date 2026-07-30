@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **value** | **object** | the default value of the parameter | [optional] 
 **value_options** | **List[object]** | Values of the parameter listed as being available for choosing from. | [optional] 
 **value_must_be_from_options** | **bool** | Must Value be one of ValueOptions (if any)? | [optional] 
+**parameter_value_options_query** | **str** | SQL that might have been used for generating the options list | [optional] 
+**parameter_value_options_query_error** | **str** | Error generated but executing ParameterValueOptionsQuery, if any | [optional] 
 ## Example
 
 ```python
@@ -24,7 +26,9 @@ value: Optional[Any] = # Replace with your value
 value_options: Optional[List[Any]] = # Replace with your value
 value_must_be_from_options: Optional[StrictBool] = # Replace with your value
 value_must_be_from_options:Optional[StrictBool] = None
-scalar_parameter_instance = ScalarParameter(name=name, type=type, value=value, value_options=value_options, value_must_be_from_options=value_must_be_from_options)
+parameter_value_options_query: Optional[StrictStr] = "example_parameter_value_options_query"
+parameter_value_options_query_error: Optional[StrictStr] = "example_parameter_value_options_query_error"
+scalar_parameter_instance = ScalarParameter(name=name, type=type, value=value, value_options=value_options, value_must_be_from_options=value_must_be_from_options, parameter_value_options_query=parameter_value_options_query, parameter_value_options_query_error=parameter_value_options_query_error)
 
 ```
 
