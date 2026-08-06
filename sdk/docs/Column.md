@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **is_main** | **bool** |  | [optional] 
 **is_required_by_provider** | **bool** |  | [optional] 
 **mandatory_for_actions** | **str** |  | [optional] 
+**action_template** | **str** |  | [optional] 
 **lineage** | [**Lineage**](Lineage.md) |  | [optional] 
 **name** | **str** |  | [optional] 
 **type** | [**DataType**](DataType.md) |  | [optional] 
@@ -31,6 +32,7 @@ is_main:Optional[StrictBool] = None
 is_required_by_provider: Optional[StrictBool] = # Replace with your value
 is_required_by_provider:Optional[StrictBool] = None
 mandatory_for_actions: Optional[StrictStr] = "example_mandatory_for_actions"
+action_template: Optional[StrictStr] = "example_action_template"
 lineage: Optional[Lineage] = None
 name: Optional[StrictStr] = "example_name"
 type: Optional[DataType] = None
@@ -39,7 +41,7 @@ display_name: Optional[StrictStr] = "example_display_name"
 condition_usage: Optional[ConditionAttributes] = # Replace with your value
 sample_values: Optional[StrictStr] = "example_sample_values"
 allowed_values: Optional[StrictStr] = "example_allowed_values"
-column_instance = Column(is_primary_key=is_primary_key, is_main=is_main, is_required_by_provider=is_required_by_provider, mandatory_for_actions=mandatory_for_actions, lineage=lineage, name=name, type=type, description=description, display_name=display_name, condition_usage=condition_usage, sample_values=sample_values, allowed_values=allowed_values)
+column_instance = Column(is_primary_key=is_primary_key, is_main=is_main, is_required_by_provider=is_required_by_provider, mandatory_for_actions=mandatory_for_actions, action_template=action_template, lineage=lineage, name=name, type=type, description=description, display_name=display_name, condition_usage=condition_usage, sample_values=sample_values, allowed_values=allowed_values)
 
 ```
 

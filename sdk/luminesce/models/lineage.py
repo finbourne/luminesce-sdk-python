@@ -38,10 +38,11 @@ class Lineage(BaseModel):
     explain_tooltip:  Optional[StrictStr] = Field(None,alias="explainTooltip") 
     arrow_to_parent_tooltip:  Optional[StrictStr] = Field(None,alias="arrowToParentTooltip") 
     full_formula:  Optional[StrictStr] = Field(None,alias="fullFormula") 
+    action_template:  Optional[StrictStr] = Field(None,alias="actionTemplate") 
     documentation_as_html:  Optional[StrictStr] = Field(None,alias="documentationAsHtml") 
     documentation_as_mark_down:  Optional[StrictStr] = Field(None,alias="documentationAsMarkDown") 
     children: Optional[List[Lineage]] = None
-    __properties = ["type", "subtype", "legendText", "alias", "columnTitleTooltip", "columnTitleIcon", "explainTitle", "explainTooltip", "arrowToParentTooltip", "fullFormula", "documentationAsHtml", "documentationAsMarkDown", "children"]
+    __properties = ["type", "subtype", "legendText", "alias", "columnTitleTooltip", "columnTitleIcon", "explainTitle", "explainTooltip", "arrowToParentTooltip", "fullFormula", "actionTemplate", "documentationAsHtml", "documentationAsMarkDown", "children"]
 
     class Config:
         """Pydantic configuration"""
@@ -127,6 +128,11 @@ class Lineage(BaseModel):
         if self.full_formula is None and "full_formula" in self.__fields_set__:
             _dict['fullFormula'] = None
 
+        # set to None if action_template (nullable) is None
+        # and __fields_set__ contains the field
+        if self.action_template is None and "action_template" in self.__fields_set__:
+            _dict['actionTemplate'] = None
+
         # set to None if documentation_as_html (nullable) is None
         # and __fields_set__ contains the field
         if self.documentation_as_html is None and "documentation_as_html" in self.__fields_set__:
@@ -164,6 +170,7 @@ class Lineage(BaseModel):
             "explain_tooltip": obj.get("explainTooltip"),
             "arrow_to_parent_tooltip": obj.get("arrowToParentTooltip"),
             "full_formula": obj.get("fullFormula"),
+            "action_template": obj.get("actionTemplate"),
             "documentation_as_html": obj.get("documentationAsHtml"),
             "documentation_as_mark_down": obj.get("documentationAsMarkDown"),
             "children": [Lineage.from_dict(_item) for _item in obj.get("children")] if obj.get("children") is not None else None
