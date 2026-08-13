@@ -36,6 +36,7 @@ Class | Method | HTTP request | Description
 *SqlBackgroundExecutionApi* | [**fetch_query_result_xml**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetch the result of a query as XML
 *SqlBackgroundExecutionApi* | [**get_historical_feedback**](docs/SqlBackgroundExecutionApi.md#get_historical_feedback) | **GET** /api/SqlBackground/{executionId}/historicalFeedback | GetHistoricalFeedback: View historical query progress (for older queries)
 *SqlBackgroundExecutionApi* | [**get_progress_of**](docs/SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View query progress up to this point.
+*SqlBackgroundExecutionApi* | [**save_query_result_to_drive**](docs/SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
 *SqlBackgroundExecutionApi* | [**start_query**](docs/SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Start to Execute Sql in the background
 *SqlDesignApi* | [**get_provider_template_for_export**](docs/SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
 *SqlDesignApi* | [**put_case_statement_design_sql_to_design**](docs/SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
@@ -113,6 +114,7 @@ Class | Method | HTTP request | Description
  - [ErrorHighlightItem](docs/ErrorHighlightItem.md)
  - [ErrorHighlightRequest](docs/ErrorHighlightRequest.md)
  - [ErrorHighlightResponse](docs/ErrorHighlightResponse.md)
+ - [ExportType](docs/ExportType.md)
  - [ExpressionWithAlias](docs/ExpressionWithAlias.md)
  - [FeedbackEventArgs](docs/FeedbackEventArgs.md)
  - [FeedbackLevel](docs/FeedbackLevel.md)

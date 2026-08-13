@@ -41,7 +41,8 @@ class BackgroundQueryResponse(BaseModel):
     fetch_excel: Optional[Link] = Field(default=None, alias="fetchExcel")
     fetch_sqlite: Optional[Link] = Field(default=None, alias="fetchSqlite")
     histogram: Optional[Link] = None
-    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
+    save_to_drive: Optional[Link] = Field(default=None, alias="saveToDrive")
+    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram", "saveToDrive"]
 
     class Config:
         """Pydantic configuration"""
@@ -111,6 +112,9 @@ class BackgroundQueryResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of histogram
         if self.histogram:
             _dict['histogram'] = self.histogram.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of save_to_drive
+        if self.save_to_drive:
+            _dict['saveToDrive'] = self.save_to_drive.to_dict()
         # set to None if execution_id (nullable) is None
         # and __fields_set__ contains the field
         if self.execution_id is None and "execution_id" in self.__fields_set__:
@@ -140,7 +144,8 @@ class BackgroundQueryResponse(BaseModel):
             "fetch_pipe": Link.from_dict(obj.get("fetchPipe")) if obj.get("fetchPipe") is not None else None,
             "fetch_excel": Link.from_dict(obj.get("fetchExcel")) if obj.get("fetchExcel") is not None else None,
             "fetch_sqlite": Link.from_dict(obj.get("fetchSqlite")) if obj.get("fetchSqlite") is not None else None,
-            "histogram": Link.from_dict(obj.get("histogram")) if obj.get("histogram") is not None else None
+            "histogram": Link.from_dict(obj.get("histogram")) if obj.get("histogram") is not None else None,
+            "save_to_drive": Link.from_dict(obj.get("saveToDrive")) if obj.get("saveToDrive") is not None else None
         })
         return _obj
 

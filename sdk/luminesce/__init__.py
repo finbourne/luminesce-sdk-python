@@ -73,6 +73,7 @@ from luminesce.models.design_join_type import DesignJoinType
 from luminesce.models.error_highlight_item import ErrorHighlightItem
 from luminesce.models.error_highlight_request import ErrorHighlightRequest
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
+from luminesce.models.export_type import ExportType
 from luminesce.models.expression_with_alias import ExpressionWithAlias
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.feedback_level import FeedbackLevel
@@ -186,6 +187,7 @@ __all__ = [
     "ErrorHighlightItem",
     "ErrorHighlightRequest",
     "ErrorHighlightResponse",
+    "ExportType",
     "ExpressionWithAlias",
     "FeedbackEventArgs",
     "FeedbackLevel",

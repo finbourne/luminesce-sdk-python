@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **fetch_excel** | [**Link**](Link.md) |  | [optional] 
 **fetch_sqlite** | [**Link**](Link.md) |  | [optional] 
 **histogram** | [**Link**](Link.md) |  | [optional] 
+**save_to_drive** | [**Link**](Link.md) |  | [optional] 
 ## Example
 
 ```python
@@ -39,7 +40,8 @@ fetch_pipe: Optional[Link] = # Replace with your value
 fetch_excel: Optional[Link] = # Replace with your value
 fetch_sqlite: Optional[Link] = # Replace with your value
 histogram: Optional[Link] = None
-background_query_response_instance = BackgroundQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
+save_to_drive: Optional[Link] = # Replace with your value
+background_query_response_instance = BackgroundQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram, save_to_drive=save_to_drive)
 
 ```
 
