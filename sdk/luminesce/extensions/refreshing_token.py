@@ -224,8 +224,8 @@ class RefreshingToken(UserString):
                 wait_time = int(
                     datetime.strptime(
                         retry_value, "%a, %d %b %Y %H:%M:%S GMT"
-                    ).timestamp()
-                    - datetime.utcnow().timestamp()
+                    ).replace(tzinfo=timezone.utc).timestamp()
+                    - datetime.now(timezone.utc).timestamp()
                 )
                 if wait_time <= 0:  # Won't wait for a negative period
                     return
