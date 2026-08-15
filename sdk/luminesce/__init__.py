@@ -75,6 +75,7 @@ from luminesce.models.error_highlight_request import ErrorHighlightRequest
 from luminesce.models.error_highlight_response import ErrorHighlightResponse
 from luminesce.models.export_type import ExportType
 from luminesce.models.expression_with_alias import ExpressionWithAlias
+from luminesce.models.external_query_source import ExternalQuerySource
 from luminesce.models.feedback_event_args import FeedbackEventArgs
 from luminesce.models.feedback_level import FeedbackLevel
 from luminesce.models.field_design import FieldDesign
@@ -189,6 +190,7 @@ __all__ = [
     "ErrorHighlightResponse",
     "ExportType",
     "ExpressionWithAlias",
+    "ExternalQuerySource",
     "FeedbackEventArgs",
     "FeedbackLevel",
     "FieldDesign",

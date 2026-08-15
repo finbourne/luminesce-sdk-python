@@ -1500,7 +1500,7 @@ Name | Type | Description  | Notes
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 # **start_query**
-> BackgroundQueryResponse start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags)
+> BackgroundQueryResponse start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags, external_query_source=external_query_source)
 
 StartQuery: Start to Execute Sql in the background
 
@@ -1558,13 +1558,14 @@ def main():
     timeout_seconds = 0 # int | Maximum time the query may run for, in seconds: <0 → ∞, 0 → 7200 (2h) (optional) (default to 0)
     keep_for_seconds = 0 # int | Maximum time the result may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d) (optional) (default to 0)
     execution_flags = luminesce.SqlExecutionFlags() # SqlExecutionFlags | Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage. (optional)
+    external_query_source = luminesce.ExternalQuerySource() # ExternalQuerySource | Optional request to load the query from an external SQL-store. The payload is then a key that means something to the chosen source Currently limited by may grow in time: - SavedQuery : Load from Saved Queries (within the Workspaces API),   Query/Body examples: `personal/YourUserId/items/queries/SomeQuery` or `shared/SomeWorkspace/items/queries/SomeQuery`. (optional)
 
     try:
         # uncomment the below to set overrides at the request level
-        # api_response =  api_instance.start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags, opts=opts)
+        # api_response =  api_instance.start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags, external_query_source=external_query_source, opts=opts)
 
         # StartQuery: Start to Execute Sql in the background
-        api_response = api_instance.start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags)
+        api_response = api_instance.start_query(body, execution_id=execution_id, scalar_parameters=scalar_parameters, query_name=query_name, timeout_seconds=timeout_seconds, keep_for_seconds=keep_for_seconds, execution_flags=execution_flags, external_query_source=external_query_source)
         pprint(api_response)
 
     except ApiException as e:
@@ -1584,6 +1585,7 @@ Name | Type | Description  | Notes
  **timeout_seconds** | **int**| Maximum time the query may run for, in seconds: &lt;0 → ∞, 0 → 7200 (2h) | [optional] [default to 0]
  **keep_for_seconds** | **int**| Maximum time the result may be kept for, in seconds: &lt;0 → 1200 (20m), 0 → 28800 (8h), max &#x3D; 2,678,400 (31d) | [optional] [default to 0]
  **execution_flags** | [**SqlExecutionFlags**](.md)| Optional request flags for the execution.  Currently limited by may grow in time: - ProvideLineage : Should Lineage be requested when running the query?  This must be set in order to later retrieve Lineage. | [optional] 
+ **external_query_source** | [**ExternalQuerySource**](.md)| Optional request to load the query from an external SQL-store. The payload is then a key that means something to the chosen source Currently limited by may grow in time: - SavedQuery : Load from Saved Queries (within the Workspaces API),   Query/Body examples: &#x60;personal/YourUserId/items/queries/SomeQuery&#x60; or &#x60;shared/SomeWorkspace/items/queries/SomeQuery&#x60;. | [optional] 
 
 ### Return type
 
