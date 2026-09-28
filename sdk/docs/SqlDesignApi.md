@@ -988,7 +988,7 @@ Name | Type | Description  | Notes
 
 PutQueryToFormat: Format SQL into a more readable form
 
- This formats SQL (given a set of options as to how to do so), a.k.a. Pretty-Print the SQL. It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b    on a.x = b.x where x > y    or y != z ``` 
+ This formats SQL, a.k.a. Pretty-Print the SQL. It takes some SQL (or a fragment thereof, it need not fully parse as yet and certainly need not execute correctly) and returns the reformatted version. Of the options only `maxLineWidth` has any effect, the rest are retained for compatibility. e.g. ```sql select x,y,z from a inner join b on a.x=b.x where x>y or y!=z ``` becomes ```sql select x, y, z from a inner join b on a.x = b.x where x > y   or y != z ``` 
 
 ### Example
 
@@ -1036,19 +1036,19 @@ def main():
     # Create an instance of the API class
     api_instance = api_client_factory.build(SqlDesignApi)
     body = select * from sys.field # str | LuminesceSql to Pretty-Print. Even if it doesn't parse an attempt will be made to format it
-    trailing_commas = True # bool | Should commas be after an expression (as opposed to before) (optional) (default to True)
-    uppercase_keywords = False # bool | Should key words be capitalized (optional) (default to False)
-    break_join_on_sections = True # bool | Should clauses on joins be given line breaks? (optional) (default to True)
-    space_after_expanded_comma = True # bool | Should comma-lists have spaces after the commas? (optional) (default to True)
-    keyword_standardization = True # bool | Should the \"nicest\" key words be used? (e.g. JOIN -> INNER JOIN) (optional) (default to True)
-    expand_comma_lists = False # bool | Should comma-lists (e.g. select a,b,c) have line breaks added? (optional) (default to False)
-    expand_in_lists = False # bool | Should IN-lists have line breaks added? (optional) (default to False)
-    expand_boolean_expressions = True # bool | Should boolean expressions have line breaks added? (optional) (default to True)
-    expand_between_conditions = True # bool | Should between conditions have line breaks added? (optional) (default to True)
-    expand_case_statements = True # bool | Should case-statements have line breaks added? (optional) (default to True)
+    trailing_commas = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    uppercase_keywords = False # bool | No longer has any effect, retained only for compatibility (optional) (default to False)
+    break_join_on_sections = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    space_after_expanded_comma = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    keyword_standardization = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    expand_comma_lists = False # bool | No longer has any effect, retained only for compatibility (optional) (default to False)
+    expand_in_lists = False # bool | No longer has any effect, retained only for compatibility (optional) (default to False)
+    expand_boolean_expressions = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    expand_between_conditions = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    expand_case_statements = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
     max_line_width = 120 # int | Maximum number of characters to allow on one line (if possible) (optional) (default to 120)
-    space_before_trailing_single_line_comments = True # bool | Should the be a space before trailing single line comments? (optional) (default to True)
-    multiline_comment_extra_line_break = False # bool | Should an additional line break be added after multi-line comments? (optional) (default to False)
+    space_before_trailing_single_line_comments = True # bool | No longer has any effect, retained only for compatibility (optional) (default to True)
+    multiline_comment_extra_line_break = False # bool | No longer has any effect, retained only for compatibility (optional) (default to False)
 
     try:
         # uncomment the below to set overrides at the request level
@@ -1069,19 +1069,19 @@ main()
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | **str**| LuminesceSql to Pretty-Print. Even if it doesn&#39;t parse an attempt will be made to format it | 
- **trailing_commas** | **bool**| Should commas be after an expression (as opposed to before) | [optional] [default to True]
- **uppercase_keywords** | **bool**| Should key words be capitalized | [optional] [default to False]
- **break_join_on_sections** | **bool**| Should clauses on joins be given line breaks? | [optional] [default to True]
- **space_after_expanded_comma** | **bool**| Should comma-lists have spaces after the commas? | [optional] [default to True]
- **keyword_standardization** | **bool**| Should the \&quot;nicest\&quot; key words be used? (e.g. JOIN -&gt; INNER JOIN) | [optional] [default to True]
- **expand_comma_lists** | **bool**| Should comma-lists (e.g. select a,b,c) have line breaks added? | [optional] [default to False]
- **expand_in_lists** | **bool**| Should IN-lists have line breaks added? | [optional] [default to False]
- **expand_boolean_expressions** | **bool**| Should boolean expressions have line breaks added? | [optional] [default to True]
- **expand_between_conditions** | **bool**| Should between conditions have line breaks added? | [optional] [default to True]
- **expand_case_statements** | **bool**| Should case-statements have line breaks added? | [optional] [default to True]
+ **trailing_commas** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **uppercase_keywords** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to False]
+ **break_join_on_sections** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **space_after_expanded_comma** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **keyword_standardization** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **expand_comma_lists** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to False]
+ **expand_in_lists** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to False]
+ **expand_boolean_expressions** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **expand_between_conditions** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **expand_case_statements** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
  **max_line_width** | **int**| Maximum number of characters to allow on one line (if possible) | [optional] [default to 120]
- **space_before_trailing_single_line_comments** | **bool**| Should the be a space before trailing single line comments? | [optional] [default to True]
- **multiline_comment_extra_line_break** | **bool**| Should an additional line break be added after multi-line comments? | [optional] [default to False]
+ **space_before_trailing_single_line_comments** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to True]
+ **multiline_comment_extra_line_break** | **bool**| No longer has any effect, retained only for compatibility | [optional] [default to False]
 
 ### Return type
 
