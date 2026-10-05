@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**fetch_query_result_xml**](SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetch the result of a query as XML
 [**get_historical_feedback**](SqlBackgroundExecutionApi.md#get_historical_feedback) | **GET** /api/SqlBackground/{executionId}/historicalFeedback | GetHistoricalFeedback: View historical query progress (for older queries)
 [**get_progress_of**](SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View query progress up to this point.
+[**list_queries**](SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
 [**save_query_result_to_drive**](SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
 [**start_query**](SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Start to Execute Sql in the background
 
@@ -1370,6 +1371,96 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BackgroundQueryProgressResponse**](BackgroundQueryProgressResponse.md)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+# **list_queries**
+> List[BackgroundQueryListItem] list_queries(sql_like=sql_like)
+
+[EXPERIMENTAL] ListQueries: List the background queries available to the calling user
+
+Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized
+
+### Example
+
+```python
+from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
+from luminesce.models import *
+from pprint import pprint
+from luminesce import (
+    SyncApiClientFactory,
+    SqlBackgroundExecutionApi
+)
+
+def main():
+
+    with open("secrets.json", "w") as file:
+        file.write('''
+    {
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
+
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = SyncApiClientFactory(opts=opts)
+
+    api_client_factory = SyncApiClientFactory()
+
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlBackgroundExecutionApi)
+    sql_like = 'sql_like_example' # str | An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired). (optional)
+
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.list_queries(sql_like=sql_like, opts=opts)
+
+        # [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
+        api_response = api_instance.list_queries(sql_like=sql_like)
+        pprint(api_response)
+
+    except ApiException as e:
+        print("Exception when calling SqlBackgroundExecutionApi->list_queries: %s\n" % e)
+
+main()
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sql_like** | **str**| An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired). | [optional] 
+
+### Return type
+
+[**List[BackgroundQueryListItem]**](BackgroundQueryListItem.md)
 
 ### HTTP request headers
 

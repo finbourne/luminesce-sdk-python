@@ -36,6 +36,7 @@ Class | Method | HTTP request | Description
 *SqlBackgroundExecutionApi* | [**fetch_query_result_xml**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetch the result of a query as XML
 *SqlBackgroundExecutionApi* | [**get_historical_feedback**](docs/SqlBackgroundExecutionApi.md#get_historical_feedback) | **GET** /api/SqlBackground/{executionId}/historicalFeedback | GetHistoricalFeedback: View historical query progress (for older queries)
 *SqlBackgroundExecutionApi* | [**get_progress_of**](docs/SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View query progress up to this point.
+*SqlBackgroundExecutionApi* | [**list_queries**](docs/SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
 *SqlBackgroundExecutionApi* | [**save_query_result_to_drive**](docs/SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
 *SqlBackgroundExecutionApi* | [**start_query**](docs/SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Start to Execute Sql in the background
 *SqlDesignApi* | [**get_provider_template_for_export**](docs/SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
@@ -91,6 +92,7 @@ Class | Method | HTTP request | Description
  - [BackgroundMultiQueryProgressResponse](docs/BackgroundMultiQueryProgressResponse.md)
  - [BackgroundMultiQueryResponse](docs/BackgroundMultiQueryResponse.md)
  - [BackgroundQueryCancelResponse](docs/BackgroundQueryCancelResponse.md)
+ - [BackgroundQueryListItem](docs/BackgroundQueryListItem.md)
  - [BackgroundQueryProgressResponse](docs/BackgroundQueryProgressResponse.md)
  - [BackgroundQueryResponse](docs/BackgroundQueryResponse.md)
  - [BackgroundQueryState](docs/BackgroundQueryState.md)

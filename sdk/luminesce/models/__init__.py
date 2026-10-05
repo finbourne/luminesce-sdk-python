@@ -26,6 +26,7 @@ from luminesce.models.available_parameter import AvailableParameter
 from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+from luminesce.models.background_query_list_item import BackgroundQueryListItem
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.background_query_response import BackgroundQueryResponse
 from luminesce.models.background_query_state import BackgroundQueryState
@@ -118,6 +119,7 @@ __all__ = [
     "BackgroundMultiQueryProgressResponse",
     "BackgroundMultiQueryResponse",
     "BackgroundQueryCancelResponse",
+    "BackgroundQueryListItem",
     "BackgroundQueryProgressResponse",
     "BackgroundQueryResponse",
     "BackgroundQueryState",
