@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 **execution_id** | **str** |  | [optional] [readonly] 
 **progress** | [**Link**](Link.md) |  | [optional] 
 **cancel** | [**Link**](Link.md) |  | [optional] 
+**download** | [**Link**](Link.md) |  | [optional] 
+**save_to_drive** | [**Link**](Link.md) |  | [optional] 
 **fetch_json** | [**List[Link]**](Link.md) | Json (as a string) data request links for all of the child queries | [optional] [readonly] 
 **fetch_json_proper** | [**List[Link]**](Link.md) | Json-proper data request links for all of the child queries | [optional] [readonly] 
 **fetch_json_proper_with_lineage** | [**List[Link]**](Link.md) | Json-proper-with-lineage data request links for all of the child queries | [optional] [readonly] 
@@ -28,6 +30,8 @@ from datetime import datetime
 execution_id: Optional[StrictStr] = "example_execution_id"
 progress: Optional[Link] = None
 cancel: Optional[Link] = None
+download: Optional[Link] = None
+save_to_drive: Optional[Link] = # Replace with your value
 fetch_json: Optional[List[Link]] = # Replace with your value
 fetch_json_proper: Optional[List[Link]] = # Replace with your value
 fetch_json_proper_with_lineage: Optional[List[Link]] = # Replace with your value
@@ -38,7 +42,7 @@ fetch_pipe: Optional[List[Link]] = # Replace with your value
 fetch_excel: Optional[List[Link]] = # Replace with your value
 fetch_sqlite: Optional[List[Link]] = # Replace with your value
 histogram: Optional[List[Link]] = # Replace with your value
-background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
+background_multi_query_response_instance = BackgroundMultiQueryResponse(execution_id=execution_id, progress=progress, cancel=cancel, download=download, save_to_drive=save_to_drive, fetch_json=fetch_json, fetch_json_proper=fetch_json_proper, fetch_json_proper_with_lineage=fetch_json_proper_with_lineage, fetch_xml=fetch_xml, fetch_parquet=fetch_parquet, fetch_csv=fetch_csv, fetch_pipe=fetch_pipe, fetch_excel=fetch_excel, fetch_sqlite=fetch_sqlite, histogram=histogram)
 
 ```
 

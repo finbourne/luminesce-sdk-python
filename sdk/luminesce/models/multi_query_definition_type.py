@@ -45,6 +45,7 @@ class MultiQueryDefinitionType(str, Enum):
     INSIGHTSVENDORLOGS = 'InsightsVendorLogs'
     CANDELATRACELOGS = 'CandelaTraceLogs'
     CANDELATRACEEVENTLOGS = 'CandelaTraceEventLogs'
+    CUSTOM = 'Custom'
 
     @classmethod
     def from_json(cls, json_str: str) -> MultiQueryDefinitionType:

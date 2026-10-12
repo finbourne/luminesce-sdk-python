@@ -43,6 +43,10 @@ from luminesce.models.column_state_type import ColumnStateType
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.cursor_position import CursorPosition
+from luminesce.models.custom_multi_query_item import CustomMultiQueryItem
+from luminesce.models.custom_multi_query_list_item import CustomMultiQueryListItem
+from luminesce.models.custom_multi_query_list_item_query import CustomMultiQueryListItemQuery
+from luminesce.models.custom_multi_query_request import CustomMultiQueryRequest
 from luminesce.models.dashboard_type import DashboardType
 from luminesce.models.data_type import DataType
 from luminesce.models.date_parameters import DateParameters
@@ -136,6 +140,10 @@ __all__ = [
     "ConditionAttributes",
     "ConvertToViewData",
     "CursorPosition",
+    "CustomMultiQueryItem",
+    "CustomMultiQueryListItem",
+    "CustomMultiQueryListItemQuery",
+    "CustomMultiQueryRequest",
     "DashboardType",
     "DataType",
     "DateParameters",

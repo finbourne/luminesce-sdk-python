@@ -31,6 +31,8 @@ class BackgroundMultiQueryResponse(BaseModel):
     execution_id:  Optional[StrictStr] = Field(None,alias="executionId") 
     progress: Optional[Link] = None
     cancel: Optional[Link] = None
+    download: Optional[Link] = None
+    save_to_drive: Optional[Link] = Field(default=None, alias="saveToDrive")
     fetch_json: Optional[List[Link]] = Field(default=None, description="Json (as a string) data request links for all of the child queries", alias="fetchJson")
     fetch_json_proper: Optional[List[Link]] = Field(default=None, description="Json-proper data request links for all of the child queries", alias="fetchJsonProper")
     fetch_json_proper_with_lineage: Optional[List[Link]] = Field(default=None, description="Json-proper-with-lineage data request links for all of the child queries", alias="fetchJsonProperWithLineage")
@@ -41,7 +43,7 @@ class BackgroundMultiQueryResponse(BaseModel):
     fetch_excel: Optional[List[Link]] = Field(default=None, description="Excel workbook data request links for all of the child queries", alias="fetchExcel")
     fetch_sqlite: Optional[List[Link]] = Field(default=None, description="SqLite DB data request links for all of the child queries", alias="fetchSqlite")
     histogram: Optional[List[Link]] = Field(default=None, description="Histogram links for all of the child queries")
-    __properties = ["executionId", "progress", "cancel", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
+    __properties = ["executionId", "progress", "cancel", "download", "saveToDrive", "fetchJson", "fetchJsonProper", "fetchJsonProperWithLineage", "fetchXml", "fetchParquet", "fetchCsv", "fetchPipe", "fetchExcel", "fetchSqlite", "histogram"]
 
     class Config:
         """Pydantic configuration"""
@@ -92,6 +94,12 @@ class BackgroundMultiQueryResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of cancel
         if self.cancel:
             _dict['cancel'] = self.cancel.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of download
+        if self.download:
+            _dict['download'] = self.download.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of save_to_drive
+        if self.save_to_drive:
+            _dict['saveToDrive'] = self.save_to_drive.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in fetch_json (list)
         _items = []
         if self.fetch_json:
@@ -227,6 +235,8 @@ class BackgroundMultiQueryResponse(BaseModel):
             "execution_id": obj.get("executionId"),
             "progress": Link.from_dict(obj.get("progress")) if obj.get("progress") is not None else None,
             "cancel": Link.from_dict(obj.get("cancel")) if obj.get("cancel") is not None else None,
+            "download": Link.from_dict(obj.get("download")) if obj.get("download") is not None else None,
+            "save_to_drive": Link.from_dict(obj.get("saveToDrive")) if obj.get("saveToDrive") is not None else None,
             "fetch_json": [Link.from_dict(_item) for _item in obj.get("fetchJson")] if obj.get("fetchJson") is not None else None,
             "fetch_json_proper": [Link.from_dict(_item) for _item in obj.get("fetchJsonProper")] if obj.get("fetchJsonProper") is not None else None,
             "fetch_json_proper_with_lineage": [Link.from_dict(_item) for _item in obj.get("fetchJsonProperWithLineage")] if obj.get("fetchJsonProperWithLineage") is not None else None,

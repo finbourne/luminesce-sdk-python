@@ -20,12 +20,15 @@ from pydantic.v1 import validate_arguments, ValidationError
 from typing import overload, Optional, Union, Awaitable
 
 from datetime import datetime
-from pydantic.v1 import Field, StrictInt, StrictStr
-from typing import Optional
+from pydantic.v1 import Field, StrictBool, StrictBytes, StrictInt, StrictStr
+from typing import List, Optional, Union
 from typing_extensions import Annotated
 from luminesce.models.background_multi_query_progress_response import BackgroundMultiQueryProgressResponse
 from luminesce.models.background_multi_query_response import BackgroundMultiQueryResponse
 from luminesce.models.background_query_cancel_response import BackgroundQueryCancelResponse
+from luminesce.models.custom_multi_query_list_item import CustomMultiQueryListItem
+from luminesce.models.custom_multi_query_request import CustomMultiQueryRequest
+from luminesce.models.export_type import ExportType
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
 
 from luminesce.api_client import ApiClient
@@ -206,6 +209,191 @@ class MultiQueryExecutionApi:
 
 
     @overload
+    async def download_multi_query_results(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], format : Annotated[Optional[str], Field( description="Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, file_name : Annotated[Optional[StrictStr], Field( description="Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> bytearray:  # noqa: E501
+        ...
+
+    @overload
+    def download_multi_query_results(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], format : Annotated[Optional[str], Field( description="Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, file_name : Annotated[Optional[StrictStr], Field( description="Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=True, **kwargs) -> bytearray:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def download_multi_query_results(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], format : Annotated[Optional[str], Field( description="Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, file_name : Annotated[Optional[StrictStr], Field( description="Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[bytearray, Awaitable[bytearray]]:  # noqa: E501
+        """[EXPERIMENTAL] DownloadMultiQueryResults: Downloads the results of a custom query-set as one file  # noqa: E501
+
+        Exports the results of all the queries of a custom query-set (other than those which are not external results) as one file. Queries that failed, or were skipped as a query they depend on failed, are left out - though if none succeeded there is nothing to export.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : no query succeeded, or a placeholder or Drive parameter was incorrect in some way - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query-set doesn't exist, isn't a custom one, or the calling user did not run it. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.download_multi_query_results(execution_id, format, file_name, date_time_format, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query-set (required)
+        :type execution_id: str
+        :param format: Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.
+        :type format: ExportType
+        :param file_name: Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).
+        :type file_name: str
+        :param date_time_format: Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`
+        :type date_time_format: str
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: bytearray
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the download_multi_query_results_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.download_multi_query_results_with_http_info(execution_id, format, file_name, date_time_format, load_wait_milliseconds, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def download_multi_query_results_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], format : Annotated[Optional[str], Field( description="Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, file_name : Annotated[Optional[StrictStr], Field( description="Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] DownloadMultiQueryResults: Downloads the results of a custom query-set as one file  # noqa: E501
+
+        Exports the results of all the queries of a custom query-set (other than those which are not external results) as one file. Queries that failed, or were skipped as a query they depend on failed, are left out - though if none succeeded there is nothing to export.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : no query succeeded, or a placeholder or Drive parameter was incorrect in some way - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query-set doesn't exist, isn't a custom one, or the calling user did not run it. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.download_multi_query_results_with_http_info(execution_id, format, file_name, date_time_format, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query-set (required)
+        :type execution_id: str
+        :param format: Format to download in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.
+        :type format: ExportType
+        :param file_name: Name of the file (without extension).  Defaults to `{executionId}`. May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).
+        :type file_name: str
+        :param date_time_format: Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`
+        :type date_time_format: str
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(bytearray, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'execution_id',
+            'format',
+            'file_name',
+            'date_time_format',
+            'load_wait_milliseconds'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method download_multi_query_results" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['execution_id']:
+            _path_params['executionId'] = _params['execution_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('format') is not None:  # noqa: E501
+            _query_params.append(('format', _params['format']))
+
+        if _params.get('file_name') is not None:  # noqa: E501
+            _query_params.append(('fileName', _params['file_name']))
+
+        if _params.get('date_time_format') is not None:  # noqa: E501
+            _query_params.append(('dateTimeFormat', _params['date_time_format']))
+
+        if _params.get('load_wait_milliseconds') is not None:  # noqa: E501
+            _query_params.append(('loadWaitMilliseconds', _params['load_wait_milliseconds']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "bytearray",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/MultiQueryBackground/{executionId}/download', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
     async def get_progress_of_multi_query(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query")], **kwargs) -> BackgroundMultiQueryProgressResponse:  # noqa: E501
         ...
 
@@ -339,6 +527,518 @@ class MultiQueryExecutionApi:
 
         return self.api_client.call_api(
             '/api/MultiQueryBackground/{executionId}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
+    async def list_custom_queries(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.")] = None, **kwargs) -> List[CustomMultiQueryListItem]:  # noqa: E501
+        ...
+
+    @overload
+    def list_custom_queries(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.")] = None, async_req: Optional[bool]=True, **kwargs) -> List[CustomMultiQueryListItem]:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def list_custom_queries(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[CustomMultiQueryListItem], Awaitable[List[CustomMultiQueryListItem]]]:  # noqa: E501
+        """[EXPERIMENTAL] ListCustomQueries: List the custom query-sets available to the calling user  # noqa: E501
+
+        Lists the custom query-sets (started by the calling user via `custom`) that have finished with at least one result which may be fetched,  and which have not yet passed their `keepForSeconds` time, most recent first.  Each lists its queries that are external results, and which of those have results. Those that errored are included, as some of their queries may still have succeeded.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_custom_queries(sql_like, async_req=True)
+        >>> result = thread.get()
+
+        :param sql_like: An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.
+        :type sql_like: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: List[CustomMultiQueryListItem]
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_custom_queries_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.list_custom_queries_with_http_info(sql_like, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_custom_queries_with_http_info(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] ListCustomQueries: List the custom query-sets available to the calling user  # noqa: E501
+
+        Lists the custom query-sets (started by the calling user via `custom`) that have finished with at least one result which may be fetched,  and which have not yet passed their `keepForSeconds` time, most recent first.  Each lists its queries that are external results, and which of those have results. Those that errored are included, as some of their queries may still have succeeded.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_custom_queries_with_http_info(sql_like, async_req=True)
+        >>> result = thread.get()
+
+        :param sql_like: An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired), a query-set matching should any of its queries.
+        :type sql_like: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(List[CustomMultiQueryListItem], status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'sql_like'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_custom_queries" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('sql_like') is not None:  # noqa: E501
+            _query_params.append(('sqlLike', _params['sql_like']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "List[CustomMultiQueryListItem]",
+        }
+
+        return self.api_client.call_api(
+            '/api/MultiQueryBackground', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
+    async def save_multi_query_results_to_drive(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], drive_location_and_file_name : Annotated[StrictStr, Field(..., description="Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")], may_overwrite : Annotated[Optional[StrictBool], Field(description="If there is an existing file at the requested location with the same name should this be overridden, or an error returned?")] = None, format : Annotated[Optional[str], Field( description="Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, drive_template_location : Annotated[Optional[StrictStr], Field( description="Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @overload
+    def save_multi_query_results_to_drive(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], drive_location_and_file_name : Annotated[StrictStr, Field(..., description="Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")], may_overwrite : Annotated[Optional[StrictBool], Field(description="If there is an existing file at the requested location with the same name should this be overridden, or an error returned?")] = None, format : Annotated[Optional[str], Field( description="Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, drive_template_location : Annotated[Optional[StrictStr], Field( description="Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=True, **kwargs) -> str:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def save_multi_query_results_to_drive(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], drive_location_and_file_name : Annotated[StrictStr, Field(..., description="Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")], may_overwrite : Annotated[Optional[StrictBool], Field(description="If there is an existing file at the requested location with the same name should this be overridden, or an error returned?")] = None, format : Annotated[Optional[str], Field( description="Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, drive_template_location : Annotated[Optional[StrictStr], Field( description="Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[str, Awaitable[str]]:  # noqa: E501
+        """[EXPERIMENTAL] SaveMultiQueryResultsToDrive: Saves the results of a custom query-set directly to Drive, as one file  # noqa: E501
+
+        Exports the results of all the queries of a custom query-set (other than those which are not external results) as one file. Queries that failed, or were skipped as a query they depend on failed, are left out - though if none succeeded there is nothing to export.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : no query succeeded, or a placeholder or Drive parameter was incorrect in some way - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query-set doesn't exist, isn't a custom one, or the calling user did not run it. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.save_multi_query_results_to_drive(execution_id, drive_location_and_file_name, may_overwrite, format, drive_template_location, date_time_format, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query-set (required)
+        :type execution_id: str
+        :param drive_location_and_file_name: Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter). (required)
+        :type drive_location_and_file_name: str
+        :param may_overwrite: If there is an existing file at the requested location with the same name should this be overridden, or an error returned?
+        :type may_overwrite: bool
+        :param format: Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.
+        :type format: ExportType
+        :param drive_template_location: Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.
+        :type drive_template_location: str
+        :param date_time_format: Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`
+        :type date_time_format: str
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: str
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the save_multi_query_results_to_drive_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.save_multi_query_results_to_drive_with_http_info(execution_id, drive_location_and_file_name, may_overwrite, format, drive_template_location, date_time_format, load_wait_milliseconds, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def save_multi_query_results_to_drive_with_http_info(self, execution_id : Annotated[StrictStr, Field(..., description="ExecutionId returned when starting the query-set")], drive_location_and_file_name : Annotated[StrictStr, Field(..., description="Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter).")], may_overwrite : Annotated[Optional[StrictBool], Field(description="If there is an existing file at the requested location with the same name should this be overridden, or an error returned?")] = None, format : Annotated[Optional[str], Field( description="Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.")] = None, drive_template_location : Annotated[Optional[StrictStr], Field( description="Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.")] = None, date_time_format : Annotated[Optional[StrictStr], Field( description="Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`")] = None, load_wait_milliseconds : Annotated[Optional[StrictInt], Field(description="Optional maximum additional wait period for post execution platform processing.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] SaveMultiQueryResultsToDrive: Saves the results of a custom query-set directly to Drive, as one file  # noqa: E501
+
+        Exports the results of all the queries of a custom query-set (other than those which are not external results) as one file. Queries that failed, or were skipped as a query they depend on failed, are left out - though if none succeeded there is nothing to export.  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : no query succeeded, or a placeholder or Drive parameter was incorrect in some way - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query-set doesn't exist, isn't a custom one, or the calling user did not run it. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.save_multi_query_results_to_drive_with_http_info(execution_id, drive_location_and_file_name, may_overwrite, format, drive_template_location, date_time_format, load_wait_milliseconds, async_req=True)
+        >>> result = thread.get()
+
+        :param execution_id: ExecutionId returned when starting the query-set (required)
+        :type execution_id: str
+        :param drive_location_and_file_name: Location and file name within drive where this should be saved to. Missing paths will be created, and extension (if given) will be ignored and inferred from the chosen format (zip where several results are zipped). May contain the placeholders `{executionId}`, `{date:format}` (when the queries started, UTC, e.g. `{date:yyyyMMdd}`) and `{param:name}` (the value of a scalar parameter). (required)
+        :type drive_location_and_file_name: str
+        :param may_overwrite: If there is an existing file at the requested location with the same name should this be overridden, or an error returned?
+        :type may_overwrite: bool
+        :param format: Format to save in.  Several results are one worksheet each for Excel, one table each for Sqlite, and otherwise one file each within a zip.
+        :type format: ExportType
+        :param drive_template_location: Drive path and full file name including extension to be used for the export. Only some export types support templates, such as Excel and Pdf, and this will need to match the format type, if given.
+        :type drive_template_location: str
+        :param date_time_format: Format to apply for DateTime data, leaving blank gives the Luminesce Exporter default, currently `yyyy-MM-dd HH:mm:ss.fff`
+        :type date_time_format: str
+        :param load_wait_milliseconds: Optional maximum additional wait period for post execution platform processing.
+        :type load_wait_milliseconds: int
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(str, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'execution_id',
+            'drive_location_and_file_name',
+            'may_overwrite',
+            'format',
+            'drive_template_location',
+            'date_time_format',
+            'load_wait_milliseconds'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method save_multi_query_results_to_drive" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['execution_id']:
+            _path_params['executionId'] = _params['execution_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('drive_location_and_file_name') is not None:  # noqa: E501
+            _query_params.append(('driveLocationAndFileName', _params['drive_location_and_file_name']))
+
+        if _params.get('may_overwrite') is not None:  # noqa: E501
+            _query_params.append(('mayOverwrite', _params['may_overwrite']))
+
+        if _params.get('format') is not None:  # noqa: E501
+            _query_params.append(('format', _params['format']))
+
+        if _params.get('drive_template_location') is not None:  # noqa: E501
+            _query_params.append(('driveTemplateLocation', _params['drive_template_location']))
+
+        if _params.get('date_time_format') is not None:  # noqa: E501
+            _query_params.append(('dateTimeFormat', _params['date_time_format']))
+
+        if _params.get('load_wait_milliseconds') is not None:  # noqa: E501
+            _query_params.append(('loadWaitMilliseconds', _params['load_wait_milliseconds']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '200': "str",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/MultiQueryBackground/{executionId}/drive', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            opts=_params.get('opts'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+
+    @overload
+    async def start_custom_queries(self, custom_multi_query_request : Annotated[CustomMultiQueryRequest, Field(description="The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc.")], **kwargs) -> BackgroundMultiQueryResponse:  # noqa: E501
+        ...
+
+    @overload
+    def start_custom_queries(self, custom_multi_query_request : Annotated[CustomMultiQueryRequest, Field(description="The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc.")], async_req: Optional[bool]=True, **kwargs) -> BackgroundMultiQueryResponse:  # noqa: E501
+        ...
+
+    @validate_arguments
+    def start_custom_queries(self, custom_multi_query_request : Annotated[CustomMultiQueryRequest, Field(description="The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc.")], async_req: Optional[bool]=None, **kwargs) -> Union[BackgroundMultiQueryResponse, Awaitable[BackgroundMultiQueryResponse]]:  # noqa: E501
+        """[EXPERIMENTAL] StartCustomQueries: Run a caller-supplied set of Sql queries in the background  # noqa: E501
+
+         Starts a caller-supplied set of named queries in the background, getting back an immediate response with how to - fetch the data of each (external) query in various formats, view progress information and cancel / clear them, as for any multi-query - download, or save to Drive, the results of all the (external) queries that succeeded as one file  The queries are started in the order given, at most `maxInParallel` at a time (1 by default, null for as many as possible). A query may use the results of an earlier one as a table variable of its name, e.g. `select * from @Holdings`, and is then only started once that has succeeded (and is skipped if it does not).  The scalar parameters are given to every query.  The multi-query as a whole is reported as failed if any of its queries fails or is skipped.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - the request was invalid, a Saved Query could not be loaded, or there was something wrong with the syntax of a query - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.start_custom_queries(custom_multi_query_request, async_req=True)
+        >>> result = thread.get()
+
+        :param custom_multi_query_request: The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc. (required)
+        :type custom_multi_query_request: CustomMultiQueryRequest
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: BackgroundMultiQueryResponse
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the start_custom_queries_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        if async_req is not None:
+            kwargs['async_req'] = async_req
+        return self.start_custom_queries_with_http_info(custom_multi_query_request, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def start_custom_queries_with_http_info(self, custom_multi_query_request : Annotated[CustomMultiQueryRequest, Field(description="The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """[EXPERIMENTAL] StartCustomQueries: Run a caller-supplied set of Sql queries in the background  # noqa: E501
+
+         Starts a caller-supplied set of named queries in the background, getting back an immediate response with how to - fetch the data of each (external) query in various formats, view progress information and cancel / clear them, as for any multi-query - download, or save to Drive, the results of all the (external) queries that succeeded as one file  The queries are started in the order given, at most `maxInParallel` at a time (1 by default, null for as many as possible). A query may use the results of an earlier one as a table variable of its name, e.g. `select * from @Holdings`, and is then only started once that has succeeded (and is skipped if it does not).  The scalar parameters are given to every query.  The multi-query as a whole is reported as failed if any of its queries fails or is skipped.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - the request was invalid, a Saved Query could not be loaded, or there was something wrong with the syntax of a query - 401 Unauthorized - 403 Forbidden   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.start_custom_queries_with_http_info(custom_multi_query_request, async_req=True)
+        >>> result = thread.get()
+
+        :param custom_multi_query_request: The queries to run (as LuminesceSql or Saved Query references), the scalar parameters for them all, etc. (required)
+        :type custom_multi_query_request: CustomMultiQueryRequest
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: Timeout setting. Do not use - use the opts parameter instead
+        :param opts: Configuration options for this request
+        :type opts: ConfigurationOptions, optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(BackgroundMultiQueryResponse, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'custom_multi_query_request'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers',
+                'opts'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method start_custom_queries" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['custom_multi_query_request'] is not None:
+            _body_params = _params['custom_multi_query_request']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['text/plain', 'application/json', 'text/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['oauth2']  # noqa: E501
+
+        _response_types_map = {
+            '202': "BackgroundMultiQueryResponse",
+            '400': "LusidProblemDetails",
+            '403': "LusidProblemDetails",
+        }
+
+        return self.api_client.call_api(
+            '/api/MultiQueryBackground/custom', 'PUT',
             _path_params,
             _query_params,
             _header_params,

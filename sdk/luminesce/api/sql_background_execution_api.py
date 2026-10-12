@@ -2749,7 +2749,7 @@ class SqlBackgroundExecutionApi:
     def list_queries(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired).")] = None, async_req: Optional[bool]=None, **kwargs) -> Union[List[BackgroundQueryListItem], Awaitable[List[BackgroundQueryListItem]]]:  # noqa: E501
         """[EXPERIMENTAL] ListQueries: List the background queries available to the calling user  # noqa: E501
 
-        Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
+        Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are (other than those marked as not being external results).  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2780,7 +2780,7 @@ class SqlBackgroundExecutionApi:
     def list_queries_with_http_info(self, sql_like : Annotated[Optional[StrictStr], Field( description="An optional SQL-LIKE style filter on the LuminesceSql of the queries (manually include wildcards if desired).")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """[EXPERIMENTAL] ListQueries: List the background queries available to the calling user  # noqa: E501
 
-        Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are.  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
+        Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are (other than those marked as not being external results).  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
