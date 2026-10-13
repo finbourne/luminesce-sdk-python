@@ -20,6 +20,7 @@ from luminesce.models.access_controlled_resource_identifier_part_schema_attribut
 from luminesce.models.action_id import ActionId
 from luminesce.models.aggregate_function import AggregateFunction
 from luminesce.models.aggregation import Aggregation
+from luminesce.models.api_endpoint import ApiEndpoint
 from luminesce.models.auto_detect_type import AutoDetectType
 from luminesce.models.available_field import AvailableField
 from luminesce.models.available_parameter import AvailableParameter
@@ -97,6 +98,7 @@ from luminesce.models.query_designer_version import QueryDesignerVersion
 from luminesce.models.resource_id import ResourceId
 from luminesce.models.resource_list_of_access_controlled_resource import ResourceListOfAccessControlledResource
 from luminesce.models.scalar_parameter import ScalarParameter
+from luminesce.models.service_api_endpoints import ServiceApiEndpoints
 from luminesce.models.source import Source
 from luminesce.models.source_type import SourceType
 from luminesce.models.sql_execution_flags import SqlExecutionFlags
@@ -117,6 +119,7 @@ __all__ = [
     "ActionId",
     "AggregateFunction",
     "Aggregation",
+    "ApiEndpoint",
     "AutoDetectType",
     "AvailableField",
     "AvailableParameter",
@@ -194,6 +197,7 @@ __all__ = [
     "ResourceId",
     "ResourceListOfAccessControlledResource",
     "ScalarParameter",
+    "ServiceApiEndpoints",
     "Source",
     "SourceType",
     "SqlExecutionFlags",

@@ -6,6 +6,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/honeycomb*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ApplicationMetadataApi* | [**get_services_as_access_controlled_resources**](docs/ApplicationMetadataApi.md#get_services_as_access_controlled_resources) | **GET** /api/metadata/access/resources | GetServicesAsAccessControlledResources: Get resources available for access control
+*ApplicationMetadataApi* | [**list_api_endpoints**](docs/ApplicationMetadataApi.md#list_api_endpoints) | **GET** /api/metadata/endpoints | ListApiEndpoints: Get the API endpoints available
 *BinaryDownloadingApi* | [**download_binary**](docs/BinaryDownloadingApi.md#download_binary) | **GET** /api/Download/download | DownloadBinary: Download a Luminesce Binary you may run on-site
 *BinaryDownloadingApi* | [**get_binary_versions**](docs/BinaryDownloadingApi.md#get_binary_versions) | **GET** /api/Download/versions | GetBinaryVersions: List available versions of binaries
 *CertificateManagementApi* | [**download_certificate**](docs/CertificateManagementApi.md#download_certificate) | **GET** /api/Certificate/certificate | DownloadCertificate: Download domain or your personal certificates
@@ -90,6 +91,7 @@ Class | Method | HTTP request | Description
  - [ActionId](docs/ActionId.md)
  - [AggregateFunction](docs/AggregateFunction.md)
  - [Aggregation](docs/Aggregation.md)
+ - [ApiEndpoint](docs/ApiEndpoint.md)
  - [AutoDetectType](docs/AutoDetectType.md)
  - [AvailableField](docs/AvailableField.md)
  - [AvailableParameter](docs/AvailableParameter.md)
@@ -167,6 +169,7 @@ Class | Method | HTTP request | Description
  - [ResourceId](docs/ResourceId.md)
  - [ResourceListOfAccessControlledResource](docs/ResourceListOfAccessControlledResource.md)
  - [ScalarParameter](docs/ScalarParameter.md)
+ - [ServiceApiEndpoints](docs/ServiceApiEndpoints.md)
  - [Source](docs/Source.md)
  - [SourceType](docs/SourceType.md)
  - [SqlExecutionFlags](docs/SqlExecutionFlags.md)
