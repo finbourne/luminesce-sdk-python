@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**get_provider_template_for_export**](SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
 [**put_case_statement_design_sql_to_design**](SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
 [**put_case_statement_design_to_sql**](SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | PutCaseStatementDesignToSql: Convert a case statement design object to SQL
+[**put_custom_queries_to_extract_scalar_parameters**](SqlDesignApi.md#put_custom_queries_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters/custom | PutCustomQueriesToExtractScalarParameters: Extract scalar parameter information from all the queries of a custom multi-query
 [**put_file_read_design_to_sql**](SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | PutFileReadDesignToSql: Make file read SQL from a design object
 [**put_inlined_properties_design_sql_to_design**](SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
 [**put_inlined_properties_design_to_sql**](SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
@@ -296,6 +297,103 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**400** | Bad Request |  -  |
+**403** | Forbidden |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+# **put_custom_queries_to_extract_scalar_parameters**
+> List[ScalarParameter] put_custom_queries_to_extract_scalar_parameters(custom_multi_query_request)
+
+PutCustomQueriesToExtractScalarParameters: Extract scalar parameter information from all the queries of a custom multi-query
+
+ Extracts information about all the scalar parameters defined across the queries of a custom multi-query, loading the SQL of any given as Saved Queries. Each name is given only once (the first found of it, in query order), as the same value of it is given to every query that is run. The request's own `scalarParameters` are ignored.  The following error codes are to be anticipated with standard Problem Detail reports: - 400 BadRequest - the request was invalid, a Saved Query could not be loaded, or there was something wrong with the syntax of a query - 401 Unauthorized - 403 Forbidden   > This method is generally only intended for IDE generation purposes.  > It is largely internal to the Finbourne web user interfaces and subject to change without notice. 
+
+### Example
+
+```python
+from luminesce.exceptions import ApiException
+from luminesce.extensions.configuration_options import ConfigurationOptions
+from luminesce.models import *
+from pprint import pprint
+from luminesce import (
+    SyncApiClientFactory,
+    SqlDesignApi
+)
+
+def main():
+
+    with open("secrets.json", "w") as file:
+        file.write('''
+    {
+        "api":
+        {
+            "tokenUrl":"<your-token-url>",
+            "luminesceUrl":"https://<your-domain>.lusid.com/honeycomb",
+            "username":"<your-username>",
+            "password":"<your-password>",
+            "clientId":"<your-client-id>",
+            "clientSecret":"<your-client-secret>"
+        }
+    }''')
+
+    # Use the luminesce SyncApiClientFactory to build Api instances with a configured api client
+    # By default this will read config from environment variables
+    # Then from a secrets.json file found in the current working directory
+
+    # uncomment the below to use configuration overrides
+    # opts = ConfigurationOptions();
+    # opts.total_timeout_ms = 30_000
+
+    # uncomment the below to use an api client factory with overrides
+    # api_client_factory = SyncApiClientFactory(opts=opts)
+
+    api_client_factory = SyncApiClientFactory()
+
+    # Enter a context with an instance of the SyncApiClientFactory to ensure the connection pool is closed after use
+    
+    # Create an instance of the API class
+    api_instance = api_client_factory.build(SqlDesignApi)
+
+    # Objects can be created either via the class constructor, or using the 'from_dict' or 'from_json' methods
+    # Change the lines below to switch approach
+    # custom_multi_query_request = CustomMultiQueryRequest.from_json("")
+    # custom_multi_query_request = CustomMultiQueryRequest.from_dict({})
+    custom_multi_query_request = CustomMultiQueryRequest()
+
+    try:
+        # uncomment the below to set overrides at the request level
+        # api_response =  api_instance.put_custom_queries_to_extract_scalar_parameters(custom_multi_query_request, opts=opts)
+
+        # PutCustomQueriesToExtractScalarParameters: Extract scalar parameter information from all the queries of a custom multi-query
+        api_response = api_instance.put_custom_queries_to_extract_scalar_parameters(custom_multi_query_request)
+        pprint(api_response)
+
+    except ApiException as e:
+        print("Exception when calling SqlDesignApi->put_custom_queries_to_extract_scalar_parameters: %s\n" % e)
+
+main()
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **custom_multi_query_request** | [**CustomMultiQueryRequest**](CustomMultiQueryRequest.md)| The same set of queries as would be given to start them via &#x60;api/MultiQueryBackground/custom&#x60; | 
+
+### Return type
+
+[**List[ScalarParameter]**](ScalarParameter.md)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: text/plain, application/json, text/json
 
 ### HTTP response details
