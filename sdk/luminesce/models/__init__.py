@@ -44,6 +44,7 @@ from luminesce.models.column_state_type import ColumnStateType
 from luminesce.models.condition_attributes import ConditionAttributes
 from luminesce.models.convert_to_view_data import ConvertToViewData
 from luminesce.models.cursor_position import CursorPosition
+from luminesce.models.custom_multi_query_export import CustomMultiQueryExport
 from luminesce.models.custom_multi_query_item import CustomMultiQueryItem
 from luminesce.models.custom_multi_query_list_item import CustomMultiQueryListItem
 from luminesce.models.custom_multi_query_list_item_query import CustomMultiQueryListItemQuery
@@ -84,6 +85,7 @@ from luminesce.models.lusid_problem_details import LusidProblemDetails
 from luminesce.models.mappable_field import MappableField
 from luminesce.models.mapping_flags import MappingFlags
 from luminesce.models.multi_query_definition_type import MultiQueryDefinitionType
+from luminesce.models.multi_query_export_state import MultiQueryExportState
 from luminesce.models.on_clause_term_design import OnClauseTermDesign
 from luminesce.models.options_csv import OptionsCsv
 from luminesce.models.options_excel import OptionsExcel
@@ -143,6 +145,7 @@ __all__ = [
     "ConditionAttributes",
     "ConvertToViewData",
     "CursorPosition",
+    "CustomMultiQueryExport",
     "CustomMultiQueryItem",
     "CustomMultiQueryListItem",
     "CustomMultiQueryListItemQuery",
@@ -183,6 +186,7 @@ __all__ = [
     "MappableField",
     "MappingFlags",
     "MultiQueryDefinitionType",
+    "MultiQueryExportState",
     "OnClauseTermDesign",
     "OptionsCsv",
     "OptionsExcel",

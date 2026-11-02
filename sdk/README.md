@@ -22,11 +22,11 @@ Class | Method | HTTP request | Description
 *HistoricallyExecutedQueriesApi* | [**get_history**](docs/HistoricallyExecutedQueriesApi.md#get_history) | **GET** /api/History | GetHistory: Start a background history search
 *HistoricallyExecutedQueriesApi* | [**get_progress_of_history**](docs/HistoricallyExecutedQueriesApi.md#get_progress_of_history) | **GET** /api/History/{executionId} | GetProgressOfHistory: View progress of a history search
 *MultiQueryExecutionApi* | [**cancel_multi_query**](docs/MultiQueryExecutionApi.md#cancel_multi_query) | **DELETE** /api/MultiQueryBackground/{executionId} | CancelMultiQuery: Cancel / Clear a previously started query-set
-*MultiQueryExecutionApi* | [**download_multi_query_results**](docs/MultiQueryExecutionApi.md#download_multi_query_results) | **GET** /api/MultiQueryBackground/{executionId}/download | [EXPERIMENTAL] DownloadMultiQueryResults: Downloads the results of a custom query-set as one file
+*MultiQueryExecutionApi* | [**download_multi_query_results**](docs/MultiQueryExecutionApi.md#download_multi_query_results) | **GET** /api/MultiQueryBackground/{executionId}/download | DownloadMultiQueryResults: Downloads the results of a custom query-set as one file
 *MultiQueryExecutionApi* | [**get_progress_of_multi_query**](docs/MultiQueryExecutionApi.md#get_progress_of_multi_query) | **GET** /api/MultiQueryBackground/{executionId} | GetProgressOfMultiQuery: View progress of the entire query-set load
-*MultiQueryExecutionApi* | [**list_custom_queries**](docs/MultiQueryExecutionApi.md#list_custom_queries) | **GET** /api/MultiQueryBackground | [EXPERIMENTAL] ListCustomQueries: List the custom query-sets available to the calling user
-*MultiQueryExecutionApi* | [**save_multi_query_results_to_drive**](docs/MultiQueryExecutionApi.md#save_multi_query_results_to_drive) | **GET** /api/MultiQueryBackground/{executionId}/drive | [EXPERIMENTAL] SaveMultiQueryResultsToDrive: Saves the results of a custom query-set directly to Drive, as one file
-*MultiQueryExecutionApi* | [**start_custom_queries**](docs/MultiQueryExecutionApi.md#start_custom_queries) | **PUT** /api/MultiQueryBackground/custom | [EXPERIMENTAL] StartCustomQueries: Run a caller-supplied set of Sql queries in the background
+*MultiQueryExecutionApi* | [**list_custom_queries**](docs/MultiQueryExecutionApi.md#list_custom_queries) | **GET** /api/MultiQueryBackground | ListCustomQueries: List the custom query-sets available to the calling user
+*MultiQueryExecutionApi* | [**save_multi_query_results_to_drive**](docs/MultiQueryExecutionApi.md#save_multi_query_results_to_drive) | **GET** /api/MultiQueryBackground/{executionId}/drive | SaveMultiQueryResultsToDrive: Saves the results of a custom query-set directly to Drive, as one file
+*MultiQueryExecutionApi* | [**start_custom_queries**](docs/MultiQueryExecutionApi.md#start_custom_queries) | **PUT** /api/MultiQueryBackground/custom | StartCustomQueries: Run a caller-supplied set of Sql queries in the background
 *MultiQueryExecutionApi* | [**start_queries**](docs/MultiQueryExecutionApi.md#start_queries) | **PUT** /api/MultiQueryBackground | StartQueries: Run a given set of Sql queries in the background
 *SqlBackgroundExecutionApi* | [**cancel_query**](docs/SqlBackgroundExecutionApi.md#cancel_query) | **DELETE** /api/SqlBackground/{executionId} | CancelQuery: Cancel / Clear data from a previously run query
 *SqlBackgroundExecutionApi* | [**fetch_query_result_csv**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_csv) | **GET** /api/SqlBackground/{executionId}/csv | FetchQueryResultCsv: Fetch the result of a query as CSV
@@ -41,13 +41,14 @@ Class | Method | HTTP request | Description
 *SqlBackgroundExecutionApi* | [**fetch_query_result_xml**](docs/SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetch the result of a query as XML
 *SqlBackgroundExecutionApi* | [**get_historical_feedback**](docs/SqlBackgroundExecutionApi.md#get_historical_feedback) | **GET** /api/SqlBackground/{executionId}/historicalFeedback | GetHistoricalFeedback: View historical query progress (for older queries)
 *SqlBackgroundExecutionApi* | [**get_progress_of**](docs/SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View query progress up to this point.
-*SqlBackgroundExecutionApi* | [**list_queries**](docs/SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
-*SqlBackgroundExecutionApi* | [**save_query_result_to_drive**](docs/SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
+*SqlBackgroundExecutionApi* | [**list_queries**](docs/SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | ListQueries: List the background queries available to the calling user
+*SqlBackgroundExecutionApi* | [**save_query_result_to_drive**](docs/SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | SaveQueryResultToDrive: Saves the query results directly to Drive
 *SqlBackgroundExecutionApi* | [**start_query**](docs/SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Start to Execute Sql in the background
 *SqlDesignApi* | [**get_provider_template_for_export**](docs/SqlDesignApi.md#get_provider_template_for_export) | **GET** /api/Sql/providertemplateforexport | GetProviderTemplateForExport: Makes a fields template for file importing via a writer
 *SqlDesignApi* | [**put_case_statement_design_sql_to_design**](docs/SqlDesignApi.md#put_case_statement_design_sql_to_design) | **PUT** /api/Sql/tocasestatementdesign | PutCaseStatementDesignSqlToDesign: Convert SQL to a case statement design object
 *SqlDesignApi* | [**put_case_statement_design_to_sql**](docs/SqlDesignApi.md#put_case_statement_design_to_sql) | **PUT** /api/Sql/fromcasestatementdesign | PutCaseStatementDesignToSql: Convert a case statement design object to SQL
 *SqlDesignApi* | [**put_custom_queries_to_extract_scalar_parameters**](docs/SqlDesignApi.md#put_custom_queries_to_extract_scalar_parameters) | **PUT** /api/Sql/extractscalarparameters/custom | PutCustomQueriesToExtractScalarParameters: Extract scalar parameter information from all the queries of a custom multi-query
+*SqlDesignApi* | [**put_custom_queries_to_text**](docs/SqlDesignApi.md#put_custom_queries_to_text) | **PUT** /api/Sql/customqueries/totext | PutCustomQueriesToText: Convert the queries of a custom multi-query into its text
 *SqlDesignApi* | [**put_file_read_design_to_sql**](docs/SqlDesignApi.md#put_file_read_design_to_sql) | **PUT** /api/Sql/fromfilereaddesign | PutFileReadDesignToSql: Make file read SQL from a design object
 *SqlDesignApi* | [**put_inlined_properties_design_sql_to_design**](docs/SqlDesignApi.md#put_inlined_properties_design_sql_to_design) | **PUT** /api/Sql/toinlinedpropertiesdesign | PutInlinedPropertiesDesignSqlToDesign: Make an inlined properties design from SQL
 *SqlDesignApi* | [**put_inlined_properties_design_to_sql**](docs/SqlDesignApi.md#put_inlined_properties_design_to_sql) | **PUT** /api/Sql/frominlinedpropertiesdesign | PutInlinedPropertiesDesignToSql: Make inlined properties SQL from a design object
@@ -61,6 +62,7 @@ Class | Method | HTTP request | Description
 *SqlDesignApi* | [**put_sql_to_query_design**](docs/SqlDesignApi.md#put_sql_to_query_design) | **PUT** /api/Sql/todesign | PutSqlToQueryDesign: Make a SQL-design object from SQL if possible
 *SqlDesignApi* | [**put_sql_to_view_design**](docs/SqlDesignApi.md#put_sql_to_view_design) | **PUT** /api/Sql/toviewdesign | PutSqlToViewDesign: Make a view-design from view creation SQL
 *SqlDesignApi* | [**put_sql_to_writer_design**](docs/SqlDesignApi.md#put_sql_to_writer_design) | **PUT** /api/Sql/towriterdesign | PutSqlToWriterDesign: Make a SQL-writer-design object from SQL
+*SqlDesignApi* | [**put_text_to_custom_queries**](docs/SqlDesignApi.md#put_text_to_custom_queries) | **PUT** /api/Sql/customqueries/fromtext | PutTextToCustomQueries: Convert the text of a custom multi-query into its queries
 *SqlDesignApi* | [**put_view_design_to_sql**](docs/SqlDesignApi.md#put_view_design_to_sql) | **PUT** /api/Sql/fromviewdesign | PutViewDesignToSql: Make view creation sql from a view-design
 *SqlDesignApi* | [**put_writer_design_to_sql**](docs/SqlDesignApi.md#put_writer_design_to_sql) | **PUT** /api/Sql/fromwriterdesign | PutWriterDesignToSql: Make writer SQL from a writer-design object
 *SqlExecutionApi* | [**get_by_query_csv**](docs/SqlExecutionApi.md#get_by_query_csv) | **GET** /api/Sql/csv/{query} | GetByQueryCsv: Execute Sql from the url returning CSV
@@ -116,6 +118,7 @@ Class | Method | HTTP request | Description
  - [ConditionAttributes](docs/ConditionAttributes.md)
  - [ConvertToViewData](docs/ConvertToViewData.md)
  - [CursorPosition](docs/CursorPosition.md)
+ - [CustomMultiQueryExport](docs/CustomMultiQueryExport.md)
  - [CustomMultiQueryItem](docs/CustomMultiQueryItem.md)
  - [CustomMultiQueryListItem](docs/CustomMultiQueryListItem.md)
  - [CustomMultiQueryListItemQuery](docs/CustomMultiQueryListItemQuery.md)
@@ -156,6 +159,7 @@ Class | Method | HTTP request | Description
  - [MappableField](docs/MappableField.md)
  - [MappingFlags](docs/MappingFlags.md)
  - [MultiQueryDefinitionType](docs/MultiQueryDefinitionType.md)
+ - [MultiQueryExportState](docs/MultiQueryExportState.md)
  - [OnClauseTermDesign](docs/OnClauseTermDesign.md)
  - [OptionsCsv](docs/OptionsCsv.md)
  - [OptionsExcel](docs/OptionsExcel.md)

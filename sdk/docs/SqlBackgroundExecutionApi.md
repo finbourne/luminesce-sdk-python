@@ -17,8 +17,8 @@ Method | HTTP request | Description
 [**fetch_query_result_xml**](SqlBackgroundExecutionApi.md#fetch_query_result_xml) | **GET** /api/SqlBackground/{executionId}/xml | FetchQueryResultXml: Fetch the result of a query as XML
 [**get_historical_feedback**](SqlBackgroundExecutionApi.md#get_historical_feedback) | **GET** /api/SqlBackground/{executionId}/historicalFeedback | GetHistoricalFeedback: View historical query progress (for older queries)
 [**get_progress_of**](SqlBackgroundExecutionApi.md#get_progress_of) | **GET** /api/SqlBackground/{executionId} | GetProgressOf: View query progress up to this point.
-[**list_queries**](SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
-[**save_query_result_to_drive**](SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
+[**list_queries**](SqlBackgroundExecutionApi.md#list_queries) | **GET** /api/SqlBackground | ListQueries: List the background queries available to the calling user
+[**save_query_result_to_drive**](SqlBackgroundExecutionApi.md#save_query_result_to_drive) | **GET** /api/SqlBackground/{executionId}/drive | SaveQueryResultToDrive: Saves the query results directly to Drive
 [**start_query**](SqlBackgroundExecutionApi.md#start_query) | **PUT** /api/SqlBackground | StartQuery: Start to Execute Sql in the background
 
 
@@ -1387,7 +1387,7 @@ Name | Type | Description  | Notes
 # **list_queries**
 > List[BackgroundQueryListItem] list_queries(sql_like=sql_like)
 
-[EXPERIMENTAL] ListQueries: List the background queries available to the calling user
+ListQueries: List the background queries available to the calling user
 
 Lists the background queries (started by the calling user) whose results may be fetched, and which have not yet passed their `keepForSeconds` time, most recent first. Multi-queries themselves are not included, though the individual queries they started are (other than those marked as not being external results).  The following error codes are to be anticipated most with standard Problem Detail reports: - 401 Unauthorized
 
@@ -1442,7 +1442,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.list_queries(sql_like=sql_like, opts=opts)
 
-        # [EXPERIMENTAL] ListQueries: List the background queries available to the calling user
+        # ListQueries: List the background queries available to the calling user
         api_response = api_instance.list_queries(sql_like=sql_like)
         pprint(api_response)
 
@@ -1477,7 +1477,7 @@ Name | Type | Description  | Notes
 # **save_query_result_to_drive**
 > str save_query_result_to_drive(execution_id, drive_location_and_file_name, may_overwrite=may_overwrite, format=format, drive_template_location=drive_template_location, table_name_reference=table_name_reference, sort_by=sort_by, filter=filter, sql_filter=sql_filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
 
-[EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
+SaveQueryResultToDrive: Saves the query results directly to Drive
 
 Saves the results directly to Drive.  This can be useful for sharing results with others, keeping persistent reports, etc.      Of course always consider data visibility and security as who can see these depends on users' permissions to the chosen location within Drive.  Template support is provided, for the export types that allow this, but unlike using the `Drive.SaveAs` provider within the SQL itself, only one data set can be be saved  (the full query result set, optionally manipulated with the various parameters to this method).  The following error codes are to be anticipated most with standard Problem Detail reports: - 400 BadRequest : Something failed with the execution of your query or drive parameters were incorrect in some way - 401 Unauthorized - 403 Forbidden - 404 Not Found : The requested query result doesn't (yet) exist or the calling user did not run the query. - 429 Too Many Requests : Please try your request again soon   1. The query has been executed successfully in the past yet the server-instance receiving this request (e.g. from a load balancer) doesn't yet have this data available.   1. By virtue of the request you have just placed this will have started to load from the persisted cache and will soon be available.   1. It is also the case that the original server-instance to process the original query is likely to already be able to service this request.
 
@@ -1544,7 +1544,7 @@ def main():
         # uncomment the below to set overrides at the request level
         # api_response =  api_instance.save_query_result_to_drive(execution_id, drive_location_and_file_name, may_overwrite=may_overwrite, format=format, drive_template_location=drive_template_location, table_name_reference=table_name_reference, sort_by=sort_by, filter=filter, sql_filter=sql_filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds, opts=opts)
 
-        # [EXPERIMENTAL] SaveQueryResultToDrive: Saves the query results directly to Drive
+        # SaveQueryResultToDrive: Saves the query results directly to Drive
         api_response = api_instance.save_query_result_to_drive(execution_id, drive_location_and_file_name, may_overwrite=may_overwrite, format=format, drive_template_location=drive_template_location, table_name_reference=table_name_reference, sort_by=sort_by, filter=filter, sql_filter=sql_filter, select=select, group_by=group_by, date_time_format=date_time_format, load_wait_milliseconds=load_wait_milliseconds)
         pprint(api_response)
 

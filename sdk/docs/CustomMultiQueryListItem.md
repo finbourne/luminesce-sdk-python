@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **started_at** | **datetime** | When it was started (UTC) | [optional] 
 **when** | **datetime** | When the state of it was last updated (UTC) | [optional] 
 **expires_at** | **datetime** | When it (and the data of its queries) may be removed (UTC) | [optional] 
+**exported_to** | **str** | The Drive path its results were saved to once done, if it was started with an &#x60;export&#x60; and they were | [optional] 
 **queries** | [**List[CustomMultiQueryListItemQuery]**](CustomMultiQueryListItemQuery.md) | Its queries whose results may be fetched (those that are external results), in request order | [optional] 
 ## Example
 
@@ -26,8 +27,9 @@ state: Optional[BackgroundQueryState] = None
 started_at: Optional[datetime] = # Replace with your value
 when: Optional[datetime] = # Replace with your value
 expires_at: Optional[datetime] = # Replace with your value
+exported_to: Optional[StrictStr] = "example_exported_to"
 queries: Optional[List[CustomMultiQueryListItemQuery]] = # Replace with your value
-custom_multi_query_list_item_instance = CustomMultiQueryListItem(execution_id=execution_id, query_name=query_name, state=state, started_at=started_at, when=when, expires_at=expires_at, queries=queries)
+custom_multi_query_list_item_instance = CustomMultiQueryListItem(execution_id=execution_id, query_name=query_name, state=state, started_at=started_at, when=when, expires_at=expires_at, exported_to=exported_to, queries=queries)
 
 ```
 

@@ -24,6 +24,7 @@ from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat
 from datetime import datetime
 from luminesce.models.background_query_progress_response import BackgroundQueryProgressResponse
 from luminesce.models.feedback_event_args import FeedbackEventArgs
+from luminesce.models.multi_query_export_state import MultiQueryExportState
 from luminesce.models.task_status import TaskStatus
 
 class BackgroundMultiQueryProgressResponse(BaseModel):
@@ -34,7 +35,8 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
     feedback: Optional[List[FeedbackEventArgs]] = Field(default=None, description="Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call.")
     status: Optional[TaskStatus] = None
     queries: Optional[List[BackgroundQueryProgressResponse]] = None
-    __properties = ["progress", "feedback", "status", "queries"]
+    export: Optional[MultiQueryExportState] = None
+    __properties = ["progress", "feedback", "status", "queries", "export"]
 
     class Config:
         """Pydantic configuration"""
@@ -82,6 +84,9 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['queries'] = _items
+        # override the default output from pydantic by calling `to_dict()` of export
+        if self.export:
+            _dict['export'] = self.export.to_dict()
         # set to None if progress (nullable) is None
         # and __fields_set__ contains the field
         if self.progress is None and "progress" in self.__fields_set__:
@@ -112,7 +117,8 @@ class BackgroundMultiQueryProgressResponse(BaseModel):
             "progress": obj.get("progress"),
             "feedback": [FeedbackEventArgs.from_dict(_item) for _item in obj.get("feedback")] if obj.get("feedback") is not None else None,
             "status": obj.get("status"),
-            "queries": [BackgroundQueryProgressResponse.from_dict(_item) for _item in obj.get("queries")] if obj.get("queries") is not None else None
+            "queries": [BackgroundQueryProgressResponse.from_dict(_item) for _item in obj.get("queries")] if obj.get("queries") is not None else None,
+            "export": MultiQueryExportState.from_dict(obj.get("export")) if obj.get("export") is not None else None
         })
         return _obj
 

@@ -22,7 +22,9 @@ from typing import List, Dict, Optional, Any, Union, TYPE_CHECKING
 from typing_extensions import Annotated
 from pydantic.v1 import BaseModel, StrictStr, StrictInt, StrictBool, StrictFloat, StrictBytes, Field, validator, ValidationError, conlist, constr
 from datetime import datetime
+from luminesce.models.custom_multi_query_export import CustomMultiQueryExport
 from luminesce.models.custom_multi_query_item import CustomMultiQueryItem
+from luminesce.models.sql_execution_flags import SqlExecutionFlags
 
 class CustomMultiQueryRequest(BaseModel):
     """
@@ -31,11 +33,14 @@ class CustomMultiQueryRequest(BaseModel):
     execution_id:  Optional[StrictStr] = Field(None,alias="executionId", description="An explicit ExecutionId to use.  This must be blank OR assigned to a valid GUID-as-a-string.") 
     scalar_parameters: Optional[Dict[str, Optional[StrictStr]]] = Field(default=None, description="Scalar parameter values, handed to every query that runs (e.g. filling in `:someParameter:defaultValue` style references). At most 100, each named as an identifier of at most 256 characters, with a value of at most 4096.", alias="scalarParameters")
     queries: List[CustomMultiQueryItem] = Field(description="The queries to run.  Those ready are started in the order given here (one still waiting on those it refers to does not hold up a later one), and each may only refer to queries earlier in the list.")
+    queries_from_workspace:  Optional[StrictStr] = Field(None,alias="queriesFromWorkspace", description="A custom multi-query saved in the Workspaces API to take the queries from, rather than giving them in `Queries` (exactly one of which must be given), e.g. `shared/SomeWorkspace/items/sets/SomeSet`. What this request leaves unspecified of `maxInParallel`, `timeoutSeconds`, `keepForSeconds` and `queryName` is taken from it too, and its saved scalar parameter values are used for any this request does not give. It may instead be a Saved Query, e.g. `shared/SomeWorkspace/items/queries/SomeQuery`, run as the one query, named `Result`.") 
     max_in_parallel: Optional[StrictInt] = Field(default=None, description="Maximum number of the queries that may run concurrently.  Defaults to 1, meaning they run one after another. Explicitly null means as many as their dependencies allow.", alias="maxInParallel")
-    timeout_seconds: Optional[StrictInt] = Field(default=None, description="Maximum time each query may run for, in seconds, timed from when it starts: <0 → ∞, 0 → 1200s (20m). There is no limit on the set as a whole.", alias="timeoutSeconds")
-    keep_for_seconds: Optional[StrictInt] = Field(default=None, description="Maximum time the results may be kept for, in seconds: <0 → 1200 (20m), 0 → 28800 (8h), max = 2,678,400 (31d)", alias="keepForSeconds")
+    timeout_seconds: Optional[StrictInt] = Field(default=None, description="Maximum time each query may run for, in seconds, timed from when it starts: <0 → ∞, 0 or null → 1200s (20m). There is no limit on the set as a whole.  Null (or absent) with `queriesFromWorkspace` is that saved with it.", alias="timeoutSeconds")
+    keep_for_seconds: Optional[StrictInt] = Field(default=None, description="Maximum time the results may be kept for, in seconds: <0 → 1200 (20m), 0 or null → 28800 (8h), max = 2,678,400 (31d). Null (or absent) with `queriesFromWorkspace` is that saved with it.", alias="keepForSeconds")
+    execution_flags: Optional[SqlExecutionFlags] = Field(default=None, alias="executionFlags")
     query_name:  Optional[StrictStr] = Field(None,alias="queryName", description="A name for this set of queries.  This goes into logs and is returned when listing the sets of queries.") 
-    __properties = ["executionId", "scalarParameters", "queries", "maxInParallel", "timeoutSeconds", "keepForSeconds", "queryName"]
+    export: Optional[CustomMultiQueryExport] = None
+    __properties = ["executionId", "scalarParameters", "queries", "queriesFromWorkspace", "maxInParallel", "timeoutSeconds", "keepForSeconds", "executionFlags", "queryName", "export"]
 
     class Config:
         """Pydantic configuration"""
@@ -76,6 +81,9 @@ class CustomMultiQueryRequest(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['queries'] = _items
+        # override the default output from pydantic by calling `to_dict()` of export
+        if self.export:
+            _dict['export'] = self.export.to_dict()
         # set to None if execution_id (nullable) is None
         # and __fields_set__ contains the field
         if self.execution_id is None and "execution_id" in self.__fields_set__:
@@ -86,10 +94,25 @@ class CustomMultiQueryRequest(BaseModel):
         if self.scalar_parameters is None and "scalar_parameters" in self.__fields_set__:
             _dict['scalarParameters'] = None
 
+        # set to None if queries_from_workspace (nullable) is None
+        # and __fields_set__ contains the field
+        if self.queries_from_workspace is None and "queries_from_workspace" in self.__fields_set__:
+            _dict['queriesFromWorkspace'] = None
+
         # set to None if max_in_parallel (nullable) is None
         # and __fields_set__ contains the field
         if self.max_in_parallel is None and "max_in_parallel" in self.__fields_set__:
             _dict['maxInParallel'] = None
+
+        # set to None if timeout_seconds (nullable) is None
+        # and __fields_set__ contains the field
+        if self.timeout_seconds is None and "timeout_seconds" in self.__fields_set__:
+            _dict['timeoutSeconds'] = None
+
+        # set to None if keep_for_seconds (nullable) is None
+        # and __fields_set__ contains the field
+        if self.keep_for_seconds is None and "keep_for_seconds" in self.__fields_set__:
+            _dict['keepForSeconds'] = None
 
         # set to None if query_name (nullable) is None
         # and __fields_set__ contains the field
@@ -111,10 +134,13 @@ class CustomMultiQueryRequest(BaseModel):
             "execution_id": obj.get("executionId"),
             "scalar_parameters": obj.get("scalarParameters"),
             "queries": [CustomMultiQueryItem.from_dict(_item) for _item in obj.get("queries")] if obj.get("queries") is not None else None,
+            "queries_from_workspace": obj.get("queriesFromWorkspace"),
             "max_in_parallel": obj.get("maxInParallel"),
             "timeout_seconds": obj.get("timeoutSeconds"),
             "keep_for_seconds": obj.get("keepForSeconds"),
-            "query_name": obj.get("queryName")
+            "execution_flags": obj.get("executionFlags"),
+            "query_name": obj.get("queryName"),
+            "export": CustomMultiQueryExport.from_dict(obj.get("export")) if obj.get("export") is not None else None
         })
         return _obj
 

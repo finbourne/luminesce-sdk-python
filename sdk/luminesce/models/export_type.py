@@ -42,6 +42,7 @@ class ExportType(str, Enum):
     TABLEINTERNAL = 'TableInternal'
     JSONPROPERWITHLINEAGE = 'jsonProperWithLineage'
     PDF = 'pdf'
+    JSONPROPERBYTABLE = 'jsonProperByTable'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportType:

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **feedback** | [**List[FeedbackEventArgs]**](FeedbackEventArgs.md) | Individual Feedback Messages (to replace Progress).  A given message will be returned from only one call. | [optional] 
 **status** | [**TaskStatus**](TaskStatus.md) |  | [optional] 
 **queries** | [**List[BackgroundQueryProgressResponse]**](BackgroundQueryProgressResponse.md) |  | [optional] 
+**export** | [**MultiQueryExportState**](MultiQueryExportState.md) |  | [optional] 
 ## Example
 
 ```python
@@ -20,7 +21,8 @@ progress: Optional[StrictStr] = "example_progress"
 feedback: Optional[List[FeedbackEventArgs]] = # Replace with your value
 status: Optional[TaskStatus] = None
 queries: Optional[List[BackgroundQueryProgressResponse]] = None
-background_multi_query_progress_response_instance = BackgroundMultiQueryProgressResponse(progress=progress, feedback=feedback, status=status, queries=queries)
+export: Optional[MultiQueryExportState] = None
+background_multi_query_progress_response_instance = BackgroundMultiQueryProgressResponse(progress=progress, feedback=feedback, status=status, queries=queries, export=export)
 
 ```
 
